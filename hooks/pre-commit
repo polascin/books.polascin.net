@@ -68,7 +68,10 @@ while IFS= read -r file; do
     git diff --cached --diff-filter=D --name-only | grep -qF "$file" && continue
     ext="${file##*.}"
     case "$ext" in
+        # Skip binary / asset files and YAML workflow files (which may reference
+        # pattern strings without containing real credentials).
         png|jpg|jpeg|gif|svg|ico|woff|woff2|ttf|eot|otf|pdf|zip|tar|gz|bin) continue ;;
+        yml|yaml) continue ;;
     esac
     diff_content=$(git diff --cached -- "$file")
     for pattern in "${secret_patterns[@]}"; do

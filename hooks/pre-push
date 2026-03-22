@@ -33,7 +33,10 @@ while read -r local_ref local_sha remote_ref remote_sha; do
     else
         range="${remote_sha}..${local_sha}"
     fi
-    diff_output=$(git log -p "$range" 2>/dev/null | grep '^+' | grep -v '^+++')
+    # Scan only lines added in non-YAML files.
+    diff_output=$(git log -p "$range" 2>/dev/null \
+        | grep -v '^diff --git.*\.\(yml\|yaml\)' \
+        | awk '/^diff --git/{inYaml=(/\.(yml|yaml)$/)} !inYaml && /^\+/ && !/^\+\+\+/{print}')
     for pattern in "${secret_patterns[@]}"; do
         match=$(echo "$diff_output" | grep -m1 "$pattern" | head -c 200)
         if [[ -n "$match" ]]; then
