@@ -193,5 +193,31 @@
         "web_url": null,
         "language": "Czech",
         "category": "Academic Paper"
+    },
+    {
+        "id": 16,
+        "title": "Lekárske listy: Varia",
+        "author": "Mediweb / Zdravotnícke noviny",
+        "year": 2023,
+        "isbn": "N/A",
+        "description": "Odborná príloha (16.06.2023) s rozhovorom s nefrológom MUDr. Ľubomírom Polaščínom a ďalšími odbornými témami.",
+        "cover_image": null,
+        "url": "https://mediweb.hnonline.sk/zdn/odborne-prilohy/96088400-lekarske-listy-varia",
+        "web_url": "https://mediweb.hnonline.sk/zdn/tag/lubomir-polascin",
+        "language": "Slovak",
+        "category": "Media Mention"
+    },
+    {
+        "id": 17,
+        "title": "Lekárske listy: Interná medicína",
+        "author": "Mediweb / Zdravotnícke noviny",
+        "year": 2023,
+        "isbn": "N/A",
+        "description": "Odborná príloha (13.12.2023) zo série Lekárske listy zameraná na internú medicínu.",
+        "cover_image": null,
+        "url": "https://mediweb.hnonline.sk/zdn/odborne-prilohy/96120855-lekarske-listy-interna-medicina",
+        "web_url": "https://mediweb.hnonline.sk/zdn/odborne-prilohy",
+        "language": "Slovak",
+        "category": "Media Mention"
     }
 ]
