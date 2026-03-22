@@ -3,12 +3,15 @@ document.addEventListener('DOMContentLoaded', () => {
     const searchInput = document.getElementById('search-books');
     const categorySelect = document.getElementById('category-filter');
     const bookCards = document.querySelectorAll('.book-item');
+    const resultsCount = document.getElementById('results-count');
+    const noResults = document.getElementById('no-results');
 
     function filterBooks() {
         if(!searchInput) return;
         
         const searchTerm = searchInput.value.toLowerCase();
         const categoryTerm = categorySelect ? categorySelect.value.toLowerCase() : '';
+        let visibleCount = 0;
 
         bookCards.forEach(card => {
             const title = card.getAttribute('data-title').toLowerCase();
@@ -19,7 +22,8 @@ document.addEventListener('DOMContentLoaded', () => {
             const matchesCategory = categoryTerm === '' || category === categoryTerm;
 
             if (matchesSearch && matchesCategory) {
-                card.style.display = 'block';
+                visibleCount += 1;
+                card.style.display = '';
                 setTimeout(() => {
                     card.style.opacity = '1';
                     card.style.transform = 'translateY(0)';
@@ -32,6 +36,14 @@ document.addEventListener('DOMContentLoaded', () => {
                 }, 300); // Wait for transition
             }
         });
+
+        if (resultsCount) {
+            resultsCount.textContent = String(visibleCount);
+        }
+
+        if (noResults) {
+            noResults.classList.toggle('hidden', visibleCount !== 0);
+        }
     }
 
     if (searchInput) {
@@ -39,6 +51,9 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     if (categorySelect) {
         categorySelect.addEventListener('change', filterBooks);
+    }
+    if (searchInput || categorySelect) {
+        filterBooks();
     }
 
     // Cookie Consent Logic

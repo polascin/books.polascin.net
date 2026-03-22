@@ -4,24 +4,83 @@ require_once __DIR__ . '/includes/functions.php';
 // Load metadata
 $books = getBooks();
 
+$categories = [];
+$languages = [];
+foreach ($books as $book) {
+    $category = trim((string)($book['category'] ?? ''));
+    $language = trim((string)($book['language'] ?? ''));
+
+    if ($category !== '') {
+        $categories[$category] = true;
+    }
+
+    if ($language !== '') {
+        $languages[$language] = true;
+    }
+}
+
+$categoryList = array_keys($categories);
+sort($categoryList, SORT_NATURAL | SORT_FLAG_CASE);
+
+$languageCount = count($languages);
+$featuredCategory = $categoryList[0] ?? 'Curated Collection';
+
 // Include common header
 include __DIR__ . '/includes/header.php';
 ?>
 
 <!-- CATALOG SECTION -->
-<section id="catalog" class="w-full max-w-7xl mx-auto px-4 py-12">
-    
-    <div class="flex flex-col md:flex-row justify-between items-end mb-10 pb-4 border-b border-gray-300">
-        <div>
-            <h2 class="font-cinzel text-3xl font-bold tracking-wider text-slate-800">Catalogus Librorum</h2>
-            <p class="font-playfair italic text-slate-600 mt-2">The complete collection of medical, scientific, fiction, and non-fiction works.</p>
-        </div>
-        
-        <div class="mt-6 md:mt-0 flex gap-4 w-full md:w-auto">
-            <div class="relative w-full md:w-64">
-                <input type="text" id="search-books" aria-label="Search catalog by title or author" placeholder="Search title or author..." class="w-full pl-10 pr-4 py-2 bg-white border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-slate-800 transition-shadow">
-                <svg class="w-5 h-5 text-gray-400 absolute left-3 top-2.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+<section id="catalog" class="catalog-shell w-full max-w-7xl mx-auto px-4 py-8 md:py-12">
+    <div class="catalog-hero paper-texture rounded-[2rem] overflow-hidden border border-slate-300/60 shadow-xl shadow-slate-900/10 mb-8">
+        <div class="catalog-hero-grid px-6 py-8 md:px-10 md:py-10">
+            <div>
+                <div class="catalog-kicker">Private Library Archive</div>
+                <h2 class="font-cinzel text-3xl md:text-5xl font-bold tracking-[0.18em] text-slate-900">Catalogus Librorum</h2>
+                <p class="catalog-intro font-playfair italic text-slate-700 mt-4">A living shelf of medicine, nephrology, interviews, academic contributions, and fiction shaped by clinical practice and literary work.</p>
+                <div class="catalog-chip-row mt-6">
+                    <span class="catalog-chip"><?php echo count($books); ?> records</span>
+                    <span class="catalog-chip"><?php echo count($categoryList); ?> categories</span>
+                    <span class="catalog-chip"><?php echo $languageCount; ?> languages</span>
+                    <span class="catalog-chip"><?php echo esc_html($featuredCategory); ?></span>
+                </div>
             </div>
+
+            <div class="catalog-stat-panel">
+                <div class="catalog-stat-card">
+                    <span class="catalog-stat-label">Library Scope</span>
+                    <span class="catalog-stat-value"><?php echo count($books); ?></span>
+                    <p class="catalog-stat-copy">Books, chapters, papers, and media references presented in one searchable archive.</p>
+                </div>
+                <div class="catalog-stat-card">
+                    <span class="catalog-stat-label">Browse Focus</span>
+                    <span class="catalog-stat-value"><?php echo count($categoryList); ?></span>
+                    <p class="catalog-stat-copy">Filter by category and jump directly into medical, academic, and literary work.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="catalog-toolbar mb-10">
+        <div class="catalog-toolbar-main">
+            <div class="relative w-full md:flex-1">
+                <input type="text" id="search-books" aria-label="Search catalog by title or author" placeholder="Search by title or author" class="catalog-search-input w-full pl-11 pr-4 py-3 bg-white/90 border border-slate-300 rounded-2xl focus:outline-none focus:ring-2 focus:ring-slate-800 transition-shadow">
+                <svg class="w-5 h-5 text-slate-400 absolute left-4 top-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+            </div>
+
+            <div class="w-full md:w-64">
+                <label for="category-filter" class="sr-only">Filter by category</label>
+                <select id="category-filter" class="catalog-select w-full px-4 py-3 bg-white/90 border border-slate-300 rounded-2xl focus:outline-none focus:ring-2 focus:ring-slate-800 transition-shadow">
+                    <option value="">All categories</option>
+                    <?php foreach ($categoryList as $category): ?>
+                        <option value="<?php echo esc_html($category); ?>"><?php echo esc_html($category); ?></option>
+                    <?php endforeach; ?>
+                </select>
+            </div>
+        </div>
+
+        <div class="catalog-toolbar-meta mt-4 flex flex-col gap-2 md:flex-row md:items-center md:justify-between">
+            <p class="catalog-summary text-sm text-slate-600"><span id="results-count"><?php echo count($books); ?></span> items currently visible.</p>
+            <p class="catalog-summary text-sm text-slate-500">Use the filters to narrow the archive by title, author, or subject area.</p>
         </div>
     </div>
 
@@ -32,7 +91,12 @@ include __DIR__ . '/includes/header.php';
             <p class="font-playfair text-slate-500 mt-2 italic">The catalog is currently empty. Please add books to the data source.</p>
         </div>
     <?php else: ?>
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8" id="book-grid">
+        <div id="no-results" class="hidden bg-white/90 p-10 text-center rounded-[1.5rem] shadow-sm border border-slate-200 mb-8">
+            <h3 class="font-cinzel text-xl text-slate-800 tracking-[0.12em]">No Matching Entries</h3>
+            <p class="font-playfair italic text-slate-600 mt-3">Try another author, title fragment, or reset the category filter.</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8" id="book-grid">
             <?php foreach ($books as $book): ?>
                 <?php
                     $bookUrls = [];
@@ -51,17 +115,20 @@ include __DIR__ . '/includes/header.php';
                     }
 
                     $bookUrl = $bookUrls[0] ?? '';
+                    $bookCategory = trim((string)($book['category'] ?? ''));
+                    $bookLanguage = trim((string)($book['language'] ?? ''));
+                    $bookIsbn = trim((string)($book['isbn'] ?? ''));
+                    $bookYear = trim((string)($book['year'] ?? ''));
                 ?>
-                <div class="book-item book-card bg-paper-texture rounded-lg overflow-hidden flex flex-col transition-all duration-300 transform" 
+                <article class="book-item book-card bg-paper-texture rounded-[1.5rem] overflow-hidden flex flex-col transition-all duration-300 transform" 
                      data-title="<?php echo esc_html($book['title']); ?>" 
                      data-author="<?php echo esc_html($book['author']); ?>"
                      data-category="<?php echo esc_html($book['category'] ?? ''); ?>">
                     
-                    <div class="book-card-inner paper-texture h-full flex flex-col border border-transparent hover:border-slate-300 rounded-lg overflow-hidden">
+                    <div class="book-card-inner paper-texture h-full flex flex-col border border-transparent hover:border-slate-300 rounded-[1.5rem] overflow-hidden">
                         
-                        <!-- Book Cover placeholder -> we can use an image if provided, else a stylized div -->
                         <?php if(!empty($book['cover_image'])): ?>
-                            <div class="h-64 overflow-hidden relative border-b border-gray-300">
+                            <div class="h-64 overflow-hidden relative border-b border-slate-300/80">
                                 <?php if (!empty($bookUrl)): ?>
                                     <a href="<?php echo esc_html($bookUrl); ?>" target="_blank" rel="noopener noreferrer" aria-label="View <?php echo esc_html($book['title']); ?> online" class="block h-full">
                                         <img src="<?php echo esc_html($book['cover_image']); ?>" alt="Cover of <?php echo esc_html($book['title']); ?>" class="w-full h-full object-cover transition-transform duration-700 hover:scale-105">
@@ -70,23 +137,54 @@ include __DIR__ . '/includes/header.php';
                                     <img src="<?php echo esc_html($book['cover_image']); ?>" alt="Cover of <?php echo esc_html($book['title']); ?>" class="w-full h-full object-cover transition-transform duration-700 hover:scale-105">
                                 <?php endif; ?>
                                 <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
-                                <div class="absolute bottom-4 left-4 right-4">
-                                     <span class="inline-block bg-slate-800 text-paper text-xs px-2 py-1 rounded font-cinzel tracking-widest shadow">
-                                        <?php echo esc_html($book['year']); ?>
-                                     </span>
+                                <div class="absolute bottom-4 left-4 right-4 flex items-center justify-between gap-3">
+                                     <?php if ($bookYear !== ''): ?>
+                                         <span class="inline-block bg-slate-800 text-paper text-xs px-3 py-1 rounded-full font-cinzel tracking-[0.18em] shadow">
+                                            <?php echo esc_html($bookYear); ?>
+                                         </span>
+                                     <?php endif; ?>
+                                     <?php if ($bookCategory !== ''): ?>
+                                         <span class="inline-block bg-white/90 text-slate-800 text-[11px] px-3 py-1 rounded-full font-semibold tracking-wide shadow-sm">
+                                            <?php echo esc_html($bookCategory); ?>
+                                         </span>
+                                     <?php endif; ?>
                                 </div>
                             </div>
                         <?php else: ?>
-                            <div class="h-64 bg-slate-800 flex items-center justify-center p-6 border-b border-gray-300 relative overflow-hidden">
+                            <div class="catalog-cover-fallback h-64 flex flex-col justify-between p-6 border-b border-slate-300/80 relative overflow-hidden">
                                 <div class="absolute inset-0 opacity-10 bg-[url('data:image/svg+xml,%3Csvg width=\'20\' height=\'20\' viewBox=\'0 0 20 20\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'%23ffffff\' fill-opacity=\'1\' fill-rule=\'evenodd\'%3E%3Ccircle cx=\'3\' cy=\'3\' r=\'3\'/%3E%3Ccircle cx=\'13\' cy=\'13\' r=\'3\'/%3E%3C/g%3E%3C/svg%3E')]"></div>
-                                <h3 class="font-cinzel text-white text-center text-xl z-10 opacity-80"><?php echo esc_html($book['title']); ?></h3>
+                                <div class="relative z-10 flex items-start justify-between gap-3">
+                                    <?php if ($bookCategory !== ''): ?>
+                                        <span class="inline-block bg-white/10 text-white text-[11px] px-3 py-1 rounded-full font-semibold tracking-wide border border-white/15">
+                                            <?php echo esc_html($bookCategory); ?>
+                                        </span>
+                                    <?php endif; ?>
+                                    <?php if ($bookYear !== ''): ?>
+                                        <span class="inline-block bg-white/10 text-white text-[11px] px-3 py-1 rounded-full font-cinzel tracking-[0.18em] border border-white/15">
+                                            <?php echo esc_html($bookYear); ?>
+                                        </span>
+                                    <?php endif; ?>
+                                </div>
+                                <h3 class="font-cinzel text-white text-center text-2xl z-10 opacity-90 leading-tight relative"><?php echo esc_html($book['title']); ?></h3>
+                                <div class="relative z-10 text-white/75 text-xs uppercase tracking-[0.25em] text-center">Bibliotheca Polascini</div>
                             </div>
                         <?php endif; ?>
 
-                        <!-- Book Details -->
-                        <div class="p-6 flex-grow flex flex-col">
+                        <div class="p-6 md:p-7 flex-grow flex flex-col">
+                            <div class="book-meta-row mb-4">
+                                <?php if ($bookCategory !== ''): ?>
+                                    <span class="book-meta-pill"><?php echo esc_html($bookCategory); ?></span>
+                                <?php endif; ?>
+                                <?php if ($bookLanguage !== ''): ?>
+                                    <span class="book-meta-pill"><?php echo esc_html($bookLanguage); ?></span>
+                                <?php endif; ?>
+                                <?php if ($bookYear !== ''): ?>
+                                    <span class="book-meta-pill"><?php echo esc_html($bookYear); ?></span>
+                                <?php endif; ?>
+                            </div>
+
                             <div class="mb-4">
-                                <h3 class="font-cinzel font-bold text-xl text-slate-800 mb-1 leading-tight">
+                                <h3 class="font-cinzel font-bold text-xl md:text-2xl text-slate-900 mb-2 leading-tight text-balance">
                                     <?php if (!empty($bookUrl)): ?>
                                         <a href="<?php echo esc_html($bookUrl); ?>" target="_blank" rel="noopener noreferrer" class="hover:underline decoration-slate-600 underline-offset-4">
                                             <?php echo esc_html($book['title']); ?>
@@ -95,24 +193,24 @@ include __DIR__ . '/includes/header.php';
                                         <?php echo esc_html($book['title']); ?>
                                     <?php endif; ?>
                                 </h3>
-                                <p class="font-playfair italic text-slate-600 text-sm"><?php echo esc_html($book['author']); ?></p>
+                                <p class="font-playfair italic text-slate-600 text-base"><?php echo esc_html($book['author']); ?></p>
                             </div>
                             
-                            <p class="text-slate-600 text-sm mb-6 flex-grow leading-relaxed">
+                            <p class="catalog-description text-slate-600 text-sm md:text-[15px] mb-6 flex-grow leading-relaxed">
                                 <?php echo esc_html($book['description']); ?>
                             </p>
                             
-                            <div class="mt-auto pt-4 border-t border-gray-300/50 flex flex-wrap gap-y-2 text-xs font-mono text-slate-500 justify-between items-center">
-                                <span>ISBN: <?php echo esc_html($book['isbn']); ?></span>
-                                <?php if(!empty($book['language'])): ?>
-                                    <span class="bg-gray-200 px-2 py-1 rounded-sm text-slate-600 uppercase tracking-wide text-[10px]"><?php echo esc_html($book['language']); ?></span>
+                            <div class="mt-auto pt-4 border-t border-slate-300/60 flex flex-wrap gap-3 text-xs font-mono text-slate-500 items-center justify-between">
+                                <span class="catalog-isbn">ISBN: <?php echo esc_html($bookIsbn !== '' ? $bookIsbn : 'N/A'); ?></span>
+                                <?php if(!empty($bookLanguage)): ?>
+                                    <span class="bg-slate-200/80 px-3 py-1 rounded-full text-slate-600 uppercase tracking-[0.16em] text-[10px] font-semibold"><?php echo esc_html($bookLanguage); ?></span>
                                 <?php endif; ?>
                             </div>
 
                             <?php if (!empty($bookUrls)): ?>
-                                <div class="pt-4">
+                                <div class="pt-5 flex flex-wrap gap-2">
                                     <?php foreach ($bookUrls as $index => $linkUrl): ?>
-                                        <a href="<?php echo esc_html($linkUrl); ?>" target="_blank" rel="noopener noreferrer" class="inline-block mr-2 mb-2 px-4 py-2 text-xs font-cinzel tracking-widest border border-slate-800 text-slate-800 hover:bg-slate-800 hover:text-white transition-colors duration-200">
+                                        <a href="<?php echo esc_html($linkUrl); ?>" target="_blank" rel="noopener noreferrer" class="catalog-link-button inline-block px-4 py-2 text-xs font-cinzel tracking-[0.18em] border border-slate-800 text-slate-800 hover:bg-slate-800 hover:text-white transition-colors duration-200 rounded-full">
                                             <?php echo $index === 0 ? 'View Online' : 'Source ' . ($index + 1); ?>
                                         </a>
                                     <?php endforeach; ?>
@@ -120,7 +218,7 @@ include __DIR__ . '/includes/header.php';
                             <?php endif; ?>
                         </div>
                     </div>
-                </div>
+                </article>
             <?php endforeach; ?>
         </div>
     <?php endif; ?>
