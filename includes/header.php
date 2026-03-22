@@ -38,7 +38,7 @@
                 <ul class="flex space-x-6">
                     <li><a href="index.php" class="hover:text-gray-300 transition-colors font-playfair italic">Home</a></li>
                     <li><a href="catalog.php" class="hover:text-gray-300 transition-colors font-playfair italic">Catalog</a></li>
-                    <li><a href="#about" class="hover:text-gray-300 transition-colors font-playfair italic">About</a></li>
+                    <li><a href="about.php" class="hover:text-gray-300 transition-colors font-playfair italic">About</a></li>
                 </ul>
             </nav>
         </div>
