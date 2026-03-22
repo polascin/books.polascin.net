@@ -17,6 +17,7 @@ include __DIR__ . '/includes/header.php';
     
     <div class="space-y-6 text-slate-700 leading-relaxed text-justify font-sans">
         <p><strong>Effective Date:</strong> <?php echo date('F j, Y'); ?></p>
+            <p><strong>Effective Date:</strong> March 22, 2026</p>
         <p>Bibliotheca Polascini provides information about books, publications, authorship, medicine, literature, and related external resources. This page explains both how privacy is handled on this website and the legal limitations that apply to the informational material published here.</p>
         
         <h2 class="font-cinzel text-xl font-bold text-slate-800 mt-8 mb-2">1. Introduction</h2>

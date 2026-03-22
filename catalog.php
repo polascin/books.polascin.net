@@ -1,3 +1,4 @@
+                 <article id="book-<?php echo (int)($book['id'] ?? ($index + 1)); ?>" class="book-item book-card paper-texture rounded-[1.5rem]
 <?php
 require_once __DIR__ . '/includes/functions.php';
 
@@ -45,7 +46,7 @@ foreach ($books as $index => $book) {
     $bookDescription = excerptText((string)($book['description'] ?? ''), 220);
 
     $bookEntity = [
-        '@type' => 'CreativeWork',
+        '@type' => 'Book',
         'name' => $bookTitle,
         'url' => $bookUrl,
         'author' => [
@@ -138,7 +139,7 @@ include __DIR__ . '/includes/header.php';
         <div class="catalog-toolbar-main">
             <div class="relative w-full md:flex-1">
                 <input type="text" id="search-books" aria-label="Search catalog by title or author" placeholder="Search by title or author" class="catalog-search-input w-full pl-11 pr-4 py-3 bg-white/90 border border-slate-300 rounded-2xl focus:outline-none focus:ring-2 focus:ring-slate-800 transition-shadow">
-                <svg class="w-5 h-5 text-slate-400 absolute left-4 top-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                <svg aria-hidden="true" class="w-5 h-5 text-slate-400 absolute left-4 top-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
             </div>
 
             <div class="w-full md:w-64">
@@ -160,7 +161,7 @@ include __DIR__ . '/includes/header.php';
 
     <?php if (empty($books)): ?>
         <div class="bg-white p-12 text-center rounded-lg shadow-sm border border-gray-200">
-            <svg class="w-16 h-16 text-gray-300 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
+            <svg aria-hidden="true" class="w-16 h-16 text-gray-300 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
             <h3 class="font-cinzel text-xl text-slate-700">No Books Found</h3>
             <p class="font-playfair text-slate-500 mt-2 italic">The catalog is currently empty. Please add books to the data source.</p>
         </div>
@@ -171,10 +172,10 @@ include __DIR__ . '/includes/header.php';
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8" id="book-grid">
-            <?php foreach ($books as $book): ?>
+            <?php foreach ($books as $index => $book): ?>
                 <?php
                     $bookUrls = [];
-                    foreach (['url', 'link', 'web_url'] as $urlKey) {
+                    foreach (['url', 'web_url'] as $urlKey) {
                         $candidateUrl = trim((string)($book[$urlKey] ?? ''));
                         if ($candidateUrl !== '' && !in_array($candidateUrl, $bookUrls, true)) {
                             $bookUrls[] = $candidateUrl;
@@ -207,10 +208,11 @@ include __DIR__ . '/includes/header.php';
                             <div class="h-64 overflow-hidden relative border-b border-slate-300/80">
                                 <?php if (!empty($bookUrl)): ?>
                                     <a href="<?php echo esc_html($bookUrl); ?>" target="_blank" rel="noopener noreferrer" aria-label="View <?php echo esc_html($book['title']); ?> online" class="block h-full">
-                                        <img src="<?php echo esc_html($coverImage); ?>" alt="Cover of <?php echo esc_html($book['title']); ?>" class="w-full h-full <?php echo $isGeneratedCover ? 'object-cover' : 'object-cover'; ?> transition-transform duration-700 hover:scale-105">
+                                                                            <a href="<?php echo safeUrl($bookUrl); ?>" target="_blank" rel="noopener noreferrer" aria-label="View <?php echo esc_html($book['title']); ?> online" class="block h-full">
+                                        <img src="<?php echo esc_html($coverImage); ?>" alt="Cover of <?php echo esc_html($book['title']); ?>" class="w-full h-full object-cover transition-transform duration-700 hover:scale-105">
                                     </a>
                                 <?php else: ?>
-                                    <img src="<?php echo esc_html($coverImage); ?>" alt="Cover of <?php echo esc_html($book['title']); ?>" class="w-full h-full <?php echo $isGeneratedCover ? 'object-cover' : 'object-cover'; ?> transition-transform duration-700 hover:scale-105">
+                                    <img src="<?php echo esc_html($coverImage); ?>" alt="Cover of <?php echo esc_html($book['title']); ?>" class="w-full h-full object-cover transition-transform duration-700 hover:scale-105">
                                 <?php endif; ?>
                                 <?php if (!$isGeneratedCover): ?>
                                     <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
@@ -264,7 +266,7 @@ include __DIR__ . '/includes/header.php';
                             <div class="mb-4">
                                 <h3 class="font-cinzel font-bold text-xl md:text-2xl text-slate-900 mb-2 leading-tight text-balance">
                                     <?php if (!empty($bookUrl)): ?>
-                                        <a href="<?php echo esc_html($bookUrl); ?>" target="_blank" rel="noopener noreferrer" class="hover:underline decoration-slate-600 underline-offset-4">
+                                        <a href="<?php echo safeUrl($bookUrl); ?>" target="_blank" rel="noopener noreferrer" class="hover:underline decoration-slate-600 underline-offset-4">
                                             <?php echo esc_html($book['title']); ?>
                                         </a>
                                     <?php else: ?>
@@ -287,9 +289,9 @@ include __DIR__ . '/includes/header.php';
 
                             <?php if (!empty($bookUrls)): ?>
                                 <div class="pt-5 flex flex-wrap gap-2">
-                                    <?php foreach ($bookUrls as $index => $linkUrl): ?>
-                                        <a href="<?php echo esc_html($linkUrl); ?>" target="_blank" rel="noopener noreferrer" class="catalog-link-button inline-block px-4 py-2 text-xs font-cinzel tracking-[0.18em] border border-slate-800 text-slate-800 hover:bg-slate-800 hover:text-white transition-colors duration-200 rounded-full">
-                                            <?php echo $index === 0 ? 'View Online' : 'Source ' . ($index + 1); ?>
+                                    <?php foreach ($bookUrls as $linkIndex => $linkUrl): ?>
+                                        <a href="<?php echo safeUrl($linkUrl); ?>" target="_blank" rel="noopener noreferrer" class="catalog-link-button inline-block px-4 py-2 text-xs font-cinzel tracking-[0.18em] border border-slate-800 text-slate-800 hover:bg-slate-800 hover:text-white transition-colors duration-200 rounded-full">
+                                            <?php echo $linkIndex === 0 ? 'View Online' : 'Source ' . ($linkIndex + 1); ?>
                                         </a>
                                     <?php endforeach; ?>
                                 </div>

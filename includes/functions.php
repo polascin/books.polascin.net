@@ -48,8 +48,7 @@ function getDbConnection() {
     try {
         return new PDO($dsn, $user, $pass, $options);
     } catch (\PDOException $e) {
-        // Return null or throw custom error on UI. 
-        // For production, avoid exposing $e->getMessage()
+        error_log('DB connection failed: ' . $e->getMessage());
         return null;
     }
 }
@@ -149,5 +148,21 @@ function getDefaultSeoImage() {
  */
 function esc_html($string) {
     return htmlspecialchars($string ?? '', ENT_QUOTES, 'UTF-8');
+
+/**
+ * Return a safe URL for use in href/src attributes.
+ * Rejects anything that is not a plain http(s) URL or relative path.
+ */
+function safeUrl(string $url): string {
+    $url = trim($url);
+    if ($url === '') {
+        return '#';
+    }
+    // Allow root-relative paths and plain https/http URLs only
+    if (str_starts_with($url, '/') || preg_match('#^https?://#i', $url)) {
+        return esc_html($url);
+    }
+    return '#';
+}
 }
 ?>

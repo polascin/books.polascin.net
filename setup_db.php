@@ -1,4 +1,10 @@
 <?php
+// Block direct web access — this script must only run from CLI.
+if (php_sapi_name() !== 'cli') {
+    http_response_code(403);
+    exit('Forbidden');
+}
+
 require_once __DIR__ . '/includes/functions.php';
 
 echo "Connecting to database...\n";
@@ -82,6 +88,7 @@ try {
         echo "Table 'books' already contains $count records. Skipping JSON seeding.\n";
     }
 } catch (\PDOException $e) {
-    die("Setup failed during execution: " . $e->getMessage() . "\n");
+    error_log('setup_db.php failed: ' . $e->getMessage());
+    die("Setup failed during execution. Check server error logs.\n");
 }
 ?>

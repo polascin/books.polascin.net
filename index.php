@@ -39,6 +39,7 @@ include __DIR__ . '/includes/header.php';
 ?>
 
 <!-- HERDER / EX LIBRIS SECTION -->
+<!-- HEADER / EX LIBRIS SECTION -->
 <section class="w-full flex flex-col items-center justify-center pt-8 pb-16">
     <div class="max-w-4xl px-4 text-center mb-10">
         <p class="font-cinzel text-xs tracking-[0.28em] text-slate-500 uppercase">Bibliography, Library, and Author Archive</p>
@@ -65,6 +66,7 @@ include __DIR__ . '/includes/header.php';
             
             <div class="text-center w-full">
                 <h1 class="font-cinzel text-3xl tracking-widest mt-1">EX LIBRIS</h1>
+                                <h2 class="font-cinzel text-3xl tracking-widest mt-1">EX LIBRIS</h2>
                 <div class="flex items-center justify-center gap-2 mt-2">
                     <div class="h-px bg-slate-800 w-12"></div>
                     <span class="font-cinzel text-xs tracking-widest text-slate-700">MCMLXXI</span>
@@ -146,6 +148,8 @@ include __DIR__ . '/includes/header.php';
             <div> 
                 <p class="font-cinzel text-[13px] font-bold tracking-widest text-slate-900 leading-tight">
                     TOLLE MANUS<br>AB ISTO LIBRO!
+                                <p class="font-cinzel text-[13px] font-bold tracking-widest text-slate-900 leading-tight" lang="la">
+                                    TOLLE MANUS<br>AB ISTO LIBRO!
                 </p>
             </div>
             <div class="h-px bg-slate-400 w-1/3 my-0.5"></div>
@@ -153,6 +157,8 @@ include __DIR__ . '/includes/header.php';
             <div>
                 <p class="font-greek text-[13px] tracking-widest text-slate-800 leading-tight">
                     ΜΗ ΑΠΤΟΥ<br>ΤΟΥ ΒΙΒΛΙΟΥ ΤΟΥΤΟΥ
+                                <p class="font-greek text-[13px] tracking-widest text-slate-800 leading-tight" lang="grc">
+                                    ΜΗ ΑΠΤΟΥ<br>ΤΟΥ ΒΙΒΛΙΟΥ ΤΟΥΤΟΥ
                 </p>
             </div>
             <div class="h-px bg-slate-400 w-1/4 my-0.5"></div>
@@ -160,6 +166,8 @@ include __DIR__ . '/includes/header.php';
             <div>
                 <p class="font-glagolitic text-[13px] tracking-widest text-slate-900 leading-none" title="Ne prikasaj sę sijej kъńigě">
                     ⰐⰅ ⰒⰓⰋⰍⰀⰔⰀⰊ ⰔⰤ<br>ⰔⰋⰊⰅⰊ ⰍⰟⰐⰋⰃⰡ
+                                <p class="font-glagolitic text-[13px] tracking-widest text-slate-900 leading-none" lang="cu" title="Ne prikasaj sę sijej kъńigě">
+                                    ⰐⰅ ⰒⰓⰋⰍⰀⰔⰀⰊ ⰔⰤ<br>ⰔⰋⰊⰅⰊ ⰍⰟⰐⰋⰃⰡ
                 </p>
             </div>
         </div>

@@ -18,7 +18,7 @@
     $pageType = $pageType ?? 'website';
     $pageStructuredData = $pageStructuredData ?? [];
 
-    if (!is_array($pageStructuredData) || array_keys($pageStructuredData) !== range(0, count($pageStructuredData) - 1)) {
+    if (!empty($pageStructuredData) && (!is_array($pageStructuredData) || array_keys($pageStructuredData) !== range(0, count($pageStructuredData) - 1))) {
         $pageStructuredData = [$pageStructuredData];
     }
     ?>
@@ -64,7 +64,7 @@
     </script>
     
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="/assets/css/style.css">
 
     <?php foreach ($pageStructuredData as $structuredData): ?>
         <?php if (!empty($structuredData)): ?>
