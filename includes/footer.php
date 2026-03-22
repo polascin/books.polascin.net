@@ -9,6 +9,8 @@
         <div class="flex flex-wrap justify-center gap-4 text-xs mt-4 mb-2">
             <a href="privacy.php" class="hover:text-white transition-colors">Privacy Policy</a>
             <span>&bull;</span>
+            <a href="privacy.php#legal-disclaimer" class="hover:text-white transition-colors">Disclaimer</a>
+            <span>&bull;</span>
             <span>&copy; 1971-<?php echo date('Y'); ?> MUDr. Ľubomír Polaščín. All rights reserved.</span>
         </div>
     </div>
