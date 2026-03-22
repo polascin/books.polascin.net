@@ -20,13 +20,13 @@ $EDITOR .env
 
 `.env` keys:
 
-| Key | Description |
-|---|---|
-| `DB_HOST` | Database hostname (usually `localhost`) |
-| `DB_PORT` | MySQL/MariaDB port (usually `3306`) |
-| `DB_NAME` | Database name |
-| `DB_USER` | Database user |
-| `DB_PASS` | Database password |
+| Key        | Description                                           |
+| ---------- | ----------------------------------------------------- |
+| `DB_HOST`  | Database hostname (usually `localhost`)               |
+| `DB_PORT`  | MySQL/MariaDB port (usually `3306`)                   |
+| `DB_NAME`  | Database name                                         |
+| `DB_USER`  | Database user                                         |
+| `DB_PASS`  | Database password                                     |
 | `SITE_URL` | Canonical base URL, e.g. `https://books.polascin.net` |
 
 ### 2. Install the Git hooks
@@ -51,13 +51,14 @@ php setup_db.php
 
 ### Environment variables
 
-- Credentials live **only** in `.env` (gitignored).  
-- `.env.example` contains safe placeholder values — commit changes there when new variables are added.  
+- Credentials live **only** in `.env` (gitignored).
+- `.env.example` contains safe placeholder values — commit changes there when new variables are added.
 - The application loads `.env` via `loadEnv()` in `includes/functions.php`; no third-party dotenv library is required.
 
 ### Secret-blocking Git hooks
 
 `hooks/pre-commit` blocks:
+
 - Files whose names match known secret patterns (`.env`, `*.pem`, `*.key`, `id_rsa`, …)
 - Staged content containing credential patterns (`DB_PASS=`, `API_KEY=`, AWS/GCP/GitHub/Stripe key patterns)
 
