@@ -1,12 +1,51 @@
 <?php
 require_once __DIR__ . '/includes/functions.php';
 
+$pageTitle = 'Books by Dr. Lubomir Polascin | Private Library and Author Catalog';
+$pageDescription = 'Explore the private library, catalog, and bibliography of Dr. Lubomir Polascin, featuring nephrology, medicine, fiction, essays, and books published as Walter Kyo Csoelle.';
+$pageCanonical = buildAbsoluteUrl('/');
+$pageType = 'website';
+$pageImage = getDefaultSeoImage();
+$pageStructuredData = [
+    [
+        '@context' => 'https://schema.org',
+        '@type' => 'WebSite',
+        'name' => 'Bibliotheca Polascini',
+        'url' => buildAbsoluteUrl('/'),
+        'description' => $pageDescription,
+        'publisher' => [
+            '@type' => 'Person',
+            'name' => 'Lubomir Polascin',
+            'alternateName' => 'Walter Kyo Csoelle',
+            'url' => buildAbsoluteUrl('about.php'),
+        ],
+    ],
+    [
+        '@context' => 'https://schema.org',
+        '@type' => 'CollectionPage',
+        'name' => 'Books by Dr. Lubomir Polascin',
+        'url' => buildAbsoluteUrl('/'),
+        'description' => $pageDescription,
+        'about' => [
+            '@type' => 'Person',
+            'name' => 'Lubomir Polascin',
+            'alternateName' => 'Walter Kyo Csoelle',
+        ],
+    ],
+];
+
 // Include common header
 include __DIR__ . '/includes/header.php';
 ?>
 
 <!-- HERDER / EX LIBRIS SECTION -->
 <section class="w-full flex flex-col items-center justify-center pt-8 pb-16">
+    <div class="max-w-4xl px-4 text-center mb-10">
+        <p class="font-cinzel text-xs tracking-[0.28em] text-slate-500 uppercase">Bibliography, Library, and Author Archive</p>
+        <h1 class="font-cinzel text-3xl md:text-5xl tracking-[0.14em] text-slate-900 mt-4">Books by Dr. Lubomir Polascin</h1>
+        <p class="font-playfair text-lg italic text-slate-600 mt-5 max-w-3xl mx-auto leading-relaxed">Bibliotheca Polascini is the central archive for books, chapters, academic publications, and literary work by Lubomir Polascin, including titles written under the pen name Walter Kyo Csoelle.</p>
+    </div>
+
     <!-- Ex Libris Card from Original source -->
     <div class="paper-texture w-80 shadow-2xl relative flex flex-col items-center border border-gray-300 pt-5 px-4 pb-5">
         
@@ -138,6 +177,10 @@ include __DIR__ . '/includes/header.php';
         <a href="about.php" class="inline-block px-6 py-2 font-cinzel tracking-widest text-sm text-slate-500 hover:text-slate-800 transition-all duration-300">
             De Auctore (About)
         </a>
+    </div>
+
+    <div class="mt-12 max-w-4xl px-4 text-center text-slate-600">
+        <p class="leading-relaxed">The catalog focuses on nephrology, internal medicine, medical humanities, interviews, essays, and fiction. Use the catalog page to browse all indexed records, descriptions, languages, categories, and direct source links.</p>
     </div>
 
 </section>

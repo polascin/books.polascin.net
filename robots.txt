@@ -1,0 +1,11 @@
+User-agent: *
+Allow: /
+
+Disallow: /setup_db.php
+Disallow: /includes/
+Disallow: /data/
+Disallow: /congress37.html
+Disallow: /congress38.html
+Disallow: /Ex Libris Dr Lubomiri Polascini.html
+
+Sitemap: https://books.polascin.net/sitemap.xml

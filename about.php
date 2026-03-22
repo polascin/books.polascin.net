@@ -1,6 +1,37 @@
 <?php
 require_once __DIR__ . '/includes/functions.php';
 
+$pageTitle = 'About Lubomir Polascin | Nephrologist, Writer, and Programmer';
+$pageDescription = 'Learn about Lubomir Polascin, a nephrologist, writer, translator, and programmer whose work spans medicine, nephrology, fiction, and digital projects.';
+$pageCanonical = buildAbsoluteUrl('about.php');
+$pageType = 'profile';
+$pageImage = getDefaultSeoImage();
+$pageStructuredData = [
+    '@context' => 'https://schema.org',
+    '@type' => 'Person',
+    'name' => 'Lubomir Polascin',
+    'alternateName' => 'Walter Kyo Csoelle',
+    'url' => buildAbsoluteUrl('about.php'),
+    'image' => getDefaultSeoImage(),
+    'jobTitle' => 'Nephrologist, Writer, Programmer',
+    'sameAs' => [
+        'https://polascin.net',
+        'https://polascin.com',
+        'https://www.amazon.com/stores/author/B07PN436VJ',
+        'https://www.amazon.com/stores/Walter-Kyo-Csoelle/author/B0G2TCCJZZ?ref=ap_rdr&shoppingPortalEnabled=true&ccs_id=e50f368a-c83e-4954-a78a-3e10129c8254',
+        'https://nephrosite.polascin.net/',
+    ],
+    'knowsAbout' => [
+        'Nephrology',
+        'Internal medicine',
+        'Dialysis',
+        'Medical writing',
+        'Literary fiction',
+        'Programming',
+    ],
+    'description' => $pageDescription,
+];
+
 // Include common header
 include __DIR__ . '/includes/header.php';
 ?>

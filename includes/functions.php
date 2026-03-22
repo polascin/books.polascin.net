@@ -85,6 +85,66 @@ function getBooks() {
 }
 
 /**
+ * Return the canonical site URL.
+ */
+function getSiteUrl() {
+    if (!isset($_ENV['SITE_URL'])) {
+        loadEnv(__DIR__ . '/../.env');
+    }
+
+    return rtrim($_ENV['SITE_URL'] ?? 'https://books.polascin.net', '/');
+}
+
+/**
+ * Build an absolute URL from a relative site path.
+ */
+function buildAbsoluteUrl($path = '/') {
+    if (is_string($path) && preg_match('#^https?://#i', $path)) {
+        return $path;
+    }
+
+    $normalizedPath = '/' . ltrim((string) $path, '/');
+
+    if ($normalizedPath === '/index.php') {
+        $normalizedPath = '/';
+    }
+
+    return getSiteUrl() . $normalizedPath;
+}
+
+/**
+ * Trim text to a search-friendly description length.
+ */
+function excerptText($text, $limit = 160) {
+    $text = trim(preg_replace('/\s+/u', ' ', strip_tags((string) $text)));
+
+    if ($text === '') {
+        return '';
+    }
+
+    if (function_exists('mb_strlen') && function_exists('mb_substr')) {
+        if (mb_strlen($text) <= $limit) {
+            return $text;
+        }
+
+        return rtrim(mb_substr($text, 0, $limit - 1)) . '…';
+    }
+
+    if (strlen($text) <= $limit) {
+        return $text;
+    }
+
+    return rtrim(substr($text, 0, $limit - 1)) . '…';
+}
+
+/**
+ * Return the default social preview image.
+ */
+function getDefaultSeoImage() {
+    return buildAbsoluteUrl('assets/images/author.png');
+}
+
+/**
  * Sanitize output for HTML
  */
 function esc_html($string) {

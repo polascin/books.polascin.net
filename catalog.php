@@ -25,6 +25,80 @@ sort($categoryList, SORT_NATURAL | SORT_FLAG_CASE);
 $languageCount = count($languages);
 $featuredCategory = $categoryList[0] ?? 'Curated Collection';
 
+$pageTitle = 'Catalog of Books and Publications | Bibliotheca Polascini';
+$pageDescription = 'Browse the complete catalog of books, chapters, interviews, academic articles, and literary works by Lubomir Polascin and Walter Kyo Csoelle.';
+$pageCanonical = buildAbsoluteUrl('catalog.php');
+$pageType = 'website';
+$pageImage = getDefaultSeoImage();
+
+$itemListElements = [];
+foreach ($books as $index => $book) {
+    $bookTitle = trim((string)($book['title'] ?? ''));
+
+    if ($bookTitle === '') {
+        continue;
+    }
+
+    $bookId = (int)($book['id'] ?? ($index + 1));
+    $bookUrl = buildAbsoluteUrl('catalog.php#book-' . $bookId);
+    $bookAuthor = trim((string)($book['author'] ?? 'Lubomir Polascin'));
+    $bookDescription = excerptText((string)($book['description'] ?? ''), 220);
+
+    $bookEntity = [
+        '@type' => 'CreativeWork',
+        'name' => $bookTitle,
+        'url' => $bookUrl,
+        'author' => [
+            '@type' => 'Person',
+            'name' => $bookAuthor,
+        ],
+    ];
+
+    if ($bookDescription !== '') {
+        $bookEntity['description'] = $bookDescription;
+    }
+
+    if (!empty($book['isbn'])) {
+        $bookEntity['isbn'] = (string)$book['isbn'];
+    }
+
+    if (!empty($book['language'])) {
+        $bookEntity['inLanguage'] = (string)$book['language'];
+    }
+
+    if (!empty($book['year'])) {
+        $bookEntity['datePublished'] = (string)$book['year'];
+    }
+
+    $itemListElements[] = [
+        '@type' => 'ListItem',
+        'position' => $index + 1,
+        'url' => $bookUrl,
+        'item' => $bookEntity,
+    ];
+}
+
+$pageStructuredData = [
+    [
+        '@context' => 'https://schema.org',
+        '@type' => 'CollectionPage',
+        'name' => 'Catalog of Books and Publications',
+        'url' => $pageCanonical,
+        'description' => $pageDescription,
+        'about' => [
+            '@type' => 'Person',
+            'name' => 'Lubomir Polascin',
+            'alternateName' => 'Walter Kyo Csoelle',
+            'url' => buildAbsoluteUrl('about.php'),
+        ],
+        'mainEntity' => [
+            '@type' => 'ItemList',
+            'numberOfItems' => count($itemListElements),
+            'itemListElement' => $itemListElements,
+        ],
+    ],
+];
+
 // Include common header
 include __DIR__ . '/includes/header.php';
 ?>
@@ -35,7 +109,7 @@ include __DIR__ . '/includes/header.php';
         <div class="catalog-hero-grid px-6 py-8 md:px-10 md:py-10">
             <div>
                 <div class="catalog-kicker">Private Library Archive</div>
-                <h2 class="font-cinzel text-3xl md:text-5xl font-bold tracking-[0.18em] text-slate-900">Catalogus Librorum</h2>
+                <h1 class="font-cinzel text-3xl md:text-5xl font-bold tracking-[0.18em] text-slate-900">Catalogus Librorum</h1>
                 <p class="catalog-intro font-playfair italic text-slate-700 mt-4">A living shelf of medicine, nephrology, interviews, academic contributions, and fiction shaped by clinical practice and literary work.</p>
                 <div class="catalog-chip-row mt-6">
                     <span class="catalog-chip"><?php echo count($books); ?> records</span>
@@ -122,7 +196,7 @@ include __DIR__ . '/includes/header.php';
                     $bookIsbn = trim((string)($book['isbn'] ?? ''));
                     $bookYear = trim((string)($book['year'] ?? ''));
                 ?>
-                <article class="book-item book-card bg-paper-texture rounded-[1.5rem] overflow-hidden flex flex-col transition-all duration-300 transform" 
+                 <article id="book-<?php echo (int)($book['id'] ?? 0); ?>" class="book-item book-card bg-paper-texture rounded-[1.5rem] overflow-hidden flex flex-col transition-all duration-300 transform" 
                      data-title="<?php echo esc_html($book['title']); ?>" 
                      data-author="<?php echo esc_html($book['author']); ?>"
                      data-category="<?php echo esc_html($book['category'] ?? ''); ?>">

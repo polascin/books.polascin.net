@@ -1,6 +1,13 @@
 <?php
 require_once __DIR__ . '/includes/functions.php';
 
+$pageTitle = 'Privacy Policy | Bibliotheca Polascini';
+$pageDescription = 'Read the privacy policy for Bibliotheca Polascini, including information on cookies, consent, and data protection.';
+$pageCanonical = buildAbsoluteUrl('privacy.php');
+$pageType = 'website';
+$pageImage = getDefaultSeoImage();
+$pageRobots = 'noindex, follow';
+
 // Include common header
 include __DIR__ . '/includes/header.php';
 ?>
