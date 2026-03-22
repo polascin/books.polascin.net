@@ -190,7 +190,20 @@ include __DIR__ . '/includes/header.php';
 
                     $bookUrl = $bookUrls[0] ?? '';
                     $coverImage = trim((string)($book['cover_image'] ?? ''));
-                    $isGeneratedCover = $coverImage !== '' && str_starts_with($coverImage, 'data:image/svg+xml');
+                    // Some legacy records contain truncated SVG data URIs; treat them as invalid.
+                    if ($coverImage !== '' && str_starts_with($coverImage, 'data:image/svg+xml')) {
+                        $decodedPreview = rawurldecode(substr($coverImage, 0, 4000));
+                        if (stripos($decodedPreview, '</svg>') === false) {
+                            $coverImage = '';
+                        }
+                    }
+
+                    // Always show a valid image on catalog cards.
+                    if ($coverImage === '') {
+                        $coverImage = '/assets/images/author.png';
+                    }
+
+                    $isGeneratedCover = str_starts_with($coverImage, 'data:image/svg+xml');
                     $bookCategory = trim((string)($book['category'] ?? ''));
                     $bookLanguage = trim((string)($book['language'] ?? ''));
                     $bookIsbn = trim((string)($book['isbn'] ?? ''));
