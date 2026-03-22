@@ -4,8 +4,5 @@ Allow: /
 Disallow: /setup_db.php
 Disallow: /includes/
 Disallow: /data/
-Disallow: /congress37.html
-Disallow: /congress38.html
-Disallow: /Ex%20Libris%20Dr%20Lubomiri%20Polascini.html
 
 Sitemap: https://books.polascin.net/sitemap.xml
