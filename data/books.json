@@ -1,7 +1,7 @@
 [
     {
         "id": 1,
-        "title": "The Vital Algorithm: A Medical Thriller (Second Edition)",
+        "title": "Vital Algorithm: A Novel of Code and Conscience (Kindle Edition)",
         "author": "Walter Kyo Csoelle",
         "year": 2024,
         "isbn": "B0GGJXHQDH",
@@ -14,7 +14,7 @@
     },
     {
         "id": 2,
-        "title": "The Vital Algorithm: A Medical Thriller (Second Edition)",
+        "title": "Vital Algorithm: A Novel of Code and Conscience (Paperback)",
         "author": "Walter Kyo Csoelle",
         "year": 2026,
         "isbn": "B0FFGG4K4D",
@@ -27,7 +27,7 @@
     },
     {
         "id": 3,
-        "title": "BLOOD EQUITY: Some Cures Are Deadlier Than Disease",
+        "title": "BLOOD EQUITY: Some Cures Are Deadlier Than Disease (Kindle Edition)",
         "author": "Walter Kyo Csoelle",
         "year": 2024,
         "isbn": "B0G3MLQ1PN",
@@ -40,7 +40,7 @@
     },
     {
         "id": 4,
-        "title": "Pulse Of The Body: A Novel of Medicine, Humanity, and the Edge of Life",
+        "title": "Pulse Of The Body: A Novel of Medicine, Humanity, and the Edge of Life (Hardcover)",
         "author": "Walter Kyo Csoelle",
         "year": 2025,
         "isbn": "B0DHQY58C8",
@@ -79,7 +79,7 @@
     },
     {
         "id": 7,
-        "title": "Elimination from the body: Kidney Replacement Book (eBook)",
+        "title": "Elimination from the Body: Kidney Replacement Book (Kindle Edition)",
         "author": "Lubomir Polascin",
         "year": 2019,
         "isbn": "B07PQ4RW5Z",
@@ -92,7 +92,7 @@
     },
     {
         "id": 8,
-        "title": "Elimination Get body Kidney Replacement (Print)",
+        "title": "Elimination from the Body: Kidney Replacement (Paperback)",
         "author": "Lubomir Polascin",
         "year": 2019,
         "isbn": "1090779291",
@@ -171,7 +171,7 @@
     {
         "id": 14,
         "title": "Nefrológ Polaščín: Na zlyhanie obličiek by pacient v dnešnej dobe nemal zomrieť",
-        "author": "Pravda.sk (Interview s Ľubomírom Polaščínom)",
+        "author": "Interview in Pravda.sk with Ľubomír Polaščín",
         "year": 2015,
         "isbn": "N/A",
         "description": "Major medical interview published in Pravda on February 9, 2015. Discusses Dr. Polaščín's medical journey, the intersection of medicine and engineering, and the state of modern dialysis.",
@@ -248,7 +248,7 @@
     },
     {
         "id": 20,
-        "title": "Lubomir Polascin on Gumroad",
+        "title": "Lubomir Polascin - Gumroad Storefront",
         "author": "Lubomir Polascin",
         "year": 2026,
         "isbn": "N/A",
