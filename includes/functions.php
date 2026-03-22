@@ -148,21 +148,29 @@ function getDefaultSeoImage() {
  */
 function esc_html($string) {
     return htmlspecialchars($string ?? '', ENT_QUOTES, 'UTF-8');
+}
 
 /**
- * Return a safe URL for use in href/src attributes.
- * Rejects anything that is not a plain http(s) URL or relative path.
+ * Sanitize URLs for href/src attributes.
  */
-function safeUrl(string $url): string {
-    $url = trim($url);
+function safeUrl($url) {
+    $url = trim((string)$url);
+
     if ($url === '') {
         return '#';
     }
-    // Allow root-relative paths and plain https/http URLs only
-    if (str_starts_with($url, '/') || preg_match('#^https?://#i', $url)) {
+
+    if (str_starts_with($url, '/')) {
         return esc_html($url);
     }
+
+    if (filter_var($url, FILTER_VALIDATE_URL)) {
+        $scheme = strtolower((string)parse_url($url, PHP_URL_SCHEME));
+        if ($scheme === 'http' || $scheme === 'https') {
+            return esc_html($url);
+        }
+    }
+
     return '#';
-}
 }
 ?>

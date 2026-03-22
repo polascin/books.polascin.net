@@ -1,4 +1,3 @@
-                 <article id="book-<?php echo (int)($book['id'] ?? ($index + 1)); ?>" class="book-item book-card paper-texture rounded-[1.5rem]
 <?php
 require_once __DIR__ . '/includes/functions.php';
 
@@ -197,7 +196,7 @@ include __DIR__ . '/includes/header.php';
                     $bookIsbn = trim((string)($book['isbn'] ?? ''));
                     $bookYear = trim((string)($book['year'] ?? ''));
                 ?>
-                 <article id="book-<?php echo (int)($book['id'] ?? 0); ?>" class="book-item book-card bg-paper-texture rounded-[1.5rem] overflow-hidden flex flex-col transition-all duration-300 transform" 
+                 <article id="book-<?php echo (int)($book['id'] ?? ($index + 1)); ?>" class="book-item book-card paper-texture rounded-[1.5rem] overflow-hidden flex flex-col transition-all duration-300 transform" 
                      data-title="<?php echo esc_html($book['title']); ?>" 
                      data-author="<?php echo esc_html($book['author']); ?>"
                      data-category="<?php echo esc_html($book['category'] ?? ''); ?>">
@@ -207,8 +206,7 @@ include __DIR__ . '/includes/header.php';
                         <?php if(!empty($coverImage)): ?>
                             <div class="h-64 overflow-hidden relative border-b border-slate-300/80">
                                 <?php if (!empty($bookUrl)): ?>
-                                    <a href="<?php echo esc_html($bookUrl); ?>" target="_blank" rel="noopener noreferrer" aria-label="View <?php echo esc_html($book['title']); ?> online" class="block h-full">
-                                                                            <a href="<?php echo safeUrl($bookUrl); ?>" target="_blank" rel="noopener noreferrer" aria-label="View <?php echo esc_html($book['title']); ?> online" class="block h-full">
+                                    <a href="<?php echo safeUrl($bookUrl); ?>" target="_blank" rel="noopener noreferrer" aria-label="View <?php echo esc_html($book['title']); ?> online" class="block h-full">
                                         <img src="<?php echo esc_html($coverImage); ?>" alt="Cover of <?php echo esc_html($book['title']); ?>" class="w-full h-full object-cover transition-transform duration-700 hover:scale-105">
                                     </a>
                                 <?php else: ?>

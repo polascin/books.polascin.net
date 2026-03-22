@@ -38,7 +38,6 @@ $pageStructuredData = [
 include __DIR__ . '/includes/header.php';
 ?>
 
-<!-- HERDER / EX LIBRIS SECTION -->
 <!-- HEADER / EX LIBRIS SECTION -->
 <section class="w-full flex flex-col items-center justify-center pt-8 pb-16">
     <div class="max-w-4xl px-4 text-center mb-10">
@@ -65,8 +64,7 @@ include __DIR__ . '/includes/header.php';
         <div class="relative z-10 flex flex-col items-center w-full text-slate-800 mt-1">
             
             <div class="text-center w-full">
-                <h1 class="font-cinzel text-3xl tracking-widest mt-1">EX LIBRIS</h1>
-                                <h2 class="font-cinzel text-3xl tracking-widest mt-1">EX LIBRIS</h2>
+                <h2 class="font-cinzel text-3xl tracking-widest mt-1">EX LIBRIS</h2>
                 <div class="flex items-center justify-center gap-2 mt-2">
                     <div class="h-px bg-slate-800 w-12"></div>
                     <span class="font-cinzel text-xs tracking-widest text-slate-700">MCMLXXI</span>
@@ -146,28 +144,22 @@ include __DIR__ . '/includes/header.php';
         <div class="relative z-10 text-center w-full flex flex-col items-center gap-3 px-2 mt-14 mb-0">
             <!-- LATINČINA -->
             <div> 
-                <p class="font-cinzel text-[13px] font-bold tracking-widest text-slate-900 leading-tight">
+                <p class="font-cinzel text-[13px] font-bold tracking-widest text-slate-900 leading-tight" lang="la">
                     TOLLE MANUS<br>AB ISTO LIBRO!
-                                <p class="font-cinzel text-[13px] font-bold tracking-widest text-slate-900 leading-tight" lang="la">
-                                    TOLLE MANUS<br>AB ISTO LIBRO!
                 </p>
             </div>
             <div class="h-px bg-slate-400 w-1/3 my-0.5"></div>
             <!-- STAROGRÉČTINA -->
             <div>
-                <p class="font-greek text-[13px] tracking-widest text-slate-800 leading-tight">
+                <p class="font-greek text-[13px] tracking-widest text-slate-800 leading-tight" lang="grc">
                     ΜΗ ΑΠΤΟΥ<br>ΤΟΥ ΒΙΒΛΙΟΥ ΤΟΥΤΟΥ
-                                <p class="font-greek text-[13px] tracking-widest text-slate-800 leading-tight" lang="grc">
-                                    ΜΗ ΑΠΤΟΥ<br>ΤΟΥ ΒΙΒΛΙΟΥ ΤΟΥΤΟΥ
                 </p>
             </div>
             <div class="h-px bg-slate-400 w-1/4 my-0.5"></div>
             <!-- STAROSLOVIENČINA (HLAHOLIKA) -->
             <div>
-                <p class="font-glagolitic text-[13px] tracking-widest text-slate-900 leading-none" title="Ne prikasaj sę sijej kъńigě">
+                <p class="font-glagolitic text-[13px] tracking-widest text-slate-900 leading-none" lang="cu" title="Ne prikasaj sę sijej kъńigě">
                     ⰐⰅ ⰒⰓⰋⰍⰀⰔⰀⰊ ⰔⰤ<br>ⰔⰋⰊⰅⰊ ⰍⰟⰐⰋⰃⰡ
-                                <p class="font-glagolitic text-[13px] tracking-widest text-slate-900 leading-none" lang="cu" title="Ne prikasaj sę sijej kъńigě">
-                                    ⰐⰅ ⰒⰓⰋⰍⰀⰔⰀⰊ ⰔⰤ<br>ⰔⰋⰊⰅⰊ ⰍⰟⰐⰋⰃⰡ
                 </p>
             </div>
         </div>
