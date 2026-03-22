@@ -22,20 +22,33 @@
   background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100' height='100' filter='url(%23noise)' opacity='0.08'/%3E%3C/svg%3E");
 }
 
+:root {
+  --card-ink: #1e293b;
+  --card-paper: #fffdf7;
+  --card-muted: #475569;
+  --card-accent: #b45309;
+  --card-accent-soft: rgba(180, 83, 9, 0.1);
+}
+
 /* UI Enhancements */
 .book-card {
   transition: all 0.3s ease;
-  border: 1px solid rgba(30, 41, 59, 0.1);
+  border: 1px solid rgba(51, 65, 85, 0.16);
 }
 
 .book-card-inner {
   position: relative;
   z-index: 10;
   transition: all 0.3s ease;
+  background: linear-gradient(
+    165deg,
+    rgba(255, 253, 247, 0.98),
+    rgba(244, 241, 234, 0.95)
+  );
 }
 
 .book-card:hover {
-  background-color: rgba(244, 241, 234, 1);
+  background-color: rgba(255, 251, 239, 1);
 }
 
 .catalog-shell {
@@ -210,6 +223,190 @@
     );
 }
 
+.catalog-card-header {
+  background:
+    linear-gradient(
+      140deg,
+      rgba(255, 251, 235, 0.95),
+      rgba(255, 247, 237, 0.92)
+    ),
+    linear-gradient(120deg, rgba(251, 191, 36, 0.18), transparent 62%);
+}
+
+.catalog-card-header {
+  position: relative;
+  overflow: hidden;
+}
+
+.catalog-card-header::after {
+  content: "";
+  position: absolute;
+  right: -2.8rem;
+  top: -2.8rem;
+  width: 8rem;
+  height: 8rem;
+  border-radius: 9999px;
+  background: radial-gradient(circle, rgba(251, 191, 36, 0.28), transparent 72%);
+  pointer-events: none;
+}
+
+.catalog-card-header::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #f59e0b, #fbbf24 48%, #f59e0b);
+}
+
+.catalog-card-kicker {
+  font-weight: 700;
+  letter-spacing: 0.24em;
+  color: #7c2d12;
+  text-shadow: none;
+}
+
+.catalog-card-content {
+  background:
+    linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.64),
+      rgba(244, 241, 234, 0.25)
+    ),
+    radial-gradient(
+      circle at top right,
+      var(--card-accent-soft),
+      transparent 48%
+    );
+}
+
+.catalog-title-block {
+  position: relative;
+}
+
+.catalog-title-block::before {
+  content: "";
+  position: absolute;
+  left: -0.75rem;
+  top: 0.3rem;
+  bottom: 0.25rem;
+  width: 3px;
+  border-radius: 9999px;
+  background: linear-gradient(180deg, var(--card-accent), rgba(15, 23, 42, 0));
+}
+
+.book-title-link {
+  text-decoration-thickness: 2px;
+  color: var(--card-ink);
+  transition:
+    color 0.2s ease,
+    text-shadow 0.2s ease;
+}
+
+.book-title-link:hover {
+  color: #7c2d12;
+  text-shadow: 0 1px 0 rgba(245, 158, 11, 0.15);
+}
+
+.book-author {
+  letter-spacing: 0.01em;
+  color: #334155;
+}
+
+.book-meta-pill {
+  background: rgba(255, 255, 255, 0.92);
+  border-color: rgba(180, 83, 9, 0.28);
+  color: #7c2d12;
+  font-size: 0.67rem;
+  letter-spacing: 0.14em;
+  padding: 0.5rem 0.82rem;
+  box-shadow: 0 8px 14px -12px rgba(124, 45, 18, 0.35);
+}
+
+.book-meta-strip {
+  border-top-color: rgba(100, 116, 139, 0.25);
+}
+
+.catalog-isbn {
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+  color: #334155;
+  font-weight: 600;
+}
+
+.book-lang-chip {
+  border: 1px solid rgba(180, 83, 9, 0.25);
+  background: rgba(255, 255, 255, 0.95);
+  color: #7c2d12;
+}
+
+.catalog-links {
+  gap: 0.55rem;
+}
+
+.catalog-link-button {
+  border-color: rgba(30, 41, 59, 0.45);
+  background: linear-gradient(135deg, #ffffff, #f8fafc);
+  color: #1e293b;
+  font-size: 0.68rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  border-radius: 9999px;
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.catalog-link-button:hover {
+  background: linear-gradient(135deg, #f59e0b, #d97706);
+  border-color: #d97706;
+  color: #fff7ed;
+  transform: translateY(-2px);
+  box-shadow: 0 14px 22px -12px rgba(217, 119, 6, 0.55);
+}
+
+.book-item:nth-child(3n + 1) .catalog-title-block::before {
+  background: linear-gradient(
+    180deg,
+    rgba(30, 64, 175, 0.75),
+    rgba(30, 64, 175, 0.08)
+  );
+}
+
+.book-item:nth-child(3n + 2) .catalog-title-block::before {
+  background: linear-gradient(
+    180deg,
+    rgba(180, 83, 9, 0.75),
+    rgba(180, 83, 9, 0.08)
+  );
+}
+
+.book-item:nth-child(3n + 3) .catalog-title-block::before {
+  background: linear-gradient(
+    180deg,
+    rgba(21, 128, 61, 0.75),
+    rgba(21, 128, 61, 0.08)
+  );
+}
+
+@media (max-width: 767px) {
+  .catalog-title-block::before {
+    left: -0.45rem;
+  }
+
+  .book-meta-pill {
+    letter-spacing: 0.13em;
+  }
+
+  .catalog-link-button {
+    letter-spacing: 0.16em;
+  }
+}
+
 .catalog-description {
   display: -webkit-box;
   -webkit-line-clamp: 6;
@@ -218,7 +415,7 @@
 }
 
 .catalog-link-button {
-  box-shadow: 0 6px 16px rgba(15, 23, 42, 0.08);
+  box-shadow: 0 10px 18px -12px rgba(15, 23, 42, 0.26);
 }
 
 .catalog-isbn {
@@ -235,18 +432,18 @@
   position: absolute;
   inset: 0;
   border-radius: 1.5rem;
-  background: linear-gradient(
-    180deg,
-    rgba(255, 255, 255, 0.2),
-    transparent 30%
-  );
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.35), transparent 33%),
+    linear-gradient(135deg, rgba(251, 191, 36, 0.06), transparent 45%);
   pointer-events: none;
   z-index: 0;
 }
 
 .book-card:hover {
   transform: translateY(-8px) scale(1.01);
-  box-shadow: 0 24px 40px -16px rgba(15, 23, 42, 0.24);
+  box-shadow:
+    0 26px 36px -20px rgba(15, 23, 42, 0.26),
+    0 0 0 1px rgba(180, 83, 9, 0.12);
 }
 
 @media (min-width: 768px) {

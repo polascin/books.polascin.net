@@ -189,21 +189,6 @@ include __DIR__ . '/includes/header.php';
                     }
 
                     $bookUrl = $bookUrls[0] ?? '';
-                    $coverImage = trim((string)($book['cover_image'] ?? ''));
-                    // Some legacy records contain truncated SVG data URIs; treat them as invalid.
-                    if ($coverImage !== '' && str_starts_with($coverImage, 'data:image/svg+xml')) {
-                        $decodedPreview = rawurldecode(substr($coverImage, 0, 4000));
-                        if (stripos($decodedPreview, '</svg>') === false) {
-                            $coverImage = '';
-                        }
-                    }
-
-                    // Always show a valid image on catalog cards.
-                    if ($coverImage === '') {
-                        $coverImage = '/assets/images/author.png';
-                    }
-
-                    $isGeneratedCover = str_starts_with($coverImage, 'data:image/svg+xml');
                     $bookCategory = trim((string)($book['category'] ?? ''));
                     $bookLanguage = trim((string)($book['language'] ?? ''));
                     $bookIsbn = trim((string)($book['isbn'] ?? ''));
@@ -215,53 +200,12 @@ include __DIR__ . '/includes/header.php';
                      data-category="<?php echo esc_html($book['category'] ?? ''); ?>">
                     
                     <div class="book-card-inner paper-texture h-full flex flex-col border border-transparent hover:border-slate-300 rounded-[1.5rem] overflow-hidden">
-                        
-                        <?php if(!empty($coverImage)): ?>
-                            <div class="h-64 overflow-hidden relative border-b border-slate-300/80">
-                                <?php if (!empty($bookUrl)): ?>
-                                    <a href="<?php echo safeUrl($bookUrl); ?>" target="_blank" rel="noopener noreferrer" aria-label="View <?php echo esc_html($book['title']); ?> online" class="block h-full">
-                                        <img src="<?php echo esc_html($coverImage); ?>" alt="Cover of <?php echo esc_html($book['title']); ?>" class="w-full h-full object-cover transition-transform duration-700 hover:scale-105">
-                                    </a>
-                                <?php else: ?>
-                                    <img src="<?php echo esc_html($coverImage); ?>" alt="Cover of <?php echo esc_html($book['title']); ?>" class="w-full h-full object-cover transition-transform duration-700 hover:scale-105">
-                                <?php endif; ?>
-                                <?php if (!$isGeneratedCover): ?>
-                                    <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
-                                <?php endif; ?>
-                                <div class="absolute bottom-4 left-4 right-4 flex items-center justify-between gap-3">
-                                     <?php if ($bookYear !== ''): ?>
-                                         <span class="inline-block bg-slate-800 text-paper text-xs px-3 py-1 rounded-full font-cinzel tracking-[0.18em] shadow">
-                                            <?php echo esc_html($bookYear); ?>
-                                         </span>
-                                     <?php endif; ?>
-                                     <?php if ($bookCategory !== ''): ?>
-                                         <span class="inline-block bg-white/90 text-slate-800 text-[11px] px-3 py-1 rounded-full font-semibold tracking-wide shadow-sm">
-                                            <?php echo esc_html($bookCategory); ?>
-                                         </span>
-                                     <?php endif; ?>
-                                </div>
-                            </div>
-                        <?php else: ?>
-                            <div class="catalog-cover-fallback h-64 flex flex-col justify-between p-6 border-b border-slate-300/80 relative overflow-hidden">
-                                <div class="absolute inset-0 opacity-10 bg-[url('data:image/svg+xml,%3Csvg width=\'20\' height=\'20\' viewBox=\'0 0 20 20\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'%23ffffff\' fill-opacity=\'1\' fill-rule=\'evenodd\'%3E%3Ccircle cx=\'3\' cy=\'3\' r=\'3\'/%3E%3Ccircle cx=\'13\' cy=\'13\' r=\'3\'/%3E%3C/g%3E%3C/svg%3E')]"></div>
-                                <div class="relative z-10 flex items-start justify-between gap-3">
-                                    <?php if ($bookCategory !== ''): ?>
-                                        <span class="inline-block bg-white/10 text-white text-[11px] px-3 py-1 rounded-full font-semibold tracking-wide border border-white/15">
-                                            <?php echo esc_html($bookCategory); ?>
-                                        </span>
-                                    <?php endif; ?>
-                                    <?php if ($bookYear !== ''): ?>
-                                        <span class="inline-block bg-white/10 text-white text-[11px] px-3 py-1 rounded-full font-cinzel tracking-[0.18em] border border-white/15">
-                                            <?php echo esc_html($bookYear); ?>
-                                        </span>
-                                    <?php endif; ?>
-                                </div>
-                                <h3 class="font-cinzel text-white text-center text-2xl z-10 opacity-90 leading-tight relative"><?php echo esc_html($book['title']); ?></h3>
-                                <div class="relative z-10 text-white/75 text-xs uppercase tracking-[0.25em] text-center">Bibliotheca Polascini</div>
-                            </div>
-                        <?php endif; ?>
+                        <div class="catalog-card-header border-b border-slate-300/80 px-6 py-5 md:px-7">
+                            <div class="catalog-card-kicker text-xs uppercase tracking-[0.2em] text-slate-500 mb-2">Bibliotheca Polascini</div>
+                            <p class="font-playfair italic text-slate-700 text-sm leading-relaxed">Curated record from medical, academic, and literary publications.</p>
+                        </div>
 
-                        <div class="p-6 md:p-7 flex-grow flex flex-col">
+                        <div class="catalog-card-content p-6 md:p-7 flex-grow flex flex-col">
                             <div class="book-meta-row mb-4">
                                 <?php if ($bookCategory !== ''): ?>
                                     <span class="book-meta-pill"><?php echo esc_html($bookCategory); ?></span>
@@ -274,32 +218,32 @@ include __DIR__ . '/includes/header.php';
                                 <?php endif; ?>
                             </div>
 
-                            <div class="mb-4">
+                            <div class="catalog-title-block mb-4">
                                 <h3 class="font-cinzel font-bold text-xl md:text-2xl text-slate-900 mb-2 leading-tight text-balance">
                                     <?php if (!empty($bookUrl)): ?>
-                                        <a href="<?php echo safeUrl($bookUrl); ?>" target="_blank" rel="noopener noreferrer" class="hover:underline decoration-slate-600 underline-offset-4">
+                                        <a href="<?php echo safeUrl($bookUrl); ?>" target="_blank" rel="noopener noreferrer" class="book-title-link hover:underline decoration-slate-600 underline-offset-4">
                                             <?php echo esc_html($book['title']); ?>
                                         </a>
                                     <?php else: ?>
                                         <?php echo esc_html($book['title']); ?>
                                     <?php endif; ?>
                                 </h3>
-                                <p class="font-playfair italic text-slate-600 text-base"><?php echo esc_html($book['author']); ?></p>
+                                <p class="book-author font-playfair italic text-slate-600 text-base"><?php echo esc_html($book['author']); ?></p>
                             </div>
                             
                             <p class="catalog-description text-slate-600 text-sm md:text-[15px] mb-6 flex-grow leading-relaxed">
                                 <?php echo esc_html($book['description']); ?>
                             </p>
                             
-                            <div class="mt-auto pt-4 border-t border-slate-300/60 flex flex-wrap gap-3 text-xs font-mono text-slate-500 items-center justify-between">
+                            <div class="book-meta-strip mt-auto pt-4 border-t border-slate-300/60 flex flex-wrap gap-3 text-xs font-mono text-slate-500 items-center justify-between">
                                 <span class="catalog-isbn">ISBN: <?php echo esc_html($bookIsbn !== '' ? $bookIsbn : 'N/A'); ?></span>
                                 <?php if(!empty($bookLanguage)): ?>
-                                    <span class="bg-slate-200/80 px-3 py-1 rounded-full text-slate-600 uppercase tracking-[0.16em] text-[10px] font-semibold"><?php echo esc_html($bookLanguage); ?></span>
+                                    <span class="book-lang-chip bg-slate-200/80 px-3 py-1 rounded-full text-slate-600 uppercase tracking-[0.16em] text-[10px] font-semibold"><?php echo esc_html($bookLanguage); ?></span>
                                 <?php endif; ?>
                             </div>
 
                             <?php if (!empty($bookUrls)): ?>
-                                <div class="pt-5 flex flex-wrap gap-2">
+                                <div class="catalog-links pt-5 flex flex-wrap gap-2">
                                     <?php foreach ($bookUrls as $linkIndex => $linkUrl): ?>
                                         <a href="<?php echo safeUrl($linkUrl); ?>" target="_blank" rel="noopener noreferrer" class="catalog-link-button inline-block px-4 py-2 text-xs font-cinzel tracking-[0.18em] border border-slate-800 text-slate-800 hover:bg-slate-800 hover:text-white transition-colors duration-200 rounded-full">
                                             <?php echo $linkIndex === 0 ? 'View Online' : 'Source ' . ($linkIndex + 1); ?>
