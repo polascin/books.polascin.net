@@ -1,0 +1,45 @@
+#!/usr/bin/env bash
+# pre-push: second line of defence against pushed secrets
+
+RED='\033[0;31m'
+NC='\033[0m'
+
+fail() {
+    echo -e "${RED}[BLOCKED]${NC} $1" >&2
+    exit 1
+}
+
+secret_patterns=(
+    'DB_PASS=[^$#]'
+    'DB_PASSWORD=[^$#]'
+    'API_KEY=[^$#]'
+    'API_SECRET=[^$#]'
+    'SECRET_KEY=[^$#]'
+    'AUTH_TOKEN=[^$#]'
+    'ACCESS_TOKEN=[^$#]'
+    'PRIVATE_KEY=[^$#]'
+    'BEGIN [A-Z]* PRIVATE KEY'
+    'AKIA[0-9A-Z]\{16\}'
+    'AIza[0-9A-Za-z_-]\{35\}'
+    'ghp_[A-Za-z0-9]\{36\}'
+    'github_pat_[A-Za-z0-9_]\{82\}'
+    'sk_live_[A-Za-z0-9]\{20,\}'
+)
+
+while read -r local_ref local_sha remote_ref remote_sha; do
+    [[ "$local_sha" == "0000000000000000000000000000000000000000" ]] && continue
+    if [[ "$remote_sha" == "0000000000000000000000000000000000000000" ]]; then
+        range="$local_sha"
+    else
+        range="${remote_sha}..${local_sha}"
+    fi
+    diff_output=$(git log -p "$range" 2>/dev/null | grep '^+' | grep -v '^+++')
+    for pattern in "${secret_patterns[@]}"; do
+        match=$(echo "$diff_output" | grep -m1 "$pattern" | head -c 200)
+        if [[ -n "$match" ]]; then
+            fail "Potential secret in commits being pushed:\n  $match\n  Use --no-verify only after confirming a false positive."
+        fi
+    done
+done
+
+exit 0

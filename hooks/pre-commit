@@ -1,0 +1,82 @@
+#!/usr/bin/env bash
+# pre-commit: block secrets from entering the repository
+
+RED='\033[0;31m'
+NC='\033[0m'
+
+fail() {
+    echo -e "${RED}[BLOCKED]${NC} $1" >&2
+    exit 1
+}
+
+blocked_files=(
+    '.env'
+    '.env.local'
+    '.env.production'
+    '.env.staging'
+    '*.pem'
+    '*.key'
+    '*.p12'
+    '*.pfx'
+    '*.jks'
+    '*.keystore'
+    'id_rsa'
+    'id_dsa'
+    'id_ecdsa'
+    'id_ed25519'
+    '*.secrets'
+    'secrets.json'
+    'secrets.yml'
+    'secrets.yaml'
+    'credentials.json'
+    'service-account*.json'
+)
+
+staged_files=$(git diff --cached --name-only)
+
+while IFS= read -r file; do
+    git diff --cached --diff-filter=D --name-only | grep -qF "$file" && continue
+    basename="$(basename "$file")"
+    for pattern in "${blocked_files[@]}"; do
+        if [[ "$basename" == $pattern ]]; then
+            fail "Refusing to commit secret file: $file\n  Remove it with:  git rm --cached \"$file\""
+        fi
+    done
+done <<< "$staged_files"
+
+secret_patterns=(
+    'DB_PASS=[^$#]'
+    'DB_PASSWORD=[^$#]'
+    'DB_USER=[^$#]'
+    'API_KEY=[^$#]'
+    'API_SECRET=[^$#]'
+    'SECRET_KEY=[^$#]'
+    'APP_SECRET=[^$#]'
+    'AUTH_TOKEN=[^$#]'
+    'ACCESS_TOKEN=[^$#]'
+    'PRIVATE_KEY=[^$#]'
+    'BEGIN [A-Z]* PRIVATE KEY'
+    'AKIA[0-9A-Z]\{16\}'
+    'AIza[0-9A-Za-z_-]\{35\}'
+    'ghp_[A-Za-z0-9]\{36\}'
+    'github_pat_[A-Za-z0-9_]\{82\}'
+    'sk_live_[A-Za-z0-9]\{20,\}'
+    'xox[baprs]-[0-9A-Za-z_-]\{10,\}'
+)
+
+while IFS= read -r file; do
+    git diff --cached --diff-filter=D --name-only | grep -qF "$file" && continue
+    ext="${file##*.}"
+    case "$ext" in
+        png|jpg|jpeg|gif|svg|ico|woff|woff2|ttf|eot|otf|pdf|zip|tar|gz|bin) continue ;;
+    esac
+    diff_content=$(git diff --cached -- "$file")
+    for pattern in "${secret_patterns[@]}"; do
+        match=$(echo "$diff_content" | grep -m1 "+.*${pattern}" | head -c 200)
+        if [[ -n "$match" ]]; then
+            fail "Potential secret detected in $file:\n  $match\n  Use git commit --no-verify only if this is a confirmed false positive."
+        fi
+    done
+done <<< "$staged_files"
+
+exit 0
