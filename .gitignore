@@ -19,8 +19,8 @@ Desktop.ini
 # PHP / Composer dependencies
 vendor/
 composer.phar
-*.env
-.env.*
+# *.env
+# .env.*
 !.env.example
 php_errors.log
 error_log

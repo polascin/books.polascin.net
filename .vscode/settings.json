@@ -1,5 +1,8 @@
 {
     "git.autofetch": true,
     "git.enableSmartCommit": true,
-    "git.postCommitCommand": "sync"
+    "git.postCommitCommand": "sync",
+    "fiveServer.php.executable": "C:\\laragon\\bin\\php\\php-8.3.30-Win32-vs16-x64\\php.exe",
+    "phpserver.phpPath": "C:\\laragon\\bin\\php\\php-8.3.30-Win32-vs16-x64\\php.exe",
+    "php.validate.executablePath": "C:\\laragon\\bin\\php\\php-8.3.30-Win32-vs16-x64\\php.exe"
 }
