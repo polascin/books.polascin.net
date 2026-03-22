@@ -219,5 +219,44 @@
         "web_url": "https://mediweb.hnonline.sk/zdn/odborne-prilohy",
         "language": "Slovak",
         "category": "Media Mention"
+    },
+    {
+        "id": 18,
+        "title": "Medical Fasting: How to Use the Power of Starvation and Not Damage Your Metabolism",
+        "author": "Lubomir Polascin",
+        "year": 2026,
+        "isbn": "N/A",
+        "description": "Digital product on Gumroad. Nephrologist's guide to safe reduction and autophagy (Nephro-Safe Protocol / Circadian Neera 2.0), focused on evidence-based fasting, kidney safety, electrolyte management, supplementation, circadian timing, and careful refeeding. 108 pages.",
+        "cover_image": null,
+        "url": "https://polascin.gumroad.com/l/veszhk",
+        "web_url": "https://polascin.gumroad.com",
+        "language": "English",
+        "category": "Digital Product"
+    },
+    {
+        "id": 19,
+        "title": "Medicínsky pôst. Ako využiť silu hladovania a nezničiť si metabolizmus.",
+        "author": "Lubomir Polascin",
+        "year": 2026,
+        "isbn": "N/A",
+        "description": "Digitálny produkt na Gumroad. Bezpečnostný manuál k hladovaniu od nefrológa so zameraním na mýty o detoxikácii, riziká nesprávne vedeného hladovania, Nephro-Safe protokol Neera 2.0, cirkadiánny model a bezpečný návrat k strave. 106 strán.",
+        "cover_image": null,
+        "url": "https://polascin.gumroad.com/l/hcilux",
+        "web_url": "https://polascin.gumroad.com",
+        "language": "Slovak",
+        "category": "Digital Product"
+    },
+    {
+        "id": 20,
+        "title": "Lubomir Polascin on Gumroad",
+        "author": "Lubomir Polascin",
+        "year": 2026,
+        "isbn": "N/A",
+        "description": "Official Gumroad storefront listing Lubomir Polascin's digital products, books, and downloadable materials.",
+        "cover_image": null,
+        "url": "https://polascin.gumroad.com",
+        "web_url": "https://polascin.gumroad.com/l/veszhk",
+        "language": "English",
+        "category": "Digital Storefront"
     }
 ]
