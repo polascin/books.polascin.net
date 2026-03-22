@@ -174,6 +174,9 @@ include __DIR__ . '/includes/header.php';
             <?php foreach ($books as $index => $book): ?>
                 <?php
                     $bookUrls = [];
+                    $titleUrl = ''; // URL specifically for the title link
+                    
+                    // Collect all valid URLs
                     foreach (['url', 'web_url'] as $urlKey) {
                         $candidateUrl = trim((string)($book[$urlKey] ?? ''));
                         if ($candidateUrl !== '' && !in_array($candidateUrl, $bookUrls, true)) {
@@ -181,14 +184,29 @@ include __DIR__ . '/includes/header.php';
                         }
                     }
 
-                    if (count($bookUrls) === 0) {
-                        $searchTerms = trim((string)(($book['title'] ?? '') . ' ' . ($book['author'] ?? '') . ' book'));
-                        if ($searchTerms !== '') {
-                            $bookUrls[] = 'https://www.google.com/search?q=' . rawurlencode($searchTerms);
+                    // Determine the best URL for the title link (prioritize non-Google Search URLs)
+                    if (!empty($bookUrls)) {
+                        foreach ($bookUrls as $url) {
+                            if (strpos($url, 'google.com/search') === false) {
+                                $titleUrl = $url;
+                                break; // Use the first non-Google URL
+                            }
+                        }
+                        // If all URLs are Google searches, use the first one
+                        if ($titleUrl === '') {
+                            $titleUrl = $bookUrls[0];
                         }
                     }
 
-                    $bookUrl = $bookUrls[0] ?? '';
+                    // Fall back to Google search if no direct URLs exist
+                    if ($titleUrl === '') {
+                        $searchTerms = trim((string)(($book['title'] ?? '') . ' ' . ($book['author'] ?? '') . ' book'));
+                        if ($searchTerms !== '') {
+                            $titleUrl = 'https://www.google.com/search?q=' . rawurlencode($searchTerms);
+                            $bookUrls[] = $titleUrl;
+                        }
+                    }
+
                     $bookCategory = trim((string)($book['category'] ?? ''));
                     $bookLanguage = trim((string)($book['language'] ?? ''));
                     $bookIsbn = trim((string)($book['isbn'] ?? ''));
@@ -220,8 +238,8 @@ include __DIR__ . '/includes/header.php';
 
                             <div class="catalog-title-block mb-4">
                                 <h3 class="font-cinzel font-bold text-xl md:text-2xl text-slate-900 mb-2 leading-tight text-balance">
-                                    <?php if (!empty($bookUrl)): ?>
-                                        <a href="<?php echo safeUrl($bookUrl); ?>" target="_blank" rel="noopener noreferrer" class="book-title-link hover:underline decoration-slate-600 underline-offset-4">
+                                    <?php if (!empty($titleUrl)): ?>
+                                        <a href="<?php echo safeUrl($titleUrl); ?>" target="_blank" rel="noopener noreferrer" class="book-title-link hover:underline decoration-slate-600 underline-offset-4">
                                             <?php echo esc_html($book['title']); ?>
                                         </a>
                                     <?php else: ?>
