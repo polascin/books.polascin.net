@@ -115,6 +115,8 @@ include __DIR__ . '/includes/header.php';
                     }
 
                     $bookUrl = $bookUrls[0] ?? '';
+                    $coverImage = trim((string)($book['cover_image'] ?? ''));
+                    $isGeneratedCover = $coverImage !== '' && str_starts_with($coverImage, 'data:image/svg+xml');
                     $bookCategory = trim((string)($book['category'] ?? ''));
                     $bookLanguage = trim((string)($book['language'] ?? ''));
                     $bookIsbn = trim((string)($book['isbn'] ?? ''));
@@ -127,16 +129,18 @@ include __DIR__ . '/includes/header.php';
                     
                     <div class="book-card-inner paper-texture h-full flex flex-col border border-transparent hover:border-slate-300 rounded-[1.5rem] overflow-hidden">
                         
-                        <?php if(!empty($book['cover_image'])): ?>
+                        <?php if(!empty($coverImage)): ?>
                             <div class="h-64 overflow-hidden relative border-b border-slate-300/80">
                                 <?php if (!empty($bookUrl)): ?>
                                     <a href="<?php echo esc_html($bookUrl); ?>" target="_blank" rel="noopener noreferrer" aria-label="View <?php echo esc_html($book['title']); ?> online" class="block h-full">
-                                        <img src="<?php echo esc_html($book['cover_image']); ?>" alt="Cover of <?php echo esc_html($book['title']); ?>" class="w-full h-full object-cover transition-transform duration-700 hover:scale-105">
+                                        <img src="<?php echo esc_html($coverImage); ?>" alt="Cover of <?php echo esc_html($book['title']); ?>" class="w-full h-full <?php echo $isGeneratedCover ? 'object-cover' : 'object-cover'; ?> transition-transform duration-700 hover:scale-105">
                                     </a>
                                 <?php else: ?>
-                                    <img src="<?php echo esc_html($book['cover_image']); ?>" alt="Cover of <?php echo esc_html($book['title']); ?>" class="w-full h-full object-cover transition-transform duration-700 hover:scale-105">
+                                    <img src="<?php echo esc_html($coverImage); ?>" alt="Cover of <?php echo esc_html($book['title']); ?>" class="w-full h-full <?php echo $isGeneratedCover ? 'object-cover' : 'object-cover'; ?> transition-transform duration-700 hover:scale-105">
                                 <?php endif; ?>
-                                <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                                <?php if (!$isGeneratedCover): ?>
+                                    <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                                <?php endif; ?>
                                 <div class="absolute bottom-4 left-4 right-4 flex items-center justify-between gap-3">
                                      <?php if ($bookYear !== ''): ?>
                                          <span class="inline-block bg-slate-800 text-paper text-xs px-3 py-1 rounded-full font-cinzel tracking-[0.18em] shadow">
