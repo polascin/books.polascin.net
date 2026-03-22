@@ -7,6 +7,7 @@
         "isbn": "978-80-12345-67-8",
         "description": "Komplexný pohľad na základy nefrológie.",
         "cover_image": "https://images.unsplash.com/photo-1589829085413-56de8ae18c73?auto=format&fit=crop&q=80&w=600&h=800",
+        "url": "https://www.amazon.com/s?k=Zaklady+nefrologie+Lubomir+Polascin",
         "language": "Slovak",
         "category": "Medicine"
     },
@@ -18,6 +19,7 @@
         "isbn": "978-80-98765-43-2",
         "description": "Príručka postupov pre každodennú klinickú prax.",
         "cover_image": "https://images.unsplash.com/photo-1576091160550-2173ff94031d?auto=format&fit=crop&q=80&w=600&h=800",
+        "url": "https://www.amazon.com/s?k=Klinicka+Prax+a+Postupy+Lubomir+Polascin",
         "language": "Slovak",
         "category": "Medicine"
     }

@@ -34,6 +34,7 @@ include __DIR__ . '/includes/header.php';
     <?php else: ?>
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8" id="book-grid">
             <?php foreach ($books as $book): ?>
+                <?php $bookUrl = trim((string)($book['url'] ?? $book['link'] ?? $book['web_url'] ?? '')); ?>
                 <div class="book-item book-card bg-paper-texture rounded-lg overflow-hidden flex flex-col transition-all duration-300 transform" 
                      data-title="<?php echo esc_html($book['title']); ?>" 
                      data-author="<?php echo esc_html($book['author']); ?>"
@@ -44,7 +45,13 @@ include __DIR__ . '/includes/header.php';
                         <!-- Book Cover placeholder -> we can use an image if provided, else a stylized div -->
                         <?php if(!empty($book['cover_image'])): ?>
                             <div class="h-64 overflow-hidden relative border-b border-gray-300">
-                                <img src="<?php echo esc_html($book['cover_image']); ?>" alt="Cover of <?php echo esc_html($book['title']); ?>" class="w-full h-full object-cover transition-transform duration-700 hover:scale-105">
+                                <?php if (!empty($bookUrl)): ?>
+                                    <a href="<?php echo esc_html($bookUrl); ?>" target="_blank" rel="noopener noreferrer" aria-label="View <?php echo esc_html($book['title']); ?> online" class="block h-full">
+                                        <img src="<?php echo esc_html($book['cover_image']); ?>" alt="Cover of <?php echo esc_html($book['title']); ?>" class="w-full h-full object-cover transition-transform duration-700 hover:scale-105">
+                                    </a>
+                                <?php else: ?>
+                                    <img src="<?php echo esc_html($book['cover_image']); ?>" alt="Cover of <?php echo esc_html($book['title']); ?>" class="w-full h-full object-cover transition-transform duration-700 hover:scale-105">
+                                <?php endif; ?>
                                 <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
                                 <div class="absolute bottom-4 left-4 right-4">
                                      <span class="inline-block bg-slate-800 text-paper text-xs px-2 py-1 rounded font-cinzel tracking-widest shadow">
@@ -62,7 +69,15 @@ include __DIR__ . '/includes/header.php';
                         <!-- Book Details -->
                         <div class="p-6 flex-grow flex flex-col">
                             <div class="mb-4">
-                                <h3 class="font-cinzel font-bold text-xl text-slate-800 mb-1 leading-tight"><?php echo esc_html($book['title']); ?></h3>
+                                <h3 class="font-cinzel font-bold text-xl text-slate-800 mb-1 leading-tight">
+                                    <?php if (!empty($bookUrl)): ?>
+                                        <a href="<?php echo esc_html($bookUrl); ?>" target="_blank" rel="noopener noreferrer" class="hover:underline decoration-slate-600 underline-offset-4">
+                                            <?php echo esc_html($book['title']); ?>
+                                        </a>
+                                    <?php else: ?>
+                                        <?php echo esc_html($book['title']); ?>
+                                    <?php endif; ?>
+                                </h3>
                                 <p class="font-playfair italic text-slate-600 text-sm"><?php echo esc_html($book['author']); ?></p>
                             </div>
                             
@@ -76,6 +91,14 @@ include __DIR__ . '/includes/header.php';
                                     <span class="bg-gray-200 px-2 py-1 rounded-sm text-slate-600 uppercase tracking-wide text-[10px]"><?php echo esc_html($book['language']); ?></span>
                                 <?php endif; ?>
                             </div>
+
+                            <?php if (!empty($bookUrl)): ?>
+                                <div class="pt-4">
+                                    <a href="<?php echo esc_html($bookUrl); ?>" target="_blank" rel="noopener noreferrer" class="inline-block px-4 py-2 text-xs font-cinzel tracking-widest border border-slate-800 text-slate-800 hover:bg-slate-800 hover:text-white transition-colors duration-200">
+                                        View Online
+                                    </a>
+                                </div>
+                            <?php endif; ?>
                         </div>
                     </div>
                 </div>
