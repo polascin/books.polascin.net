@@ -35,13 +35,22 @@ include __DIR__ . '/includes/header.php';
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8" id="book-grid">
             <?php foreach ($books as $book): ?>
                 <?php
-                    $bookUrl = trim((string)($book['url'] ?? $book['link'] ?? $book['web_url'] ?? ''));
-                    if ($bookUrl === '') {
-                        $searchTerms = trim((string)(($book['title'] ?? '') . ' ' . ($book['author'] ?? '') . ' book'));
-                        if ($searchTerms !== '') {
-                            $bookUrl = 'https://www.google.com/search?q=' . rawurlencode($searchTerms);
+                    $bookUrls = [];
+                    foreach (['url', 'link', 'web_url'] as $urlKey) {
+                        $candidateUrl = trim((string)($book[$urlKey] ?? ''));
+                        if ($candidateUrl !== '' && !in_array($candidateUrl, $bookUrls, true)) {
+                            $bookUrls[] = $candidateUrl;
                         }
                     }
+
+                    if (count($bookUrls) === 0) {
+                        $searchTerms = trim((string)(($book['title'] ?? '') . ' ' . ($book['author'] ?? '') . ' book'));
+                        if ($searchTerms !== '') {
+                            $bookUrls[] = 'https://www.google.com/search?q=' . rawurlencode($searchTerms);
+                        }
+                    }
+
+                    $bookUrl = $bookUrls[0] ?? '';
                 ?>
                 <div class="book-item book-card bg-paper-texture rounded-lg overflow-hidden flex flex-col transition-all duration-300 transform" 
                      data-title="<?php echo esc_html($book['title']); ?>" 
@@ -100,11 +109,13 @@ include __DIR__ . '/includes/header.php';
                                 <?php endif; ?>
                             </div>
 
-                            <?php if (!empty($bookUrl)): ?>
+                            <?php if (!empty($bookUrls)): ?>
                                 <div class="pt-4">
-                                    <a href="<?php echo esc_html($bookUrl); ?>" target="_blank" rel="noopener noreferrer" class="inline-block px-4 py-2 text-xs font-cinzel tracking-widest border border-slate-800 text-slate-800 hover:bg-slate-800 hover:text-white transition-colors duration-200">
-                                        View Online
-                                    </a>
+                                    <?php foreach ($bookUrls as $index => $linkUrl): ?>
+                                        <a href="<?php echo esc_html($linkUrl); ?>" target="_blank" rel="noopener noreferrer" class="inline-block mr-2 mb-2 px-4 py-2 text-xs font-cinzel tracking-widest border border-slate-800 text-slate-800 hover:bg-slate-800 hover:text-white transition-colors duration-200">
+                                            <?php echo $index === 0 ? 'View Online' : 'Source ' . ($index + 1); ?>
+                                        </a>
+                                    <?php endforeach; ?>
                                 </div>
                             <?php endif; ?>
                         </div>

@@ -20,6 +20,7 @@ try {
             description TEXT,
             cover_image VARCHAR(255),
             url VARCHAR(512),
+            web_url VARCHAR(512),
             language VARCHAR(50),
             category VARCHAR(100)
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -33,6 +34,12 @@ try {
         echo "Added missing 'url' column to 'books' table.\n";
     }
 
+    $webUrlColumnCheck = $pdo->query("SHOW COLUMNS FROM books LIKE 'web_url'");
+    if (!$webUrlColumnCheck->fetch()) {
+        $pdo->exec("ALTER TABLE books ADD COLUMN web_url VARCHAR(512) NULL AFTER url");
+        echo "Added missing 'web_url' column to 'books' table.\n";
+    }
+
     $stmt = $pdo->query("SELECT COUNT(*) FROM books");
     $count = $stmt->fetchColumn();
 
@@ -44,8 +51,8 @@ try {
             
             if ($books) {
                 $insert = $pdo->prepare("
-                    INSERT INTO books (title, author, year, isbn, description, cover_image, url, language, category)
-                    VALUES (:title, :author, :year, :isbn, :description, :cover_image, :url, :language, :category)
+                    INSERT INTO books (title, author, year, isbn, description, cover_image, url, web_url, language, category)
+                    VALUES (:title, :author, :year, :isbn, :description, :cover_image, :url, :web_url, :language, :category)
                 ");
                 
                 $insertedCount = 0;
@@ -58,6 +65,7 @@ try {
                         ':description' => $book['description'] ?? '',
                         ':cover_image' => $book['cover_image'] ?? '',
                         ':url' => $book['url'] ?? '',
+                        ':web_url' => $book['web_url'] ?? '',
                         ':language' => $book['language'] ?? '',
                         ':category' => $book['category'] ?? ''
                     ]);
