@@ -34,7 +34,15 @@ include __DIR__ . '/includes/header.php';
     <?php else: ?>
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8" id="book-grid">
             <?php foreach ($books as $book): ?>
-                <?php $bookUrl = trim((string)($book['url'] ?? $book['link'] ?? $book['web_url'] ?? '')); ?>
+                <?php
+                    $bookUrl = trim((string)($book['url'] ?? $book['link'] ?? $book['web_url'] ?? ''));
+                    if ($bookUrl === '') {
+                        $searchTerms = trim((string)(($book['title'] ?? '') . ' ' . ($book['author'] ?? '') . ' book'));
+                        if ($searchTerms !== '') {
+                            $bookUrl = 'https://www.google.com/search?q=' . rawurlencode($searchTerms);
+                        }
+                    }
+                ?>
                 <div class="book-item book-card bg-paper-texture rounded-lg overflow-hidden flex flex-col transition-all duration-300 transform" 
                      data-title="<?php echo esc_html($book['title']); ?>" 
                      data-author="<?php echo esc_html($book['author']); ?>"
