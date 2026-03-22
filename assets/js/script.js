@@ -40,4 +40,31 @@ document.addEventListener('DOMContentLoaded', () => {
     if (categorySelect) {
         categorySelect.addEventListener('change', filterBooks);
     }
+
+    // Cookie Consent Logic
+    const cookieBanner = document.getElementById('cookie-banner');
+    const acceptBtn = document.getElementById('accept-cookies');
+    const rejectBtn = document.getElementById('reject-cookies');
+
+    if (cookieBanner && acceptBtn && rejectBtn) {
+        if (!localStorage.getItem('cookieConsent')) {
+            // Slight delay to animate banner upwards
+            setTimeout(() => {
+                cookieBanner.classList.remove('translate-y-full');
+            }, 1000);
+        }
+
+        const setConsent = (status) => {
+            localStorage.setItem('cookieConsent', status);
+            cookieBanner.classList.add('translate-y-full');
+            // If strictly enforcing cookies, initialize scripts conditionally here based on 'status'
+            if (status === 'accepted') {
+                console.log("Consent granted via banner.");
+                // Initialize analytics trackers here if implemented
+            }
+        };
+
+        acceptBtn.addEventListener('click', () => setConsent('accepted'));
+        rejectBtn.addEventListener('click', () => setConsent('rejected'));
+    }
 });

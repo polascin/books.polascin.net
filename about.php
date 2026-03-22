@@ -18,7 +18,7 @@ include __DIR__ . '/includes/header.php';
             
             <div class="md:col-span-1 text-center md:text-left">
                 <div class="w-48 h-48 mx-auto md:mx-0 bg-slate-200 rounded-full border-4 border-slate-800 overflow-hidden mb-6 flex items-center justify-center">
-                    <svg class="w-24 h-24 text-slate-400" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"></path></svg>
+                    <img src="assets/images/author.jpg" alt="Dr. Lubomir Polascin" class="w-full h-full object-cover">
                 </div>
                 <h3 class="font-cinzel text-xl font-bold text-slate-800">Lubomir Polascin</h3>
                 <p class="font-playfair text-slate-600 italic mb-4">Nephrologist, Writer & Programmer</p>
@@ -40,8 +40,9 @@ include __DIR__ . '/includes/header.php';
                     <strong>Literary Works:</strong> I have authored multiple books available on Amazon, writing under both my real name and my pen name, <em>Walter Kyo Csoelle</em>. Notable works include the medical non-fiction "Blood Purification" (2019), and contemporary fiction exploring the edge of life, such as "Pulse Of The Body: A Novel of Medicine, Humanity, and the Edge of Life" and "Vital Algorithm".
                 </p>
                 <div class="pt-4 border-t border-gray-300/50 flex flex-wrap gap-4 justify-center md:justify-start">
-                    <a href="https://www.amazon.com/stores/author/B07PN436VJ" target="_blank" class="px-6 py-2 bg-slate-800 text-paper font-cinzel text-sm tracking-widest hover:bg-slate-700 transition shadow">Amazon Author Page</a>
-                    <a href="https://nephrosite.polascin.net/" target="_blank" class="px-6 py-2 border border-slate-800 text-slate-800 font-cinzel text-sm tracking-widest hover:bg-slate-100 transition shadow-sm">Nephrology Projects</a>
+                    <a href="https://www.amazon.com/stores/author/B07PN436VJ" target="_blank" class="px-6 py-2 bg-slate-800 text-paper font-cinzel text-sm tracking-widest hover:bg-slate-700 transition shadow text-center">Amazon Author Page</a>
+                    <a href="https://www.amazon.com/stores/Walter-Kyo-Csoelle/author/B0G2TCCJZZ?ref=ap_rdr&shoppingPortalEnabled=true&ccs_id=e50f368a-c83e-4954-a78a-3e10129c8254" target="_blank" class="px-6 py-2 bg-slate-800 text-paper font-cinzel text-sm tracking-widest hover:bg-slate-700 transition shadow text-center">Walter Kyo Csoelle Page</a>
+                    <a href="https://nephrosite.polascin.net/" target="_blank" class="px-6 py-2 border border-slate-800 text-slate-800 font-cinzel text-sm tracking-widest hover:bg-slate-100 transition shadow-sm text-center">Nephrology Projects</a>
                 </div>
             </div>
 

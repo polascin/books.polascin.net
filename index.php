@@ -35,7 +35,7 @@ include __DIR__ . '/includes/header.php';
 
             <!-- Highly Detailed Seal Symbol -->
             <div class="my-6 w-44 h-44 flex justify-center items-center">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 220" class="w-full h-full text-slate-800">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 220" class="w-full h-full text-slate-800" aria-hidden="true">
                     <!-- Circular Border -->
                     <circle cx="110" cy="110" r="105" fill="none" stroke="currentColor" stroke-width="1" stroke-dasharray="4,4"/>
                     <circle cx="110" cy="110" r="98" fill="none" stroke="currentColor" stroke-width="2"/>

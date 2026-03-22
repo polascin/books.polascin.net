@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="sk">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -34,7 +34,7 @@
     <header class="w-full bg-slate-900 text-paper py-4 shadow-md sticky top-0 z-50">
         <div class="container mx-auto px-4 flex justify-between items-center">
             <div class="text-xl font-cinzel tracking-widest">Bibliotheca Polascini</div>
-            <nav>
+            <nav aria-label="Main Navigation">
                 <ul class="flex space-x-6">
                     <li><a href="index.php" class="hover:text-gray-300 transition-colors font-playfair italic">Home</a></li>
                     <li><a href="catalog.php" class="hover:text-gray-300 transition-colors font-playfair italic">Catalog</a></li>
