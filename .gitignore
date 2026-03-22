@@ -1,0 +1,48 @@
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+Desktop.ini
+
+# IDEs and Editors
+.idea/
+*.swp
+*.swo
+*~
+*.bak
+*.tmp
+
+# PHP / Composer dependencies
+vendor/
+composer.phar
+*.env
+.env.*
+!.env.example
+php_errors.log
+error_log
+
+# Node.js / Frontend JS / CSS dependencies and logs
+node_modules/
+npm-debug.log
+yarn-error.log
+yarn.lock
+package-lock.json
+
+# Cache, temp, and compiled files
+*.cache
+.sass-cache/
+.eslintcache
+*.css.map
+*.js.map
+
+# Build / Output directories if you compile assets
+dist/
+build/
+
+# General Logs
+logs/
+*.log
