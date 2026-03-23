@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="faviconTitle faviconDesc">
+  <title id="faviconTitle">Bibliotheca Polascini favicon</title>
+  <desc id="faviconDesc">An open book with BP initials on a dark slate background.</desc>
+  <defs>
+    <linearGradient id="bg" x1="8" y1="6" x2="56" y2="58" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#1e293b"/>
+      <stop offset="1" stop-color="#0f172a"/>
+    </linearGradient>
+    <linearGradient id="cover" x1="20" y1="18" x2="44" y2="46" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#f8fafc"/>
+      <stop offset="1" stop-color="#e2e8f0"/>
+    </linearGradient>
+  </defs>
+
+  <rect x="4" y="4" width="56" height="56" rx="12" fill="url(#bg)"/>
+  <rect x="17" y="16" width="30" height="33" rx="4" fill="url(#cover)"/>
+  <path d="M32 16v33" stroke="#94a3b8" stroke-width="1.4"/>
+  <path d="M20 22h10M20 27h10M20 32h8M34 22h10M34 27h10M34 32h8" stroke="#cbd5e1" stroke-width="1.2" stroke-linecap="round"/>
+  <text x="32" y="45" text-anchor="middle" font-size="10" font-family="Georgia, serif" fill="#b45309" font-weight="700" letter-spacing="1">BP</text>
+</svg>
