@@ -46,3 +46,12 @@ build/
 # General Logs
 logs/
 *.log
+
+# Claude Code — celý adresár je lokálny
+.claude/
+
+# Citlivé súbory
+*.pem
+*.key
+*.p12
+*.pfx
