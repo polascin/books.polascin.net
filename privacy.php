@@ -16,8 +16,8 @@ include __DIR__ . '/includes/header.php';
     <h1 class="font-cinzel text-3xl font-bold text-slate-800 mb-6 border-b border-gray-300 pb-4">Privacy Policy</h1>
     
     <div class="space-y-6 text-slate-700 leading-relaxed text-justify font-sans">
-        <p><strong>Effective Date:</strong> March 22, 2026</p>
-        <p>Bibliotheca Polascini provides information about books, publications, authorship, medicine, literature, and related external resources. This page explains both how privacy is handled on this website and the legal limitations that apply to the informational material published here.</p>
+        <p><strong>Effective Date:</strong> March 22, 2026 &middot; <strong>Last Updated:</strong> August 25, 2026</p>
+        <p>Bibliotheca Polascini provides information about books, publications, authorship, medicine, literature, and related external resources. This page explains both how privacy is handled on this website and the legal limitations that apply to the informational material published here. The use of this website is further governed by our <a href="terms.php" class="text-blue-600 hover:text-blue-800 underline focus:ring-2 focus:ring-slate-800 focus:outline-none">Terms of Use</a>.</p>
         
         <h2 class="font-cinzel text-xl font-bold text-slate-800 mt-8 mb-2">1. Introduction</h2>
         <p>Welcome to Bibliotheca Polascini. We respect your privacy and are committed to protecting your personal data in accordance with the General Data Protection Regulation (GDPR) and applicable data protection laws. This policy explains how we collect, use, and safeguard your information when you visit our website.</p>
@@ -25,10 +25,16 @@ include __DIR__ . '/includes/header.php';
         <h2 class="font-cinzel text-xl font-bold text-slate-800 mt-8 mb-2">2. Information We Collect</h2>
         <p>We collect basic technical information to ensure the website functions securely and continuously. When you interact with our cookie consent banner, we store your preference locally in your browser's local storage to prevent prompting you repeatedly. We do not collect personally identifiable information unless you explicitly volunteer it by contacting us.</p>
 
-        <h2 class="font-cinzel text-xl font-bold text-slate-800 mt-8 mb-2">3. How We Use Cookies</h2>
-        <p>Cookies and similar technologies (like browser local storage) help us understand how you use our site and maintain your preferences. Our website utilizes strictly necessary data storage for consent features. Analytics or other non-essential tracking mechanisms are only deployed if you explicitly choose "Accept All" on our consent banner.</p>
+        <h2 class="font-cinzel text-xl font-bold text-slate-800 mt-8 mb-2">3. Cookies and Browser Storage</h2>
+        <p>This website does not set any analytics, advertising, or tracking cookies. The only item stored in your browser is a single local storage entry that remembers the choice you made on our cookie consent banner, so that you are not prompted repeatedly. If optional analytics are introduced in the future, they will be loaded only after you explicitly choose "Accept" on the consent banner.</p>
 
-        <h2 class="font-cinzel text-xl font-bold text-slate-800 mt-8 mb-2">4. Your Rights under GDPR</h2>
+        <h2 class="font-cinzel text-xl font-bold text-slate-800 mt-8 mb-2">4. Hosting</h2>
+        <p>This website is hosted by Websupport, s.r.o., a hosting provider established in Slovakia, with servers located in the European Union. Like virtually all hosting providers, Websupport keeps standard server and access logs (such as IP addresses, timestamps, and requested pages) for security and operational purposes. These logs are maintained by the hosting provider as part of the ordinary operation of its infrastructure.</p>
+
+        <h2 class="font-cinzel text-xl font-bold text-slate-800 mt-8 mb-2">5. Data Retention</h2>
+        <p>Your consent preference is stored solely in your own browser's local storage and remains there until you clear your browser data. No personal data is stored on the server side beyond the standard hosting logs described above.</p>
+
+        <h2 class="font-cinzel text-xl font-bold text-slate-800 mt-8 mb-2">6. Your Rights under GDPR</h2>
         <p>As a user located in the European Union or accessing European infrastructure, you possess several core privacy rights under the GDPR:</p>
         <ul class="list-disc list-inside pl-4 space-y-2 mt-2">
             <li>The right to be informed about how your data is used.</li>
@@ -36,12 +42,13 @@ include __DIR__ . '/includes/header.php';
             <li>The right to rectification of any inaccurate or incomplete data.</li>
             <li>The right to erasure ("right to be forgotten").</li>
             <li>The right to restrict processing of your personal data.</li>
+            <li>The right to lodge a complaint with the supervisory authority, the Úrad na ochranu osobných údajov Slovenskej republiky (<a href="https://dataprotection.gov.sk/" class="text-blue-600 hover:text-blue-800 underline focus:ring-2 focus:ring-slate-800 focus:outline-none">dataprotection.gov.sk</a>).</li>
         </ul>
 
-        <h2 class="font-cinzel text-xl font-bold text-slate-800 mt-8 mb-2">5. Contact Information</h2>
+        <h2 class="font-cinzel text-xl font-bold text-slate-800 mt-8 mb-2">7. Contact Information</h2>
         <p>If you have any questions, concerns, or requests regarding this Privacy Policy or your personal data, please reach out via email at: <a href="mailto:lubomir@polascin.net" class="text-blue-600 hover:text-blue-800 underline focus:ring-2 focus:ring-slate-800 focus:outline-none">lubomir@polascin.net</a>.</p>
 
-        <h2 id="legal-disclaimer" class="font-cinzel text-xl font-bold text-slate-800 mt-10 mb-2">6. Legal Disclaimer</h2>
+        <h2 id="legal-disclaimer" class="font-cinzel text-xl font-bold text-slate-800 mt-10 mb-2">8. Legal Disclaimer</h2>
         <p><strong>Important note:</strong> The information provided on this website, including within the catalog, descriptive texts, linked resources, and any related publications referenced here, is intended for general informational and educational purposes only. It must not be construed as medical, legal, financial, or any other professional advice.</p>
 
         <h3 class="font-cinzel text-lg font-bold text-slate-800 mt-6 mb-2">Health and Medical Information</h3>

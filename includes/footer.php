@@ -9,10 +9,14 @@
         <div class="flex flex-wrap justify-center gap-4 text-xs mt-4 mb-2">
             <a href="privacy.php" class="hover:text-white transition-colors">Privacy Policy</a>
             <span>&bull;</span>
+            <a href="terms.php" class="hover:text-white transition-colors">Terms of Use</a>
+            <span>&bull;</span>
             <a href="privacy.php#legal-disclaimer" class="hover:text-white transition-colors">Disclaimer</a>
             <span>&bull;</span>
             <span>&copy; 1971-<?php echo date('Y'); ?> MUDr. Ľubomír Polaščín. All rights reserved.</span>
         </div>
+        <p class="text-xs mt-2">Site operator: MUDr. Ľubomír Polaščín &middot; <a href="mailto:lubomir@polascin.net"
+                class="hover:text-white transition-colors underline">lubomir@polascin.net</a></p>
     </div>
 </footer>
 
@@ -22,17 +26,18 @@
     aria-live="polite" aria-label="Cookie consent banner" role="dialog">
     <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
         <div class="text-sm text-slate-300">
-            <p>We use cookies to enhance your browsing experience, serve personalized content, and analyze our traffic.
-                By clicking "Accept All", you consent to our use of cookies. Read our <a href="privacy.php"
+            <p>This website uses only essential browser storage to remember your cookie preference. No analytics,
+                advertising or tracking cookies are set. If optional analytics are introduced in the future, they will
+                load only after you choose Accept. Read our <a href="privacy.php"
                     class="text-white underline hover:text-gray-300">Privacy Policy</a>.</p>
         </div>
         <div class="flex gap-3 flex-shrink-0">
             <button id="reject-cookies"
-                class="px-4 py-2 border border-slate-600 rounded text-slate-300 hover:bg-slate-800 transition-colors text-sm font-cinzel tracking-wider"
-                aria-label="Reject all non-essential cookies">Reject All</button>
+                class="px-4 py-2 bg-slate-700 text-white rounded hover:bg-slate-600 transition-colors text-sm font-cinzel tracking-wider font-semibold"
+                aria-label="Reject optional cookies">Reject</button>
             <button id="accept-cookies"
-                class="px-4 py-2 bg-paper text-slate-900 rounded hover:bg-white transition-colors text-sm font-cinzel tracking-wider font-bold"
-                aria-label="Accept all cookies">Accept All</button>
+                class="px-4 py-2 bg-paper text-slate-900 rounded hover:bg-white transition-colors text-sm font-cinzel tracking-wider font-semibold"
+                aria-label="Accept optional cookies">Accept</button>
         </div>
     </div>
 </div>
