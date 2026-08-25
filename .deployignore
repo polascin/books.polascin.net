@@ -1,0 +1,19 @@
+# Rsync exclude patterns pre GitHub Actions deploy (.github/workflows/deploy.yml).
+.git
+.gitattributes
+.github
+.gitignore
+.deployignore
+DEPLOY.md
+README.md
+phpstan.neon.dist
+phpstan-baseline.neon
+hooks
+tools
+.vscode
+.claude
+.trunk
+*.ps1
+# Jednorazový inštalačný skript databázy nepatrí do verejného web rootu;
+# existujúca serverová kópia (ak je) zostáva nedotknutá.
+setup_db.php
