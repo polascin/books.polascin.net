@@ -49,27 +49,13 @@
     <meta name="twitter:image" content="<?php echo esc_html($pageImage); ?>">
     <meta name="twitter:url" content="<?php echo esc_html($pageCanonical); ?>">
     
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Noto+Sans+Glagolitic&display=swap" rel="stylesheet">
-    
-    <!-- Tailwind CSS (CDN) -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        'paper': '#f4f1ea',
-                        'ink': '#1e293b'
-                    }
-                }
-            }
-        }
-    </script>
-    
-    <!-- Custom CSS -->
+    <!-- Styles: self-hosted fonts and a locally built Tailwind bundle.
+         No third-party CDN is contacted, so no visitor IP is disclosed to
+         Google Fonts or cdn.tailwindcss.com. Order matters: Tailwind's
+         preflight/utilities first, then fonts, then our own overrides.
+         Rebuild with: npm run build:css  (fonts: npm run fonts) -->
+    <link rel="stylesheet" href="/assets/css/tailwind.css">
+    <link rel="stylesheet" href="/assets/css/fonts.css">
     <link rel="stylesheet" href="/assets/css/style.css">
 
     <?php foreach ($pageStructuredData as $structuredData): ?>

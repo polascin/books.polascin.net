@@ -39,6 +39,22 @@ jobs:
           done < <(git ls-files -z -- '*.php')
           echo "All tracked PHP files passed php -l."
 
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Verify committed Tailwind build is current
+        run: |
+          set -euo pipefail
+          npm install --no-audit --no-fund
+          npm run build:css
+          if ! git diff --quiet -- assets/css/tailwind.css; then
+            echo "::error::assets/css/tailwind.css is stale - run 'npm run build:css' and commit the result."
+            exit 1
+          fi
+          echo "Tailwind bundle matches the committed sources."
+
       - name: Validate JavaScript syntax
         run: |
           set -euo pipefail

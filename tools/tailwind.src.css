@@ -1,0 +1,4 @@
+/* Build input for assets/css/tailwind.css — see package.json "build:css". */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;

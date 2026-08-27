@@ -23,19 +23,59 @@ function loadEnv($path) {
 }
 
 /**
+ * Loads .env at most once per request.
+ */
+function loadEnvOnce() {
+    static $loaded = false;
+    if (!$loaded) {
+        $loaded = true;
+        loadEnv(__DIR__ . '/../.env');
+    }
+}
+
+/**
+ * Reads a configuration value from .env, falling back to $default.
+ */
+function envValue($key, $default = '') {
+    loadEnvOnce();
+    return $_ENV[$key] ?? $default;
+}
+
+/**
+ * Decides whether PHP errors are rendered to the visitor.
+ *
+ * Displayed errors leak absolute server paths and stack traces, so display is
+ * off unless APP_DEBUG is explicitly enabled in .env. Errors are always
+ * written to the server log regardless.
+ */
+function configureErrorReporting() {
+    $debug = filter_var(envValue('APP_DEBUG', 'false'), FILTER_VALIDATE_BOOLEAN);
+    ini_set('display_errors', $debug ? '1' : '0');
+    ini_set('display_startup_errors', $debug ? '1' : '0');
+    ini_set('log_errors', '1');
+    error_reporting(E_ALL);
+}
+
+configureErrorReporting();
+
+/**
  * Get PDO Database Connection
  */
 function getDbConnection() {
-    // Load .env if not loaded
-    if (!isset($_ENV['DB_HOST'])) {
-        loadEnv(__DIR__ . '/../.env');
+    // One attempt per request: when the host is down, retrying would multiply
+    // the connect timeout for every caller.
+    static $pdo = null;
+    static $attempted = false;
+    if ($attempted) {
+        return $pdo;
     }
-    
-    $host = $_ENV['DB_HOST'] ?? 'localhost';
-    $port = $_ENV['DB_PORT'] ?? '3306';
-    $db   = $_ENV['DB_NAME'] ?? '';
-    $user = $_ENV['DB_USER'] ?? '';
-    $pass = $_ENV['DB_PASS'] ?? '';
+    $attempted = true;
+
+    $host    = envValue('DB_HOST', 'localhost');
+    $port    = envValue('DB_PORT', '3306');
+    $db      = envValue('DB_NAME');
+    $user    = envValue('DB_USER');
+    $pass    = envValue('DB_PASS');
     $charset = 'utf8mb4';
 
     $dsn = "mysql:host=$host;port=$port;dbname=$db;charset=$charset";
@@ -43,14 +83,21 @@ function getDbConnection() {
         PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
         PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
         PDO::ATTR_EMULATE_PREPARES   => false,
+        // Fail fast when the database host is unreachable. Without this the
+        // driver blocks until PHP's max_execution_time kills the request, so
+        // the JSON fallback in getBooks() never runs and the page dies with a
+        // fatal error instead of degrading gracefully.
+        PDO::ATTR_TIMEOUT            => 3,
     ];
 
     try {
-        return new PDO($dsn, $user, $pass, $options);
-    } catch (\PDOException $e) {
+        $pdo = new PDO($dsn, $user, $pass, $options);
+    } catch (\Throwable $e) {
         error_log('DB connection failed: ' . $e->getMessage());
-        return null;
+        $pdo = null;
     }
+
+    return $pdo;
 }
 
 /**

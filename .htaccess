@@ -33,6 +33,20 @@ ServerSignature Off
     Require all denied
 </FilesMatch>
 
+# Build konfigurácia a Node závislosti — nepatria do webu (deploy ich vylučuje,
+# toto je poistka pre prípad ručného nahratia).
+<FilesMatch "^(package(-lock)?\.json|tailwind\.config\.js)$">
+    Require all denied
+</FilesMatch>
+
+# PHP chyby sa návštevníkovi nikdy nezobrazujú — stack trace odhaľuje absolútne
+# cesty na serveri. Logujú sa na server. Poistka ku configureErrorReporting()
+# v includes/functions.php pre prípad, že .env na serveri chýba.
+<IfModule mod_php.c>
+    php_flag display_errors Off
+    php_flag log_errors On
+</IfModule>
+
 # Blokovanie setup a private súborov
 <Files "setup_db.php">
     Require all denied
@@ -40,6 +54,6 @@ ServerSignature Off
 
 <IfModule mod_rewrite.c>
     RewriteEngine On
-    RewriteRule ^(\.git|\.claude|\.vscode|\.agents|\.github)(/.*)?$ - [F,L]
+    RewriteRule ^(\.git|\.claude|\.vscode|\.agents|\.github|node_modules)(/.*)?$ - [F,L]
     RewriteRule ^sitemap\.xml$ sitemap.xml [L]
 </IfModule>

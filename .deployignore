@@ -17,3 +17,9 @@ tools
 # Jednorazový inštalačný skript databázy nepatrí do verejného web rootu;
 # existujúca serverová kópia (ak je) zostáva nedotknutá.
 setup_db.php
+# Node build tooling — build výstupy (assets/css/tailwind.css, assets/fonts/)
+# sú commitnuté a nasadzujú sa; zdroje a závislosti nie.
+node_modules
+package.json
+package-lock.json
+tailwind.config.js
