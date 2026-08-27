@@ -8,7 +8,10 @@
 
     $defaultTitle = 'Books by Dr. Lubomir Polascin | Bibliotheca Polascini';
     $defaultDescription = 'Discover books, chapters, academic publications, and literary works by Dr. Lubomir Polascin, including titles published as Walter Kyo Csoelle.';
-    $currentScript = basename($_SERVER['PHP_SELF'] ?? 'index.php');
+    // SCRIPT_NAME, not PHP_SELF: with PATH_INFO enabled, a request for
+    // /index.php/anything makes PHP_SELF carry the visitor's own string, which
+    // would end up inside <link rel="canonical"> and og:url.
+    $currentScript = basename($_SERVER['SCRIPT_NAME'] ?? 'index.php');
 
     $pageTitle = $pageTitle ?? $defaultTitle;
     $pageDescription = $pageDescription ?? $defaultDescription;
@@ -54,18 +57,22 @@
          Google Fonts or cdn.tailwindcss.com. Order matters: Tailwind's
          preflight/utilities first, then fonts, then our own overrides.
          Rebuild with: npm run build:css  (fonts: npm run fonts) -->
-    <link rel="stylesheet" href="/assets/css/tailwind.css">
-    <link rel="stylesheet" href="/assets/css/fonts.css">
-    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="<?php echo assetUrl('assets/css/tailwind.css'); ?>">
+    <link rel="stylesheet" href="<?php echo assetUrl('assets/css/fonts.css'); ?>">
+    <link rel="stylesheet" href="<?php echo assetUrl('assets/css/style.css'); ?>">
 
     <?php foreach ($pageStructuredData as $structuredData): ?>
         <?php if (!empty($structuredData)): ?>
-            <script type="application/ld+json"><?php echo json_encode($structuredData, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT); ?></script>
+            <?php // JSON_HEX_TAG escapes < and >, so a book title containing
+                  // "</script>" cannot close this element and inject markup. ?>
+            <script type="application/ld+json"><?php echo json_encode($structuredData, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_HEX_TAG | JSON_PRETTY_PRINT); ?></script>
         <?php endif; ?>
     <?php endforeach; ?>
 </head>
 <body class="bg-gray-200 min-h-screen text-slate-800 antialiased flex flex-col font-sans">
-    
+
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
     <!-- Main Header Area - Could contain navigation if needed later -->
     <header class="w-full bg-slate-900 text-paper py-4 shadow-md sticky top-0 z-50">
         <div class="container mx-auto px-4 flex justify-between items-center">
@@ -80,4 +87,4 @@
         </div>
     </header>
 
-    <main class="flex-grow flex flex-col items-center pt-10 pb-20 w-full relative">
+    <main id="main-content" tabindex="-1" class="flex-grow flex flex-col items-center pt-10 pb-20 w-full relative">

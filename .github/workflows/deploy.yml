@@ -47,7 +47,7 @@ jobs:
       - name: Verify committed Tailwind build is current
         run: |
           set -euo pipefail
-          npm install --no-audit --no-fund
+          npm ci --no-audit --no-fund
           npm run build:css
           if ! git diff --quiet -- assets/css/tailwind.css; then
             echo "::error::assets/css/tailwind.css is stale - run 'npm run build:css' and commit the result."

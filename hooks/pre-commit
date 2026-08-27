@@ -45,16 +45,16 @@ while IFS= read -r file; do
 done <<< "$staged_files"
 
 secret_patterns=(
-    'DB_PASS=[^$#]'
-    'DB_PASSWORD=[^$#]'
-    'DB_USER=[^$#]'
-    'API_KEY=[^$#]'
-    'API_SECRET=[^$#]'
-    'SECRET_KEY=[^$#]'
-    'APP_SECRET=[^$#]'
-    'AUTH_TOKEN=[^$#]'
-    'ACCESS_TOKEN=[^$#]'
-    'PRIVATE_KEY=[^$#]'
+    'DB_PASS=[^$#[:space:]]'
+    'DB_PASSWORD=[^$#[:space:]]'
+    'DB_USER=[^$#[:space:]]'
+    'API_KEY=[^$#[:space:]]'
+    'API_SECRET=[^$#[:space:]]'
+    'SECRET_KEY=[^$#[:space:]]'
+    'APP_SECRET=[^$#[:space:]]'
+    'AUTH_TOKEN=[^$#[:space:]]'
+    'ACCESS_TOKEN=[^$#[:space:]]'
+    'PRIVATE_KEY=[^$#[:space:]]'
     'BEGIN [A-Z]* PRIVATE KEY'
     'AKIA[0-9A-Z]\{16\}'
     'AIza[0-9A-Za-z_-]\{35\}'
@@ -66,6 +66,17 @@ secret_patterns=(
 
 while IFS= read -r file; do
     git diff --cached --diff-filter=D --name-only | grep -qF "$file" && continue
+    # Two exemptions, both for files that hold pattern strings rather than
+    # credentials:
+    #   .env.example - placeholders by design, and README tells contributors
+    #                  to commit changes to it whenever a variable is added
+    #   the hooks    - they contain this very pattern list, the same reason
+    #                  YAML workflow files are skipped below
+    # The blocked-filename list above still refuses real .env files, keys and
+    # certificates regardless of these exemptions.
+    case "$file" in
+        .env.example|hooks/pre-commit|hooks/pre-push) continue ;;
+    esac
     ext="${file##*.}"
     case "$ext" in
         # Skip binary / asset files and YAML workflow files (which may reference

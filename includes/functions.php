@@ -1,4 +1,5 @@
 <?php
+
 // functions.php - Helper functions and database connection for the application
 
 /**
@@ -8,14 +9,20 @@ function loadEnv($path) {
     if (!file_exists($path)) {
         return false;
     }
-    
+
     $lines = file($path, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
     foreach ($lines as $line) {
         if (strpos(trim($line), '#') === 0) continue;
         if (strpos($line, '=') !== false) {
             list($name, $value) = explode('=', $line, 2);
-            // Remove potential quotes from the value
-            $value = trim($value, "\"'");
+            // Trim surrounding whitespace first: a trailing space or a stray
+            // CR from a CRLF file would otherwise become part of the password.
+            $value = trim($value);
+            // Remove one matching pair of quotes, not any quote character —
+            // a password that legitimately ends in " must survive intact.
+            if (strlen($value) >= 2 && $value[0] === $value[strlen($value) - 1] && ($value[0] === '"' || $value[0] === "'")) {
+                $value = substr($value, 1, -1);
+            }
             $_ENV[trim($name)] = $value;
         }
     }
@@ -108,7 +115,7 @@ function getDbConnection() {
  */
 function getBooks() {
     $pdo = getDbConnection();
-    
+
     if ($pdo) {
         try {
             $stmt = $pdo->query('SELECT * FROM books ORDER BY id ASC');
@@ -117,7 +124,7 @@ function getBooks() {
             // Table might not exist yet, fallback to JSON
         }
     }
-    
+
     // Fallback to JSON file if db query fails
     $filepath = __DIR__ . '/../data/books.json';
     if (!file_exists($filepath)) {
@@ -126,7 +133,7 @@ function getBooks() {
 
     $jsonData = file_get_contents($filepath);
     $data = json_decode($jsonData, true);
-    
+
     return $data ? $data : [];
 }
 
@@ -134,11 +141,7 @@ function getBooks() {
  * Return the canonical site URL.
  */
 function getSiteUrl() {
-    if (!isset($_ENV['SITE_URL'])) {
-        loadEnv(__DIR__ . '/../.env');
-    }
-
-    return rtrim($_ENV['SITE_URL'] ?? 'https://books.polascin.net', '/');
+    return rtrim(envValue('SITE_URL', 'https://books.polascin.net'), '/');
 }
 
 /**
@@ -191,6 +194,24 @@ function getDefaultSeoImage() {
 }
 
 /**
+ * Version a static asset URL with the file's modification time.
+ *
+ * Lets the server hand out long-lived cache headers for /assets/ while a
+ * rebuilt stylesheet or script still reaches returning visitors immediately.
+ */
+function assetUrl($path) {
+    $normalizedPath = '/' . ltrim((string) $path, '/');
+    $filesystemPath = __DIR__ . '/..' . $normalizedPath;
+    $modifiedAt = @filemtime($filesystemPath);
+
+    if ($modifiedAt === false) {
+        return esc_html($normalizedPath);
+    }
+
+    return esc_html($normalizedPath . '?v=' . $modifiedAt);
+}
+
+/**
  * Sanitize output for HTML
  */
 function esc_html($string) {
@@ -207,7 +228,9 @@ function safeUrl($url) {
         return '#';
     }
 
-    if (str_starts_with($url, '/')) {
+    // A site-relative path, but never a protocol-relative one: "//evil.test"
+    // also starts with a slash and would silently become an external link.
+    if (str_starts_with($url, '/') && !str_starts_with($url, '//')) {
         return esc_html($url);
     }
 
@@ -220,4 +243,3 @@ function safeUrl($url) {
 
     return '#';
 }
-?>

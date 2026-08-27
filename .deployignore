@@ -6,8 +6,15 @@
 .deployignore
 DEPLOY.md
 README.md
+# Interné auditné dokumenty — na server nepatria (.htaccess ich blokuje ako
+# poistku, deploy ich rovno nenahrá).
+.audit.md
+.doaudit.md
+.agents
 phpstan.neon.dist
 phpstan-baseline.neon
+.prettierrc
+.php-cs-fixer.dist.php
 hooks
 tools
 .vscode

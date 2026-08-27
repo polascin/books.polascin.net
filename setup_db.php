@@ -1,4 +1,5 @@
 <?php
+
 // Block direct web access — this script must only run from CLI.
 if (php_sapi_name() !== 'cli') {
     http_response_code(403);
@@ -21,7 +22,7 @@ try {
             id INT AUTO_INCREMENT PRIMARY KEY,
             title VARCHAR(255) NOT NULL,
             author VARCHAR(255) NOT NULL,
-            year INT(4),
+            year INT,
             isbn VARCHAR(20),
             description TEXT,
             cover_image VARCHAR(255),
@@ -54,26 +55,26 @@ try {
         if (file_exists($jsonPath)) {
             $json = file_get_contents($jsonPath);
             $books = json_decode($json, true);
-            
+
             if ($books) {
                 $insert = $pdo->prepare("
                     INSERT INTO books (title, author, year, isbn, description, cover_image, url, web_url, language, category)
                     VALUES (:title, :author, :year, :isbn, :description, :cover_image, :url, :web_url, :language, :category)
                 ");
-                
+
                 $insertedCount = 0;
                 foreach ($books as $book) {
                     $insert->execute([
                         ':title' => $book['title'] ?? '',
                         ':author' => $book['author'] ?? '',
-                        ':year' => $book['year'] ?? null,
+                        ':year' => ($book['year'] ?? '') === '' ? null : (int)$book['year'],
                         ':isbn' => $book['isbn'] ?? '',
                         ':description' => $book['description'] ?? '',
                         ':cover_image' => $book['cover_image'] ?? '',
                         ':url' => $book['url'] ?? '',
                         ':web_url' => $book['web_url'] ?? '',
                         ':language' => $book['language'] ?? '',
-                        ':category' => $book['category'] ?? ''
+                        ':category' => $book['category'] ?? '',
                     ]);
                     $insertedCount++;
                 }
@@ -91,4 +92,3 @@ try {
     error_log('setup_db.php failed: ' . $e->getMessage());
     die("Setup failed during execution. Check server error logs.\n");
 }
-?>

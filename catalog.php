@@ -32,6 +32,7 @@ $pageType = 'website';
 $pageImage = getDefaultSeoImage();
 
 $itemListElements = [];
+$listPosition = 0;
 foreach ($books as $index => $book) {
     $bookTitle = trim((string)($book['title'] ?? ''));
 
@@ -70,9 +71,12 @@ foreach ($books as $index => $book) {
         $bookEntity['datePublished'] = (string)$book['year'];
     }
 
+    // Counted separately from $index: entries without a title are skipped
+    // above, and schema.org expects positions without gaps.
+    $listPosition++;
     $itemListElements[] = [
         '@type' => 'ListItem',
-        'position' => $index + 1,
+        'position' => $listPosition,
         'url' => $bookUrl,
         'item' => $bookEntity,
     ];
@@ -153,7 +157,7 @@ include __DIR__ . '/includes/header.php';
         </div>
 
         <div class="catalog-toolbar-meta mt-4 flex flex-col gap-2 md:flex-row md:items-center md:justify-between">
-            <p class="catalog-summary text-sm text-slate-600"><span id="results-count"><?php echo count($books); ?></span> items currently visible.</p>
+            <p class="catalog-summary text-sm text-slate-600" role="status"><span id="results-count"><?php echo count($books); ?></span> items currently visible.</p>
             <p class="catalog-summary text-sm text-slate-500">Use the filters to narrow the archive by title, author, or subject area.</p>
         </div>
     </div>
@@ -175,7 +179,7 @@ include __DIR__ . '/includes/header.php';
                 <?php
                     $bookUrls = [];
                     $titleUrl = ''; // URL specifically for the title link
-                    
+
                     // Collect all valid URLs
                     foreach (['url', 'web_url'] as $urlKey) {
                         $candidateUrl = trim((string)($book[$urlKey] ?? ''));
@@ -211,11 +215,16 @@ include __DIR__ . '/includes/header.php';
                     $bookLanguage = trim((string)($book['language'] ?? ''));
                     $bookIsbn = trim((string)($book['isbn'] ?? ''));
                     $bookYear = trim((string)($book['year'] ?? ''));
+                    // The JSON fallback source is hand-maintained, so a record
+                    // may be missing any of these keys.
+                    $bookTitleText = (string)($book['title'] ?? '');
+                    $bookAuthorText = (string)($book['author'] ?? '');
+                    $bookDescriptionText = (string)($book['description'] ?? '');
                 ?>
                  <article id="book-<?php echo (int)($book['id'] ?? ($index + 1)); ?>" class="book-item book-card paper-texture rounded-[1.5rem] overflow-hidden flex flex-col transition-all duration-300 transform" 
-                     data-title="<?php echo esc_html($book['title']); ?>" 
-                     data-author="<?php echo esc_html($book['author']); ?>"
-                     data-category="<?php echo esc_html($book['category'] ?? ''); ?>">
+                     data-title="<?php echo esc_html($bookTitleText); ?>" 
+                     data-author="<?php echo esc_html($bookAuthorText); ?>"
+                     data-category="<?php echo esc_html($bookCategory); ?>">
                     
                     <div class="book-card-inner paper-texture h-full flex flex-col border border-transparent hover:border-slate-300 rounded-[1.5rem] overflow-hidden">
                         <div class="catalog-card-header border-b border-slate-300/80 px-6 py-5 md:px-7">
@@ -239,18 +248,18 @@ include __DIR__ . '/includes/header.php';
                             <div class="catalog-title-block mb-4">
                                 <h3 class="font-cinzel font-bold text-xl md:text-2xl text-slate-900 mb-2 leading-tight text-balance">
                                     <?php if (!empty($titleUrl)): ?>
-                                        <a href="<?php echo safeUrl($titleUrl); ?>" target="_blank" rel="noopener noreferrer" class="book-title-link hover:underline decoration-slate-600 underline-offset-4">
-                                            <?php echo esc_html($book['title']); ?>
+                                        <a href="<?php echo safeUrl($titleUrl); ?>" target="_blank" rel="noopener noreferrer" class="book-title-link hover:underline decoration-slate-600 underline-offset-4" aria-label="<?php echo esc_html($bookTitleText); ?> (opens in a new tab)">
+                                            <?php echo esc_html($bookTitleText); ?>
                                         </a>
                                     <?php else: ?>
-                                        <?php echo esc_html($book['title']); ?>
+                                        <?php echo esc_html($bookTitleText); ?>
                                     <?php endif; ?>
                                 </h3>
-                                <p class="book-author font-playfair italic text-slate-600 text-base"><?php echo esc_html($book['author']); ?></p>
+                                <p class="book-author font-playfair italic text-slate-600 text-base"><?php echo esc_html($bookAuthorText); ?></p>
                             </div>
                             
                             <p class="catalog-description text-slate-600 text-sm md:text-[15px] mb-6 flex-grow leading-relaxed">
-                                <?php echo esc_html($book['description']); ?>
+                                <?php echo esc_html($bookDescriptionText); ?>
                             </p>
                             
                             <div class="book-meta-strip mt-auto pt-4 border-t border-slate-300/60 flex flex-wrap gap-3 text-xs font-mono text-slate-500 items-center justify-between">
@@ -263,8 +272,11 @@ include __DIR__ . '/includes/header.php';
                             <?php if (!empty($bookUrls)): ?>
                                 <div class="catalog-links pt-5 flex flex-wrap gap-2">
                                     <?php foreach ($bookUrls as $linkIndex => $linkUrl): ?>
-                                        <a href="<?php echo safeUrl($linkUrl); ?>" target="_blank" rel="noopener noreferrer" class="catalog-link-button inline-block px-4 py-2 text-xs font-cinzel tracking-[0.18em] border border-slate-800 text-slate-800 hover:bg-slate-800 hover:text-white transition-colors duration-200 rounded-full">
-                                            <?php echo $linkIndex === 0 ? 'View Online' : 'Source ' . ($linkIndex + 1); ?>
+                                        <?php $linkLabel = $linkIndex === 0 ? 'View Online' : 'Source ' . ($linkIndex + 1); ?>
+                                        <?php // Every card repeats "View Online"; the aria-label keeps the
+                                              // links distinguishable in a screen reader's link list. ?>
+                                        <a href="<?php echo safeUrl($linkUrl); ?>" target="_blank" rel="noopener noreferrer" class="catalog-link-button inline-block px-4 py-2 text-xs font-cinzel tracking-[0.18em] border border-slate-800 text-slate-800 hover:bg-slate-800 hover:text-white transition-colors duration-200 rounded-full" aria-label="<?php echo esc_html($linkLabel . ': ' . ($bookTitleText !== '' ? $bookTitleText : 'catalog entry')); ?> (opens in a new tab)">
+                                            <?php echo $linkLabel; ?>
                                         </a>
                                     <?php endforeach; ?>
                                 </div>

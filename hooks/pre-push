@@ -10,20 +10,23 @@ fail() {
 }
 
 secret_patterns=(
-    'DB_PASS=[^$#]'
-    'DB_PASSWORD=[^$#]'
-    'API_KEY=[^$#]'
-    'API_SECRET=[^$#]'
-    'SECRET_KEY=[^$#]'
-    'AUTH_TOKEN=[^$#]'
-    'ACCESS_TOKEN=[^$#]'
-    'PRIVATE_KEY=[^$#]'
+    'DB_PASS=[^$#[:space:]]'
+    'DB_PASSWORD=[^$#[:space:]]'
+    'DB_USER=[^$#[:space:]]'
+    'API_KEY=[^$#[:space:]]'
+    'API_SECRET=[^$#[:space:]]'
+    'SECRET_KEY=[^$#[:space:]]'
+    'APP_SECRET=[^$#[:space:]]'
+    'AUTH_TOKEN=[^$#[:space:]]'
+    'ACCESS_TOKEN=[^$#[:space:]]'
+    'PRIVATE_KEY=[^$#[:space:]]'
     'BEGIN [A-Z]* PRIVATE KEY'
     'AKIA[0-9A-Z]\{16\}'
     'AIza[0-9A-Za-z_-]\{35\}'
     'ghp_[A-Za-z0-9]\{36\}'
     'github_pat_[A-Za-z0-9_]\{82\}'
     'sk_live_[A-Za-z0-9]\{20,\}'
+    'xox[baprs]-[0-9A-Za-z_-]\{10,\}'
 )
 
 while read -r local_ref local_sha remote_ref remote_sha; do
@@ -33,8 +36,10 @@ while read -r local_ref local_sha remote_ref remote_sha; do
     else
         range="${remote_sha}..${local_sha}"
     fi
-    # Scan only lines added in non-YAML files.
-    diff_output=$(git log -p "$range" 2>/dev/null \
+    # Scan only lines added in non-YAML files. .env.example and the hooks are
+    # excluded for the same reasons as in pre-commit: placeholders by design,
+    # and the pattern list itself.
+    diff_output=$(git log -p "$range" -- . ':(exclude).env.example'         ':(exclude)hooks/pre-commit' ':(exclude)hooks/pre-push' 2>/dev/null \
         | grep -v '^diff --git.*\.\(yml\|yaml\)' \
         | awk '/^diff --git/{inYaml=(/\.(yml|yaml)$/)} !inYaml && /^\+/ && !/^\+\+\+/{print}')
     for pattern in "${secret_patterns[@]}"; do

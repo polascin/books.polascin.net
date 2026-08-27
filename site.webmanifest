@@ -1,6 +1,10 @@
 {
   "name": "Bibliotheca Polascini",
   "short_name": "Polascini",
+  "description": "Books, chapters, and publications by Dr. Lubomir Polascin.",
+  "lang": "en",
+  "start_url": "/",
+  "scope": "/",
   "icons": [
     {
       "src": "/assets/images/favicon-32x32.png",

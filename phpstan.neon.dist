@@ -2,14 +2,16 @@ parameters:
     # Začni nízko (0–4). Po vyčistení nálezov môžeš úroveň postupne zvyšovať až po 9.
     level: 4
 
+    # Konkrétne cesty namiesto '.' — pri '.' PHPStan prechádza aj node_modules
+    # a v predvolenom 128 MB limite spadne ešte pred analýzou.
     paths:
-        - .
-
-    excludePaths:
-        - */vendor/*
-        - */node_modules/*
-        - tools/*.phar
-        - .php-cs-fixer.dist.php
+        - includes
+        - about.php
+        - catalog.php
+        - index.php
+        - privacy.php
+        - setup_db.php
+        - terms.php
 
     # Existujúce nálezy sú v baseline — blokujú len NOVÉ chyby.
     # (Súbor naplní tools/install-dev-tools.ps1; placeholder je v repe, aby include nezlyhal.)

@@ -1,0 +1,3 @@
+# data/ obsahuje zalozny zdroj knih (books.json) - nie je urceny na verejne
+# stiahnutie; aplikacia ho cita zo suboroveho systemu.
+Require all denied

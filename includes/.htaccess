@@ -1,0 +1,3 @@
+# includes/ obsahuje zdielane PHP fragmenty - nacitavaju sa cez require z disku,
+# nikdy sa nesmu volat priamo cez HTTP.
+Require all denied

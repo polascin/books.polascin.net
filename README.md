@@ -20,14 +20,14 @@ $EDITOR .env
 
 `.env` keys:
 
-| Key        | Description                                           |
-| ---------- | ----------------------------------------------------- |
-| `DB_HOST`  | Database hostname (usually `localhost`)               |
-| `DB_PORT`  | MySQL/MariaDB port (usually `3306`)                   |
-| `DB_NAME`  | Database name                                         |
-| `DB_USER`  | Database user                                         |
-| `DB_PASS`  | Database password                                     |
-| `SITE_URL` | Canonical base URL, e.g. `https://books.polascin.net` |
+| Key         | Description                                                                                                                  |
+| ----------- | ---------------------------------------------------------------------------------------------------------------------------- |
+| `DB_HOST`   | Database hostname (usually `localhost`)                                                                                      |
+| `DB_PORT`   | MySQL/MariaDB port (usually `3306`)                                                                                          |
+| `DB_NAME`   | Database name                                                                                                                |
+| `DB_USER`   | Database user                                                                                                                |
+| `DB_PASS`   | Database password                                                                                                            |
+| `SITE_URL`  | Canonical base URL, no trailing slash, e.g. `https://books.polascin.net`                                                     |
 | `APP_DEBUG` | `true` shows PHP errors in the browser. Leave `false` in production - traces expose absolute server paths. Absent means off. |
 
 ### 2. Install the Git hooks
@@ -54,7 +54,7 @@ provider. Both build outputs are committed, so a plain clone already works and
 the server never builds anything; you only need Node when you change them.
 
 ```bash
-npm install
+npm ci                # installs exactly what package-lock.json pins
 
 # Rebuild the Tailwind bundle after adding/removing classes in any .php file.
 npm run build:css     # -> assets/css/tailwind.css
@@ -75,6 +75,13 @@ npm run fonts         # -> assets/fonts/*.woff2 + assets/css/fonts.css
   production.
 - Fonts are marked `binary` in `.gitattributes`; without that, `core.autocrlf`
   would corrupt the `.woff2` files on Windows.
+- `package-lock.json` is **committed**, and both CI and the instructions above
+  use `npm ci`. Without the lockfile a transitive dependency could change the
+  generated bundle byte-for-byte and fail the drift check on an unrelated push.
+- Stylesheets and scripts are emitted through `assetUrl()`
+  ([includes/functions.php](includes/functions.php)), which appends
+  `?v=<mtime>`. That is what makes the long `Cache-Control` lifetimes in
+  `.htaccess` safe: a rebuilt file gets a new URL and reaches visitors at once.
 
 ---
 
@@ -101,9 +108,34 @@ To bypass a **confirmed false positive** (e.g. a test fixture):
 git commit --no-verify   # use sparingly and with justification
 ```
 
+### HTTP security headers
+
+`.htaccess` sets `X-Frame-Options`, `X-Content-Type-Options`, HSTS,
+`Referrer-Policy`, `Permissions-Policy`, `Cross-Origin-Opener-Policy`,
+`X-Permitted-Cross-Domain-Policies` and a **Content Security Policy** with no
+`'unsafe-inline'` and no third-party origins — the site loads nothing but its
+own assets, so the policy can stay strict. Anything added later that needs an
+inline `<script>`, an inline `style="…"` attribute or an external host has to be
+declared there first, or the browser will block it.
+
+`includes/`, `data/`, `tools/` and `hooks/` are blocked from the web by their
+own `.htaccess` files plus a `RedirectMatch`/`RewriteRule` fallback in the root
+`.htaccess`.
+
+### Auditing
+
+[.audit.md](.audit.md) is the audit checklist and the log of completed runs;
+[.doaudit.md](.doaudit.md) is the repeatable procedure (audit → fix → verify →
+record). Neither is deployed — both are listed in `.deployignore`.
+
 ### GitHub Actions CI
 
 `.github/workflows/secret-scan.yml` runs on every push and pull request, scanning newly introduced commits with the same pattern set as the local hooks.
+
+`.github/workflows/deploy.yml` runs a `validate` job first — `php -l` over every
+tracked PHP file, `node --check` over the scripts, and a rebuild of the Tailwind
+bundle that fails if the committed `assets/css/tailwind.css` is stale — and only
+then rsyncs to the web root and smoke-tests the live pages.
 
 ### If a secret is accidentally committed
 

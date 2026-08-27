@@ -465,3 +465,52 @@
 html {
   scroll-behavior: smooth;
 }
+
+/* Preskočenie na obsah — viditeľné až pri fokuse klávesnicou (WCAG 2.4.1). */
+.skip-link {
+  position: absolute;
+  left: 1rem;
+  top: -3rem;
+  z-index: 100;
+  padding: 0.625rem 1rem;
+  background: #0f172a;
+  color: #f4f1ea;
+  font-family: "Cinzel", serif;
+  font-size: 0.875rem;
+  letter-spacing: 0.08em;
+  border-radius: 0 0 0.375rem 0.375rem;
+  transition: top 0.2s ease-in-out;
+}
+
+.skip-link:focus {
+  top: 0;
+}
+
+/* Cieľ preskočenia dostáva fokus programovo — bez vlastného rámčeka. */
+#main-content:focus {
+  outline: none;
+}
+
+/* Jednotný, dobre viditeľný fokusový rámček. Tailwind ho na niektorých
+   prvkoch potláča cez focus:outline-none a nahrádza vlastným ringom. */
+:focus-visible {
+  outline: 3px solid #0f172a;
+  outline-offset: 2px;
+}
+
+/* Rešpektovanie systémovej voľby „obmedziť pohyb" (WCAG 2.3.3). Skripty
+   čítajú tú istú preferenciu cez matchMedia a vynechávajú svoje oneskorenia. */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

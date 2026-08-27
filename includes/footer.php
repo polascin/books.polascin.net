@@ -21,7 +21,10 @@
 </footer>
 
 <!-- Cookie Consent Banner -->
-<div id="cookie-banner"
+<?php // Starts hidden. script.js reveals it only when no choice is stored yet;
+      // without the hidden attribute the Accept/Reject buttons stay in the tab
+      // order and in the screen-reader tree while the banner sits off-screen. ?>
+<div id="cookie-banner" hidden
     class="fixed bottom-0 left-0 right-0 bg-slate-900 border-t border-slate-700 text-white p-4 shadow-2xl z-[100] transform transition-transform duration-500 translate-y-full"
     aria-live="polite" aria-label="Cookie consent banner" role="dialog">
     <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
@@ -43,7 +46,7 @@
 </div>
 
 <!-- Custom Scripts -->
-<script src="/assets/js/script.js"></script>
+<script src="<?php echo assetUrl('assets/js/script.js'); ?>"></script>
 </body>
 
 </html>

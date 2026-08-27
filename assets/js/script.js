@@ -1,4 +1,30 @@
 document.addEventListener("DOMContentLoaded", () => {
+  // Visitors who asked their OS to reduce motion get the same states without
+  // the transitions, so nothing animates and nothing waits for an animation.
+  const reduceMotion = window.matchMedia(
+    "(prefers-reduced-motion: reduce)",
+  ).matches;
+  const motionDelay = (ms) => (reduceMotion ? 0 : ms);
+
+  // localStorage throws instead of returning null in some privacy modes, so
+  // every access is guarded - a failure must not break search and filtering.
+  const storage = {
+    get(key) {
+      try {
+        return localStorage.getItem(key);
+      } catch {
+        return null;
+      }
+    },
+    set(key, value) {
+      try {
+        localStorage.setItem(key, value);
+      } catch {
+        /* storage unavailable - the banner simply reappears next visit */
+      }
+    },
+  };
+
   // Search and filter logic
   const searchInput = document.getElementById("search-books");
   const categorySelect = document.getElementById("category-filter");
@@ -28,13 +54,13 @@ document.addEventListener("DOMContentLoaded", () => {
         setTimeout(() => {
           card.style.opacity = "1";
           card.style.transform = "translateY(0)";
-        }, 50);
+        }, motionDelay(50));
       } else {
         card.style.opacity = "0";
         card.style.transform = "translateY(10px)";
         setTimeout(() => {
           card.style.display = "none";
-        }, 300); // Wait for transition
+        }, motionDelay(300)); // Wait for transition
       }
     });
 
@@ -63,16 +89,27 @@ document.addEventListener("DOMContentLoaded", () => {
   const rejectBtn = document.getElementById("reject-cookies");
 
   if (cookieBanner && acceptBtn && rejectBtn) {
-    if (!localStorage.getItem("cookieConsent")) {
-      // Slight delay to animate banner upwards
+    if (!storage.get("cookieConsent")) {
+      // Slight delay to animate banner upwards. The hidden attribute has to go
+      // first, then the transform on the next frame, or there is nothing
+      // rendered for the transition to start from.
       setTimeout(() => {
-        cookieBanner.classList.remove("translate-y-full");
-      }, 1000);
+        cookieBanner.hidden = false;
+        requestAnimationFrame(() => {
+          cookieBanner.classList.remove("translate-y-full");
+        });
+      }, motionDelay(1000));
     }
 
     const setConsent = (status) => {
-      localStorage.setItem("cookieConsent", status);
+      storage.set("cookieConsent", status);
       cookieBanner.classList.add("translate-y-full");
+      // Back to hidden once it has slid away: an off-screen banner that is
+      // still in the DOM keeps its buttons in the tab order and in the
+      // screen-reader tree.
+      setTimeout(() => {
+        cookieBanner.hidden = true;
+      }, motionDelay(500));
       // If strictly enforcing cookies, initialize scripts conditionally here based on 'status'
       if (status === "accepted") {
         // Initialize analytics trackers here if implemented

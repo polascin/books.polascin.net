@@ -20,7 +20,9 @@ if (-not (Test-Path $phpstan) -or -not (Test-Path $fixer)) {
 Push-Location $root
 try {
     Write-Host '=== PHPStan (statická analýza) ===' -ForegroundColor Cyan
-    & php $phpstan analyse --no-progress
+    # --memory-limit: predvolených 128 MB PHPStanu na tento projekt nestačí
+    # a analýza spadne na "reached configured PHP memory limit".
+    & php $phpstan analyse --no-progress --memory-limit=1G
     $phpstanCode = $LASTEXITCODE
 
     Write-Host "`n=== PHP-CS-Fixer (formátovanie) ===" -ForegroundColor Cyan

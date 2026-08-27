@@ -49,14 +49,14 @@ include __DIR__ . '/includes/header.php';
             
             <div class="md:col-span-1 text-center md:text-left">
                 <div class="w-48 h-48 mx-auto md:mx-0 bg-slate-200 rounded-full border-4 border-slate-800 overflow-hidden mb-6 flex items-center justify-center">
-                    <img src="/assets/images/author.png" alt="Dr. Lubomir Polascin" class="w-full h-full object-cover">
+                    <img src="<?php echo assetUrl('assets/images/author.png'); ?>" alt="Portrait of Dr. Lubomir Polascin" width="1024" height="1024" loading="lazy" decoding="async" class="w-full h-full object-cover">
                 </div>
                 <h3 class="font-cinzel text-xl font-bold text-slate-800">Lubomir Polascin</h3>
                 <p class="font-playfair text-slate-600 italic mb-4">Nephrologist, Writer & Programmer</p>
                 
                 <div class="space-y-2 text-sm text-slate-700">
-                    <a href="https://polascin.net" target="_blank" rel="noopener noreferrer" class="block hover:text-slate-900 transition-colors">🌐 polascin.net</a>
-                    <a href="https://polascin.com" target="_blank" rel="noopener noreferrer" class="block hover:text-slate-900 transition-colors">🌐 polascin.com</a>
+                    <a href="https://polascin.net" target="_blank" rel="noopener noreferrer" class="block hover:text-slate-900 transition-colors" aria-label="polascin.net (opens in a new tab)"><span aria-hidden="true">🌐</span> polascin.net</a>
+                    <a href="https://polascin.com" target="_blank" rel="noopener noreferrer" class="block hover:text-slate-900 transition-colors" aria-label="polascin.com (opens in a new tab)"><span aria-hidden="true">🌐</span> polascin.com</a>
                 </div>
             </div>
 
@@ -71,9 +71,9 @@ include __DIR__ . '/includes/header.php';
                     <strong>Literary Works:</strong> I have authored multiple books available on Amazon, writing under both my real name and my pen name, <em>Walter Kyo Csoelle</em>. Notable works include the medical non-fiction "Blood Purification" (2019), and contemporary fiction exploring the edge of life, such as "Pulse Of The Body: A Novel of Medicine, Humanity, and the Edge of Life" and "Vital Algorithm".
                 </p>
                 <div class="pt-4 border-t border-gray-300/50 flex flex-wrap gap-4 justify-center md:justify-start">
-                    <a href="https://www.amazon.com/stores/author/B07PN436VJ" target="_blank" rel="noopener noreferrer" class="px-6 py-2 bg-slate-800 text-paper font-cinzel text-sm tracking-widest hover:bg-slate-700 transition shadow text-center">Amazon Author Page</a>
-                    <a href="https://www.amazon.com/stores/Walter-Kyo-Csoelle/author/B0G2TCCJZZ?ref=ap_rdr&shoppingPortalEnabled=true&ccs_id=e50f368a-c83e-4954-a78a-3e10129c8254" target="_blank" rel="noopener noreferrer" class="px-6 py-2 bg-slate-800 text-paper font-cinzel text-sm tracking-widest hover:bg-slate-700 transition shadow text-center">Walter Kyo Csoelle Page</a>
-                    <a href="https://nephrosite.polascin.net/" target="_blank" rel="noopener noreferrer" class="px-6 py-2 border border-slate-800 text-slate-800 font-cinzel text-sm tracking-widest hover:bg-slate-100 transition shadow-sm text-center">Nephrology Projects</a>
+                    <a href="https://www.amazon.com/stores/author/B07PN436VJ" target="_blank" rel="noopener noreferrer" class="px-6 py-2 bg-slate-800 text-paper font-cinzel text-sm tracking-widest hover:bg-slate-700 transition shadow text-center" aria-label="Amazon author page (opens in a new tab)">Amazon Author Page</a>
+                    <a href="https://www.amazon.com/stores/Walter-Kyo-Csoelle/author/B0G2TCCJZZ?ref=ap_rdr&amp;shoppingPortalEnabled=true&amp;ccs_id=e50f368a-c83e-4954-a78a-3e10129c8254" target="_blank" rel="noopener noreferrer" class="px-6 py-2 bg-slate-800 text-paper font-cinzel text-sm tracking-widest hover:bg-slate-700 transition shadow text-center" aria-label="Walter Kyo Csoelle Amazon page (opens in a new tab)">Walter Kyo Csoelle Page</a>
+                    <a href="https://nephrosite.polascin.net/" target="_blank" rel="noopener noreferrer" class="px-6 py-2 border border-slate-800 text-slate-800 font-cinzel text-sm tracking-widest hover:bg-slate-100 transition shadow-sm text-center" aria-label="Nephrology projects (opens in a new tab)">Nephrology Projects</a>
                 </div>
             </div>
 

@@ -13,6 +13,32 @@ ServerSignature Off
     Header always set X-Permitted-Cross-Domain-Policies "none"
     Header always unset X-Powered-By
     Header unset X-Powered-By
+
+    # Content Security Policy. Stránka nenačítava nič z cudzieho pôvodu —
+    # Tailwind, fonty aj skript sú lokálne — takže politika môže byť prísna
+    # bez 'unsafe-inline' a 'unsafe-eval'.
+    #   img-src data:  — .paper-texture v assets/css/style.css používa
+    #                    inline SVG šum ako background-image
+    #   JSON-LD v <script type="application/ld+json"> nie je spustiteľný skript,
+    #   prehliadač ho pod script-src 'self' neblokuje.
+    Header always set Content-Security-Policy "default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self'; form-action 'self'; frame-ancestors 'self'; base-uri 'self'; object-src 'none'; upgrade-insecure-requests"
+
+    # Cachovanie. CSS a JS chodia s ?v=<mtime> z assetUrl() v
+    # includes/functions.php, fonty majú hash priamo v názve súboru — nová
+    # verzia sa preto k návštevníkovi dostane okamžite aj pri dlhej platnosti.
+    <FilesMatch "\.woff2$">
+        Header set Cache-Control "public, max-age=31536000, immutable"
+    </FilesMatch>
+    <FilesMatch "\.(css|js)$">
+        Header set Cache-Control "public, max-age=2592000"
+    </FilesMatch>
+    <FilesMatch "\.(png|jpe?g|gif|svg|ico|webp|avif)$">
+        Header set Cache-Control "public, max-age=2592000"
+    </FilesMatch>
+    # Dynamické stránky sa musia vždy overiť — obsah katalógu sa mení.
+    <FilesMatch "\.php$">
+        Header set Cache-Control "no-cache"
+    </FilesMatch>
 </IfModule>
 
 # Blokovanie .git a citlivých súborov
@@ -28,7 +54,7 @@ ServerSignature Off
     Require all denied
 </FilesMatch>
 
-# Interné Markdown dokumenty (.agent.md, AGENTS.md, README, …) — nie cez web
+# Interné Markdown dokumenty (.audit.md, .doaudit.md, README, DEPLOY, …) — nie cez web
 <FilesMatch "\.md$">
     Require all denied
 </FilesMatch>
@@ -52,8 +78,15 @@ ServerSignature Off
     Require all denied
 </Files>
 
+# Neverejné adresáre. Primárne ich blokujú vlastné .htaccess súbory
+# (includes/, data/, tools/, hooks/); toto je poistka pre prípad, že by sa
+# niektorý z nich na server nedostal, a RewriteRule nižšie je tretia vrstva.
+<IfModule mod_alias.c>
+    RedirectMatch 403 ^/(includes|data|tools|hooks)(/|$)
+</IfModule>
+
 <IfModule mod_rewrite.c>
     RewriteEngine On
-    RewriteRule ^(\.git|\.claude|\.vscode|\.agents|\.github|node_modules)(/.*)?$ - [F,L]
+    RewriteRule ^(\.git|\.claude|\.vscode|\.agents|\.github|node_modules|includes|data|tools|hooks)(/.*)?$ - [F,L]
     RewriteRule ^sitemap\.xml$ sitemap.xml [L]
 </IfModule>
