@@ -41,7 +41,12 @@ include __DIR__ . '/includes/header.php';
         <p>These Terms of Use are governed by and construed in accordance with the laws of the Slovak Republic. Any disputes arising from or in connection with the use of this website shall be subject to the jurisdiction of the competent courts of the Slovak Republic.</p>
 
         <h2 class="font-cinzel text-xl font-bold text-slate-800 mt-8 mb-2">8. Contact</h2>
-        <p>If you have any questions about these Terms of Use, please contact the site operator, MUDr. Ľubomír Polaščín, at: <a href="mailto:lubomir@polascin.net" class="text-blue-600 hover:text-blue-800 underline focus:ring-2 focus:ring-slate-800 focus:outline-none">lubomir@polascin.net</a>.</p>
+        <p>If you have any questions about these Terms of Use, please contact the site operator:</p>
+        <ul class="list-disc list-inside pl-4 space-y-1 mt-2">
+            <li>MUDr. Ľubomír Polaščín</li>
+            <li>IČO: 57646856</li>
+            <li>Email: <a href="mailto:lubomir@polascin.net" class="text-blue-600 hover:text-blue-800 underline focus:ring-2 focus:ring-slate-800 focus:outline-none">lubomir@polascin.net</a></li>
+        </ul>
     </div>
 </section>
 

@@ -15,7 +15,7 @@
             <span>&bull;</span>
             <span>&copy; 1971-<?php echo date('Y'); ?> MUDr. Ľubomír Polaščín. All rights reserved.</span>
         </div>
-        <p class="text-xs mt-2">Site operator: MUDr. Ľubomír Polaščín &middot; <a href="mailto:lubomir@polascin.net"
+        <p class="text-xs mt-2">Site operator: MUDr. Ľubomír Polaščín &middot; IČO: 57646856 &middot; <a href="mailto:lubomir@polascin.net"
                 class="hover:text-white transition-colors underline">lubomir@polascin.net</a></p>
     </div>
 </footer>

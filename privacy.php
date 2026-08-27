@@ -16,17 +16,25 @@ include __DIR__ . '/includes/header.php';
     <h1 class="font-cinzel text-3xl font-bold text-slate-800 mb-6 border-b border-gray-300 pb-4">Privacy Policy</h1>
     
     <div class="space-y-6 text-slate-700 leading-relaxed text-justify font-sans">
-        <p><strong>Effective Date:</strong> March 22, 2026 &middot; <strong>Last Updated:</strong> August 25, 2026</p>
+        <p><strong>Effective Date:</strong> March 22, 2026 &middot; <strong>Last Updated:</strong> August 27, 2026</p>
         <p>Bibliotheca Polascini provides information about books, publications, authorship, medicine, literature, and related external resources. This page explains both how privacy is handled on this website and the legal limitations that apply to the informational material published here. The use of this website is further governed by our <a href="terms.php" class="text-blue-600 hover:text-blue-800 underline focus:ring-2 focus:ring-slate-800 focus:outline-none">Terms of Use</a>.</p>
         
-        <h2 class="font-cinzel text-xl font-bold text-slate-800 mt-8 mb-2">1. Introduction</h2>
+        <h2 class="font-cinzel text-xl font-bold text-slate-800 mt-8 mb-2">1. Introduction and Data Controller</h2>
         <p>Welcome to Bibliotheca Polascini. We respect your privacy and are committed to protecting your personal data in accordance with the General Data Protection Regulation (GDPR) and applicable data protection laws. This policy explains how we collect, use, and safeguard your information when you visit our website.</p>
+        <p>The controller responsible for the processing of personal data in connection with this website is:</p>
+        <ul class="list-disc list-inside pl-4 space-y-1 mt-2">
+            <li>MUDr. Ľubomír Polaščín</li>
+            <li>IČO: 57646856</li>
+            <li>Email: <a href="mailto:lubomir@polascin.net" class="text-blue-600 hover:text-blue-800 underline focus:ring-2 focus:ring-slate-800 focus:outline-none">lubomir@polascin.net</a></li>
+        </ul>
+        <p>No data protection officer has been appointed, as the website is operated by an individual and does not carry out large-scale or systematic processing that would require one under Article 37 GDPR.</p>
 
         <h2 class="font-cinzel text-xl font-bold text-slate-800 mt-8 mb-2">2. Information We Collect</h2>
         <p>We collect basic technical information to ensure the website functions securely and continuously. When you interact with our cookie consent banner, we store your preference locally in your browser's local storage to prevent prompting you repeatedly. We do not collect personally identifiable information unless you explicitly volunteer it by contacting us.</p>
 
-        <h2 class="font-cinzel text-xl font-bold text-slate-800 mt-8 mb-2">3. Cookies and Browser Storage</h2>
-        <p>This website does not set any analytics, advertising, or tracking cookies. The only item stored in your browser is a single local storage entry that remembers the choice you made on our cookie consent banner, so that you are not prompted repeatedly. If optional analytics are introduced in the future, they will be loaded only after you explicitly choose "Accept" on the consent banner.</p>
+        <h2 class="font-cinzel text-xl font-bold text-slate-800 mt-8 mb-2">3. Cookies, Browser Storage and External Resources</h2>
+        <p>This website does not set any analytics, advertising, or tracking cookies. The only item stored in your browser is a single local storage entry that remembers the choice you made on our cookie consent banner, so that you are not prompted repeatedly. This entry is written only after you select "Accept" or "Reject"; nothing is stored before you make a choice. If optional analytics are introduced in the future, they will be loaded only after you explicitly choose "Accept" on the consent banner.</p>
+        <p>For transparency, this website loads web fonts from Google Fonts (<span class="whitespace-nowrap">fonts.googleapis.com</span> and <span class="whitespace-nowrap">fonts.gstatic.com</span>) and a stylesheet library from the Tailwind CSS content delivery network (<span class="whitespace-nowrap">cdn.tailwindcss.com</span>). These requests are made by your browser when a page loads and technically disclose your IP address and browser details to those providers. They do not set cookies on this website and are not used to profile you, but they are third-party connections and are disclosed here so that you are informed of them.</p>
 
         <h2 class="font-cinzel text-xl font-bold text-slate-800 mt-8 mb-2">4. Hosting</h2>
         <p>This website is hosted by Websupport, s.r.o., a hosting provider established in Slovakia, with servers located in the European Union. Like virtually all hosting providers, Websupport keeps standard server and access logs (such as IP addresses, timestamps, and requested pages) for security and operational purposes. These logs are maintained by the hosting provider as part of the ordinary operation of its infrastructure.</p>
