@@ -13,6 +13,11 @@ súboroch, `node --check` na skriptoch a prestavba Tailwind bundle, ktorá zlyh�
 ak je commitnutý `assets/css/tailwind.css` zastaraný. Po rsyncu prebehne smoke
 test na `/`, `/privacy.php` a `/terms.php`.
 
+> **Aktuálny stav (overené 2026-08-27): `DEPLOY_*` secrets nastavené nie sú**,
+> takže job `deploy` sa iba preskočí s upozornením a workflow skončí zeleno.
+> Jediná skutočne fungujúca cesta nasadenia je zatiaľ lokálny `post-commit`
+> hook popísaný nižšie. Job `validate` beží a chráni repozitár aj tak.
+
 Kým secrets nie sú nastavené, deploy job sa iba preskočí s upozornením
 (workflow nezlyhá).
 
