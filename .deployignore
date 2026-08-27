@@ -15,6 +15,9 @@ phpstan.neon.dist
 phpstan-baseline.neon
 .prettierrc
 .php-cs-fixer.dist.php
+# Zástupné hodnoty, ale na web root nepatria — prezrádzajú názvy premenných
+# a konvenciu pomenovania databázy.
+.env.example
 hooks
 tools
 .vscode

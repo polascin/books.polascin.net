@@ -29,3 +29,18 @@ Kým secrets nie sú nastavené, deploy job sa iba preskočí s upozornením
 
 Workflow pred rsyncom overí, že vzdialený adresár existuje — pri zlej ceste
 bezpečne zlyhá bez zápisu.
+
+## Druhá, lokálna cesta nasadenia
+
+Okrem GitHub Actions existuje **lokálny `post-commit` hook** v `.git/hooks/`
+(`post-commit` → `deploy.sh`), ktorý po každom commite pushne branch a rovno
+nahrá zmenené súbory cez SFTP. Nie je v repozitári — po novom klonovaní ho
+treba nastaviť ručne a používa kľúč `~/.ssh/books_deploy`.
+
+Do behu #1 auditu tento hook **nerešpektoval `.deployignore`** a filtroval len
+`.claude/`, `.vscode/` a `.agents/` — na produkčný web root sa tak dostal
+`setup_db.php`, interné `.md` dokumenty, CI konfigurácia aj vývojárske
+nástroje. Odvtedy číta `.deployignore` rovnako ako rsync v CI.
+
+Ak sa vylučovanie mení, treba ho overiť **v oboch** cestách — `.deployignore`
+je spoločný zdroj pravdy, ale používajú ho dva nezávislé skripty.

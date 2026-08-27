@@ -36,12 +36,18 @@ while read -r local_ref local_sha remote_ref remote_sha; do
     else
         range="${remote_sha}..${local_sha}"
     fi
-    # Scan only lines added in non-YAML files. .env.example and the hooks are
-    # excluded for the same reasons as in pre-commit: placeholders by design,
-    # and the pattern list itself.
-    diff_output=$(git log -p "$range" -- . ':(exclude).env.example'         ':(exclude)hooks/pre-commit' ':(exclude)hooks/pre-push' 2>/dev/null \
-        | grep -v '^diff --git.*\.\(yml\|yaml\)' \
-        | awk '/^diff --git/{inYaml=(/\.(yml|yaml)$/)} !inYaml && /^\+/ && !/^\+\+\+/{print}')
+    # Exclusions are pathspecs rather than a grep/awk filter on the diff
+    # header. The previous filter stripped the "diff --git" line for YAML
+    # files, which is the very line the awk state machine needed in order to
+    # recognise them - so YAML was never actually skipped.
+    #   *.yml/*.yaml        - workflow files quote the pattern strings
+    #   .env.example        - placeholders by design; README says to edit it
+    #   pre-commit/pre-push - they carry this very pattern list
+    exclude=(-- .
+        ':(exclude)*.yml' ':(exclude)*.yaml'
+        ':(exclude).env.example'
+        ':(exclude)hooks/pre-commit' ':(exclude)hooks/pre-push')
+    diff_output=$(git log -p "$range" "${exclude[@]}" 2>/dev/null | grep '^+' | grep -v '^+++')
     for pattern in "${secret_patterns[@]}"; do
         match=$(echo "$diff_output" | grep -m1 "$pattern" | head -c 200)
         if [[ -n "$match" ]]; then

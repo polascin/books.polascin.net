@@ -85,8 +85,13 @@ ServerSignature Off
     RedirectMatch 403 ^/(includes|data|tools|hooks)(/|$)
 </IfModule>
 
+# Bodkové súbory a adresáre okrem .well-known (ACME/SSL overenie). Pokrýva
+# .prettierrc, .deployignore, .env.example aj čokoľvek pridané neskôr —
+# .deployignore ich na server nenahrá, ale lokálny post-commit deploy hook
+# (.git/hooks/deploy.sh) ho neberie do úvahy, takže sa tam dostať môžu.
 <IfModule mod_rewrite.c>
     RewriteEngine On
+    RewriteRule "(^|/)\.(?!well-known)" - [F,L]
     RewriteRule ^(\.git|\.claude|\.vscode|\.agents|\.github|node_modules|includes|data|tools|hooks)(/.*)?$ - [F,L]
     RewriteRule ^sitemap\.xml$ sitemap.xml [L]
 </IfModule>
