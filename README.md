@@ -28,6 +28,7 @@ $EDITOR .env
 | `DB_USER`  | Database user                                         |
 | `DB_PASS`  | Database password                                     |
 | `SITE_URL` | Canonical base URL, e.g. `https://books.polascin.net` |
+| `APP_DEBUG` | `true` shows PHP errors in the browser. Leave `false` in production - traces expose absolute server paths. Absent means off. |
 
 ### 2. Install the Git hooks
 
@@ -44,6 +45,36 @@ This copies `hooks/pre-commit` and `hooks/pre-push` into `.git/hooks/` and marks
 ```bash
 php setup_db.php
 ```
+
+### 4. Build the front-end assets
+
+The site loads **no third-party CDN** - fonts and Tailwind are served from our
+own origin, so opening a page discloses no visitor IP to Google or any other
+provider. Both build outputs are committed, so a plain clone already works and
+the server never builds anything; you only need Node when you change them.
+
+```bash
+npm install
+
+# Rebuild the Tailwind bundle after adding/removing classes in any .php file.
+npm run build:css     # -> assets/css/tailwind.css
+
+# Re-download the web fonts (rarely needed).
+npm run fonts         # -> assets/fonts/*.woff2 + assets/css/fonts.css
+```
+
+- **Tailwind is pinned to v3.4.17** on purpose: it matches what
+  `cdn.tailwindcss.com` used to serve. Upgrading to v4 changes the default
+  border colour, the `shadow`/`rounded` scale names and ring widths, which
+  would silently restyle the site.
+- The `content` globs in `tailwind.config.js` decide which classes survive
+  purging. A class that only ever exists as a runtime-built string must be
+  added to the globs or safelisted, or it will be purged.
+- CI rebuilds the bundle on every push and **fails if the committed
+  `assets/css/tailwind.css` is stale**, so a forgotten rebuild cannot reach
+  production.
+- Fonts are marked `binary` in `.gitattributes`; without that, `core.autocrlf`
+  would corrupt the `.woff2` files on Windows.
 
 ---
 
