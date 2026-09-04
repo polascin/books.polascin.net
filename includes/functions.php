@@ -121,7 +121,9 @@ function getBooks() {
             $stmt = $pdo->query('SELECT * FROM books ORDER BY id ASC');
             return $stmt->fetchAll();
         } catch (\PDOException $e) {
-            // Table might not exist yet, fallback to JSON
+            // Table might not exist yet — fall through to JSON, but log so a
+            // broken schema is visible in server logs rather than silent.
+            error_log('getBooks() DB query failed, using JSON fallback: ' . $e->getMessage());
         }
     }
 

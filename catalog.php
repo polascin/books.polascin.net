@@ -276,7 +276,7 @@ include __DIR__ . '/includes/header.php';
                                         <?php // Every card repeats "View Online"; the aria-label keeps the
                                               // links distinguishable in a screen reader's link list. ?>
                                         <a href="<?php echo safeUrl($linkUrl); ?>" target="_blank" rel="noopener noreferrer" class="catalog-link-button inline-block px-4 py-2 text-xs font-cinzel tracking-[0.18em] border border-slate-800 text-slate-800 hover:bg-slate-800 hover:text-white transition-colors duration-200 rounded-full" aria-label="<?php echo esc_html($linkLabel . ': ' . ($bookTitleText !== '' ? $bookTitleText : 'catalog entry')); ?> (opens in a new tab)">
-                                            <?php echo $linkLabel; ?>
+                                            <?php echo esc_html($linkLabel); ?>
                                         </a>
                                     <?php endforeach; ?>
                                 </div>

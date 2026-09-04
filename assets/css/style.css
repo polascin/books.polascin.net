@@ -513,4 +513,10 @@ html {
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
+
+  /* Hover transforms must also stop — zeroing transition duration alone still
+     jumps the card when the pointer enters. */
+  .book-card:hover {
+    transform: none;
+  }
 }

@@ -1,11 +1,13 @@
 # robots.txt — books.polascin.net
-# Aktualizované: 2026-05-21
+# Aktualizované: 2026-09-04
 
 User-agent: *
 Allow: /
 Disallow: /setup_db.php
 Disallow: /includes/
 Disallow: /data/
+Disallow: /tools/
+Disallow: /hooks/
 Disallow: /.git/
 
 Crawl-delay: 10

@@ -36,10 +36,10 @@
         </div>
         <div class="flex gap-3 flex-shrink-0">
             <button id="reject-cookies"
-                class="px-4 py-2 bg-slate-700 text-white rounded hover:bg-slate-600 transition-colors text-sm font-cinzel tracking-wider font-semibold"
+                class="min-h-11 min-w-[2.75rem] px-4 py-2.5 bg-slate-700 text-white rounded hover:bg-slate-600 transition-colors text-sm font-cinzel tracking-wider font-semibold"
                 aria-label="Reject optional cookies">Reject</button>
             <button id="accept-cookies"
-                class="px-4 py-2 bg-paper text-slate-900 rounded hover:bg-white transition-colors text-sm font-cinzel tracking-wider font-semibold"
+                class="min-h-11 min-w-[2.75rem] px-4 py-2.5 bg-paper text-slate-900 rounded hover:bg-white transition-colors text-sm font-cinzel tracking-wider font-semibold"
                 aria-label="Accept optional cookies">Accept</button>
         </div>
     </div>
