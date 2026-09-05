@@ -1,0 +1,21 @@
+---
+description: Po každej zmene commitni, pushni na main a over nasadenie na WebSupport
+alwaysApply: true
+---
+
+# Commit, push a verifikácia deployu
+
+Po **každom** dokončení zmien v tomto projekte (bez ďalšieho pýtania):
+
+1. **Commitni** všetky relevantné zmeny s výstižnou správou (necommituj `.env` ani tajomstvá).
+2. **Pushni na `main`:** `git push origin main` (bežný push; nikdy `--force` na `main`).
+3. **Verifikuj nasadenie na WebSupport** (`https://books.polascin.net`):
+   - HTTP 200: `/`, `/catalog.php`, `/about.php`, `/privacy.php`, `/terms.php`
+   - Bezpečnostné hlavičky na `/` vrátane CSP bez `'unsafe-inline'`
+   - Chránené cesty nie 200: `/setup_db.php`, `/includes/functions.php`, `/data/books.json`, `/.env`
+   - Ak zmeny menili UI/aktíva: over očakávané markery na produkcii
+   - Ak beží CI: `gh run list --workflow=deploy.yml --limit 1` (validate zelený)
+
+Primárne nasadenie môže ísť cez lokálny `post-commit` hook (SFTP na WebSupport) a/alebo GitHub Actions — pozri `DEPLOY.md`. Po pushi vždy over živú produkciu, nielen CI.
+
+Toto pravidlo má prednosť pred všeobecným „necommituj / nepushuj bez vyžiadania“ pre tento repozitár.
