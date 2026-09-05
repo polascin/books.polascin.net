@@ -92,6 +92,6 @@ ServerSignature Off
 <IfModule mod_rewrite.c>
     RewriteEngine On
     RewriteRule "(^|/)\.(?!well-known)" - [F,L]
-    RewriteRule ^(\.git|\.claude|\.vscode|\.agents|\.github|node_modules|includes|data|tools|hooks)(/.*)?$ - [F,L]
+    RewriteRule ^(\.git|\.claude|\.vscode|\.agents|\.cursor|\.github|node_modules|includes|data|tools|hooks)(/.*)?$ - [F,L]
     RewriteRule ^sitemap\.xml$ sitemap.xml [L]
 </IfModule>

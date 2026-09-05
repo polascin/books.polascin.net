@@ -11,6 +11,7 @@ README.md
 .audit.md
 .doaudit.md
 .agents
+.cursor
 phpstan.neon.dist
 phpstan-baseline.neon
 .prettierrc
