@@ -17,7 +17,7 @@ include __DIR__ . '/includes/header.php';
     
     <div class="space-y-6 text-slate-700 leading-relaxed text-justify font-sans">
         <p><strong>Effective Date:</strong> March 22, 2026 &middot; <strong>Last Updated:</strong> August 27, 2026</p>
-        <p>Bibliotheca Polascini provides information about books, publications, authorship, medicine, literature, and related external resources. This page explains both how privacy is handled on this website and the legal limitations that apply to the informational material published here. The use of this website is further governed by our <a href="terms.php" class="text-blue-600 hover:text-blue-800 underline focus:ring-2 focus:ring-slate-800 focus:outline-none">Terms of Use</a>.</p>
+        <p>Bibliotheca Polascini provides information about books, publications, authorship, medicine, literature, and related external resources. This page explains both how privacy is handled on this website and the legal limitations that apply to the informational material published here. The use of this website is further governed by our <a href="/terms" class="text-blue-600 hover:text-blue-800 underline focus:ring-2 focus:ring-slate-800 focus:outline-none">Terms of Use</a>.</p>
         
         <h2 class="font-cinzel text-xl font-bold text-slate-800 mt-8 mb-2">1. Introduction and Data Controller</h2>
         <p>Welcome to Bibliotheca Polascini. We respect your privacy and are committed to protecting your personal data in accordance with the General Data Protection Regulation (GDPR) and applicable data protection laws. This policy explains how we collect, use, and safeguard your information when you visit our website.</p>

@@ -17,7 +17,7 @@ include __DIR__ . '/includes/header.php';
 
     <div class="space-y-6 text-slate-700 leading-relaxed text-justify font-sans">
         <p><strong>Effective Date:</strong> August 25, 2026</p>
-        <p>These Terms of Use govern your access to and use of Bibliotheca Polascini, the personal library website of MUDr. Ľubomír Polaščín. Please read them carefully before using the website. Information on how privacy is handled here is provided in our <a href="privacy.php" class="text-blue-600 hover:text-blue-800 underline focus:ring-2 focus:ring-slate-800 focus:outline-none">Privacy Policy</a>.</p>
+        <p>These Terms of Use govern your access to and use of Bibliotheca Polascini, the personal library website of MUDr. Ľubomír Polaščín. Please read them carefully before using the website. Information on how privacy is handled here is provided in our <a href="/privacy" class="text-blue-600 hover:text-blue-800 underline focus:ring-2 focus:ring-slate-800 focus:outline-none">Privacy Policy</a>.</p>
 
         <h2 class="font-cinzel text-xl font-bold text-slate-800 mt-8 mb-2">1. Acceptance of Terms</h2>
         <p>By accessing or using this website, you acknowledge that you have read, understood, and agreed to be bound by these Terms of Use and by the legal disclaimer contained in our Privacy Policy. If you do not agree with any part of these terms, please do not use the website.</p>
