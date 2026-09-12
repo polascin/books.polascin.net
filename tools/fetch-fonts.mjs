@@ -5,23 +5,27 @@
  * Fonts are self-hosted so that loading a page discloses no visitor IP to
  * Google. Run after changing the font list:  npm run fonts
  */
-import { createHash } from 'node:crypto';
-import { mkdir, writeFile, readdir, unlink } from 'node:fs/promises';
+import { createHash } from "node:crypto";
+import { mkdir, writeFile, readdir, unlink } from "node:fs/promises";
 
-const UA = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36';
-const OUT_DIR = 'assets/fonts';
+const UA =
+  "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36";
+const OUT_DIR = "assets/fonts";
 // Slovak diacritics (Ľubomír Polaščín) live in latin-ext, so it must be kept.
-const KEEP = new Set(['latin', 'latin-ext', 'glagolitic']);
+const KEEP = new Set(["latin", "latin-ext", "glagolitic"]);
 
 const FAMILIES = [
-  { css: 'Cinzel:wght@600;700', slug: 'cinzel' },
-  { css: 'Playfair+Display:ital,wght@0,400;0,700;1,400', slug: 'playfair-display' },
-  { css: 'Noto+Sans+Glagolitic', slug: 'noto-sans-glagolitic' },
+  { css: "Cinzel:wght@600;700", slug: "cinzel" },
+  {
+    css: "Playfair+Display:ital,wght@0,400;0,700;1,400",
+    slug: "playfair-display",
+  },
+  { css: "Noto+Sans+Glagolitic", slug: "noto-sans-glagolitic" },
 ];
 
 await mkdir(OUT_DIR, { recursive: true });
 for (const f of await readdir(OUT_DIR)) {
-  if (f.endsWith('.woff2')) await unlink(`${OUT_DIR}/${f}`);
+  if (f.endsWith(".woff2")) await unlink(`${OUT_DIR}/${f}`);
 }
 
 const byHash = new Map(); // content hash -> filename (variable fonts repeat across weights)
@@ -29,7 +33,7 @@ const blocks = [];
 
 for (const fam of FAMILIES) {
   const url = `https://fonts.googleapis.com/css2?family=${fam.css}&display=swap`;
-  const res = await fetch(url, { headers: { 'User-Agent': UA } });
+  const res = await fetch(url, { headers: { "User-Agent": UA } });
   if (!res.ok) throw new Error(`CSS fetch failed ${res.status} for ${fam.css}`);
   const css = await res.text();
 
@@ -43,8 +47,12 @@ for (const fam of FAMILIES) {
     const src = /src:\s*url\((https:\/\/[^)]+\.woff2)\)/.exec(face);
     if (!src) continue;
 
-    const bin = Buffer.from(await (await fetch(src[1], { headers: { 'User-Agent': UA } })).arrayBuffer());
-    const hash = createHash('sha256').update(bin).digest('hex').slice(0, 8);
+    const bin = Buffer.from(
+      await (
+        await fetch(src[1], { headers: { "User-Agent": UA } })
+      ).arrayBuffer(),
+    );
+    const hash = createHash("sha256").update(bin).digest("hex").slice(0, 8);
 
     let name = byHash.get(hash);
     if (!name) {
@@ -57,9 +65,9 @@ for (const fam of FAMILIES) {
     blocks.push(
       face
         .replace(src[1], `/assets/fonts/${name}`)
-        .replace(/@font-face\s*\{\s*/, '@font-face {\n  ')
-        .replace(/;\s*/g, ';\n  ')
-        .replace(/\s*\}$/, '\n}')
+        .replace(/@font-face\s*\{\s*/, "@font-face {\n  ")
+        .replace(/;\s*/g, ";\n  ")
+        .replace(/\s*\}$/, "\n}"),
     );
   }
 }
@@ -70,5 +78,7 @@ const header = `/*
  * Subsets: latin, latin-ext (Slovak diacritics), glagolitic.
  */
 `;
-await writeFile('assets/css/fonts.css', header + blocks.join('\n\n') + '\n');
-console.log(`${byHash.size} unique woff2 files, ${blocks.length} @font-face rules`);
+await writeFile("assets/css/fonts.css", header + blocks.join("\n\n") + "\n");
+console.log(
+  `${byHash.size} unique woff2 files, ${blocks.length} @font-face rules`,
+);

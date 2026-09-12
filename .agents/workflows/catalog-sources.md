@@ -60,28 +60,28 @@ Dôležité: ASIN tlačeného vydania **nie je** ISBN. V `isbn` poli je pre tla�
 
 ### Vital Algorithm: A Novel of Code and Conscience
 
-| id | Formát | isbn (kľúč) | ASIN (Amazon /dp) | Rok | category |
-| --- | --- | --- | --- | --- | --- |
-| 1 | Kindle Edition, 2nd ed. | B0GGJXHQDH | B0GGJXHQDH | 2026-01-13 | Medical Thriller |
-| 2 | Kindle Edition, 1st ed. (title: *The* Vital Algorithm) | B0FFGG4K4D | B0FFGG4K4D | 2025-11-29 | Medical Thriller |
-| 21 | Paperback | 9798243848893 | B0GGQGWGQY | 2026-01-13 | Medical Thriller |
-| 22 | Hardcover | 9798243857475 | B0GGQL6LTT | 2026-01-13 | Medical Thriller |
+| id  | Formát                                                 | isbn (kľúč)   | ASIN (Amazon /dp) | Rok        | category         |
+| --- | ------------------------------------------------------ | ------------- | ----------------- | ---------- | ---------------- |
+| 1   | Kindle Edition, 2nd ed.                                | B0GGJXHQDH    | B0GGJXHQDH        | 2026-01-13 | Medical Thriller |
+| 2   | Kindle Edition, 1st ed. (title: _The_ Vital Algorithm) | B0FFGG4K4D    | B0FFGG4K4D        | 2025-11-29 | Medical Thriller |
+| 21  | Paperback                                              | 9798243848893 | B0GGQGWGQY        | 2026-01-13 | Medical Thriller |
+| 22  | Hardcover                                              | 9798243857475 | B0GGQL6LTT        | 2026-01-13 | Medical Thriller |
 
 ### BLOOD EQUITY: Some Cures Are Deadlier Than Disease
 
-| id | Formát | isbn (kľúč) | ASIN (Amazon /dp) | Rok | category |
-| --- | --- | --- | --- | --- | --- |
-| 3 | Kindle Edition | B0G3MLQ1PN | B0G3MLQ1PN | 2025-11-23 | Medical Thriller |
-| 23 | Paperback | 9798275766110 | B0G3PZ47C1 | 2025-11-23 | Medical Thriller |
-| 24 | Hardcover | 9798275768503 | B0G3NXZCNF | 2025-11-23 | Medical Thriller |
+| id  | Formát         | isbn (kľúč)   | ASIN (Amazon /dp) | Rok        | category         |
+| --- | -------------- | ------------- | ----------------- | ---------- | ---------------- |
+| 3   | Kindle Edition | B0G3MLQ1PN    | B0G3MLQ1PN        | 2025-11-23 | Medical Thriller |
+| 23  | Paperback      | 9798275766110 | B0G3PZ47C1        | 2025-11-23 | Medical Thriller |
+| 24  | Hardcover      | 9798275768503 | B0G3NXZCNF        | 2025-11-23 | Medical Thriller |
 
 ### Pulse Of The Body: A Novel of Medicine, Humanity, and the Edge of Life
 
-| id | Formát | isbn (kľúč) | ASIN (Amazon /dp) | Rok | category |
-| --- | --- | --- | --- | --- | --- |
-| 4 | Kindle Edition | B0DHQY58C8 | B0DHQY58C8 | 2025-11-18 | Medical Fiction |
-| 25 | Paperback | 9798275086690 | B0G2WW1CKG | 2025-11-18 | Medical Fiction |
-| 26 | Hardcover | 9798275098167 | B0G2XC7PZ8 | 2025-11-18 | Medical Fiction |
+| id  | Formát         | isbn (kľúč)   | ASIN (Amazon /dp) | Rok        | category        |
+| --- | -------------- | ------------- | ----------------- | ---------- | --------------- |
+| 4   | Kindle Edition | B0DHQY58C8    | B0DHQY58C8        | 2025-11-18 | Medical Fiction |
+| 25  | Paperback      | 9798275086690 | B0G2WW1CKG        | 2025-11-18 | Medical Fiction |
+| 26  | Hardcover      | 9798275098167 | B0G2XC7PZ8        | 2025-11-18 | Medical Fiction |
 
 ### Časté zámeny (nepridávať znova)
 
@@ -96,7 +96,7 @@ Tieto ASIN už v katalógu sú; nesmieš ich znova vložiť pod iným formátom:
 - `B0GGQGWGQY` = Vital Algorithm **Paperback** (id 21), nie Hardcover
 - `B0GGQL6LTT` = Vital Algorithm **Hardcover** (id 22)
 - `B0GGJXHQDH` = Vital Algorithm Kindle 2nd ed. (id 1)
-- `B0FFGG4K4D` = *The* Vital Algorithm Kindle 1st ed. (id 2)
+- `B0FFGG4K4D` = _The_ Vital Algorithm Kindle 1st ed. (id 2)
 
 ## Aktuálny stav (11. 9. 2026)
 

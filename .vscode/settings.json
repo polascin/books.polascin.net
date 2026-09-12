@@ -1,9 +1,9 @@
 {
-    "git.autofetch": true,
-    "git.autofetchPeriod": 180,
-    "git.enableSmartCommit": true,
-    "git.postCommitCommand": "sync",
-    "fiveServer.php.executable": "/opt/homebrew/bin/php",
-    "phpserver.phpPath": "/opt/homebrew/bin/php",
-    "php.validate.executablePath": "/opt/homebrew/bin/php"
+  "git.autofetch": true,
+  "git.autofetchPeriod": 180,
+  "git.enableSmartCommit": true,
+  "git.postCommitCommand": "sync",
+  "fiveServer.php.executable": "/opt/homebrew/bin/php",
+  "phpserver.phpPath": "/opt/homebrew/bin/php",
+  "php.validate.executablePath": "/opt/homebrew/bin/php"
 }
