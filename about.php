@@ -62,10 +62,10 @@ include __DIR__ . '/includes/header.php';
 
             <div class="md:col-span-2 space-y-6 text-slate-700 leading-relaxed text-justify">
                 <p>
-                    My work rests at the intersection of medicine, storytelling, and technology. As a medical doctor specializing in Nephrology (since 1995, focusing on dialysis and renal therapies), medicine sharpens my clinical precision. As a writer, I explore the human condition through fiction and non-fiction. As a self-taught programmer, technology empowers me to solve complex problems bridging the analog and digital divide.
+                    My work rests at the intersection of medicine, storytelling, and technology. I have specialized in nephrology since 1995, focusing on dialysis and renal therapies. Clinical practice has sharpened my precision and judgment. As a writer, I explore the human condition through fiction and non-fiction. As a self-taught programmer, technology empowers me to solve complex problems bridging the analog and digital divide.
                 </p>
                 <p>
-                    Born in Czechoslovakia in 1971 and raised in Kyjov, my Ruthenian roots deeply inform my worldview. My passions span reading, travel, philosophy, and poetry. Over the years, I have served as Chief Medical Officer at multiple dialysis centers, lectured extensively, and engaged deeply in English-Slovak medical translations and software localization.
+                    I was born in Czechoslovakia in 1971 and raised in Kyjov. My Ruthenian roots deeply inform my worldview. My passions span reading, travel, philosophy, and poetry. Over the years, I have served as Chief Medical Officer at multiple dialysis centers, lectured extensively, and engaged deeply in English-Slovak medical translations and software localization.
                 </p>
                 <p>
                     <strong>Literary Works:</strong> I have authored multiple books available on Amazon, writing under both my real name and my pen name, <em>Walter Kyo Csoelle</em>. Notable works include the medical non-fiction "Blood Purification" (2019), and contemporary fiction exploring the edge of life, such as "Pulse Of The Body: A Novel of Medicine, Humanity, and the Edge of Life" and "Vital Algorithm".

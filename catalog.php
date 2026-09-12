@@ -59,8 +59,17 @@ foreach ($books as $index => $book) {
         $bookEntity['description'] = $bookDescription;
     }
 
-    if (!empty($book['isbn'])) {
-        $bookEntity['isbn'] = (string)$book['isbn'];
+    $identifier = getBookIdentifier($book['isbn'] ?? '');
+    if ($identifier !== null) {
+        if ($identifier['label'] === 'ISBN') {
+            $bookEntity['isbn'] = $identifier['value'];
+        } else {
+            $bookEntity['identifier'] = [
+                '@type' => 'PropertyValue',
+                'propertyID' => $identifier['label'],
+                'value' => $identifier['value'],
+            ];
+        }
     }
 
     if (!empty($book['language'])) {
@@ -213,7 +222,7 @@ include __DIR__ . '/includes/header.php';
 
                     $bookCategory = trim((string)($book['category'] ?? ''));
                     $bookLanguage = trim((string)($book['language'] ?? ''));
-                    $bookIsbn = trim((string)($book['isbn'] ?? ''));
+                    $bookIdentifier = getBookIdentifier($book['isbn'] ?? '');
                     $bookYear = trim((string)($book['year'] ?? ''));
                     // The JSON fallback source is hand-maintained, so a record
                     // may be missing any of these keys.
@@ -263,7 +272,7 @@ include __DIR__ . '/includes/header.php';
                             </p>
                             
                             <div class="book-meta-strip mt-auto pt-4 border-t border-slate-300/60 flex flex-wrap gap-3 text-xs font-mono text-slate-500 items-center justify-between">
-                                <span class="catalog-isbn">ISBN: <?php echo esc_html($bookIsbn !== '' ? $bookIsbn : 'N/A'); ?></span>
+                                <span class="catalog-isbn"><?php echo esc_html($bookIdentifier !== null ? $bookIdentifier['label'] . ': ' . $bookIdentifier['value'] : 'ISBN: N/A'); ?></span>
                                 <?php if(!empty($bookLanguage)): ?>
                                     <span class="book-lang-chip bg-slate-200/80 px-3 py-1 rounded-full text-slate-600 uppercase tracking-[0.16em] text-[10px] font-semibold"><?php echo esc_html($bookLanguage); ?></span>
                                 <?php endif; ?>

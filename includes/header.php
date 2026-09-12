@@ -75,7 +75,7 @@
 
     <!-- Main Header Area - Could contain navigation if needed later -->
     <header class="w-full bg-slate-900 text-paper py-4 shadow-md sticky top-0 z-50">
-        <div class="container mx-auto px-4 flex justify-between items-center">
+        <div class="container mx-auto px-4 flex flex-col gap-3 sm:flex-row justify-between items-center">
             <a href="index.php" class="text-xl font-cinzel tracking-widest hover:text-white transition-colors">Bibliotheca Polascini</a>
             <nav aria-label="Main Navigation">
                 <ul class="flex space-x-6">

@@ -41,7 +41,7 @@ include __DIR__ . '/includes/header.php';
 <!-- HEADER / EX LIBRIS SECTION -->
 <section class="w-full flex flex-col items-center justify-center pt-8 pb-16">
     <div class="max-w-4xl px-4 text-center mb-10">
-        <p class="font-cinzel text-xs tracking-[0.28em] text-slate-500 uppercase">Bibliography, Library, and Author Archive</p>
+        <p class="font-cinzel text-xs tracking-[0.28em] text-slate-600 uppercase">Bibliography, Library, and Author Archive</p>
         <h1 class="font-cinzel text-3xl md:text-5xl tracking-[0.14em] text-slate-900 mt-4">Books by Dr. Lubomir Polascin</h1>
         <p class="font-playfair text-lg italic text-slate-600 mt-5 max-w-3xl mx-auto leading-relaxed">Bibliotheca Polascini is the central archive for books, chapters, academic publications, and literary work by Lubomir Polascin, including titles written under the pen name Walter Kyo Csoelle.</p>
     </div>
@@ -174,7 +174,7 @@ include __DIR__ . '/includes/header.php';
 
     <!-- Link to the separated About Page -->
     <div class="mt-4 text-center">
-        <a href="about.php" class="inline-block px-6 py-2 font-cinzel tracking-widest text-sm text-slate-500 hover:text-slate-800 transition-all duration-300">
+        <a href="about.php" class="inline-block px-6 py-2 font-cinzel tracking-widest text-sm text-slate-600 hover:text-slate-800 transition-all duration-300">
             De Auctore (About)
         </a>
     </div>

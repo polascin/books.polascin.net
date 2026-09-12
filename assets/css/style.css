@@ -368,7 +368,7 @@
 .catalog-link-button:hover {
   background: linear-gradient(135deg, #f59e0b, #d97706);
   border-color: #d97706;
-  color: #fff7ed;
+  color: #0f172a;
   transform: translateY(-2px);
   box-shadow: 0 14px 22px -12px rgba(217, 119, 6, 0.55);
 }
@@ -516,7 +516,20 @@ html {
 
   /* Hover transforms must also stop — zeroing transition duration alone still
      jumps the card when the pointer enters. */
-  .book-card:hover {
+  .book-card:hover,
+  .catalog-link-button:hover {
     transform: none;
   }
+}
+
+/* The display utilities on cards must not override their hidden state. */
+.book-item[hidden] {
+  display: none;
+}
+
+/* Keep keyboard focus visible against the dark navigation and footer. */
+header :focus-visible,
+footer :focus-visible,
+#cookie-banner :focus-visible {
+  outline-color: #f4f1ea;
 }

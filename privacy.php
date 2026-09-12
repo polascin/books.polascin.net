@@ -16,7 +16,7 @@ include __DIR__ . '/includes/header.php';
     <h1 class="font-cinzel text-3xl font-bold text-slate-800 mb-6 border-b border-gray-300 pb-4">Privacy Policy</h1>
     
     <div class="space-y-6 text-slate-700 leading-relaxed text-justify font-sans">
-        <p><strong>Effective Date:</strong> March 22, 2026 &middot; <strong>Last Updated:</strong> August 27, 2026</p>
+        <p><strong>Effective Date:</strong> March 22, 2026 &middot; <strong>Last Updated:</strong> September 12, 2026</p>
         <p>Bibliotheca Polascini provides information about books, publications, authorship, medicine, literature, and related external resources. This page explains both how privacy is handled on this website and the legal limitations that apply to the informational material published here. The use of this website is further governed by our <a href="/terms" class="text-blue-600 hover:text-blue-800 underline focus:ring-2 focus:ring-slate-800 focus:outline-none">Terms of Use</a>.</p>
         
         <h2 class="font-cinzel text-xl font-bold text-slate-800 mt-8 mb-2">1. Introduction and Data Controller</h2>
@@ -34,7 +34,7 @@ include __DIR__ . '/includes/header.php';
 
         <h2 class="font-cinzel text-xl font-bold text-slate-800 mt-8 mb-2">3. Cookies, Browser Storage and External Resources</h2>
         <p>This website does not set any analytics, advertising, or tracking cookies. The only item stored in your browser is a single local storage entry that remembers the choice you made on our cookie consent banner, so that you are not prompted repeatedly. This entry is written only after you select "Accept" or "Reject"; nothing is stored before you make a choice. If optional analytics are introduced in the future, they will be loaded only after you explicitly choose "Accept" on the consent banner.</p>
-        <p>Every asset needed to display this website &mdash; stylesheets, web fonts, scripts, and images &mdash; is served directly from this website's own server. No content delivery network, font service, or other third-party host is contacted when you open a page. Your IP address is therefore not disclosed to any third party as a result of visiting this site, and no third party is in a position to observe your browsing here.</p>
+        <p>Every asset needed to display this website &mdash; stylesheets, web fonts, scripts, and images &mdash; is served directly from this website's own server. No content delivery network, font service, or other third-party host is contacted when you open a page. Loading a page does not send requests to external font, analytics, or advertising services. Our hosting provider processes connection information to serve the website, as described below. Following an external link connects you to the destination website, which has its own privacy practices.</p>
 
         <h2 class="font-cinzel text-xl font-bold text-slate-800 mt-8 mb-2">4. Hosting</h2>
         <p>This website is hosted by Websupport, s.r.o., a hosting provider established in Slovakia, with servers located in the European Union. Like virtually all hosting providers, Websupport keeps standard server and access logs (such as IP addresses, timestamps, and requested pages) for security and operational purposes. These logs are maintained by the hosting provider as part of the ordinary operation of its infrastructure.</p>

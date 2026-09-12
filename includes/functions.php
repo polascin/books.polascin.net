@@ -221,6 +221,26 @@ function esc_html($string) {
 }
 
 /**
+ * The legacy isbn column also contains ASINs and publication identifiers.
+ * Keep those distinct in the visible catalog and structured data.
+ */
+function getBookIdentifier($value) {
+    $value = trim((string)$value);
+    if ($value === '' || strcasecmp($value, 'N/A') === 0) {
+        return null;
+    }
+
+    $label = 'ID';
+    if (preg_match('/^(?:[0-9]{9}[0-9X]|[0-9]{13})$/', $value)) {
+        $label = 'ISBN';
+    } elseif (preg_match('/^B0[A-Z0-9]{8}$/', $value)) {
+        $label = 'ASIN';
+    }
+
+    return ['label' => $label, 'value' => $value];
+}
+
+/**
  * Sanitize URLs for href/src attributes.
  */
 function safeUrl($url) {

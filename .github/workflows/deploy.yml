@@ -62,6 +62,9 @@ jobs:
             node --check "$file"
           done < <(git ls-files -z -- 'assets/js/*.js')
 
+      - name: Test catalog filtering and identifiers
+        run: node --test tools/tests/*.test.cjs
+
   deploy:
     name: Deploy production
     needs: validate

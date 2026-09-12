@@ -48,19 +48,12 @@ document.addEventListener("DOMContentLoaded", () => {
         title.includes(searchTerm) || author.includes(searchTerm);
       const matchesCategory = categoryTerm === "" || category === categoryTerm;
 
-      if (matchesSearch && matchesCategory) {
+      const visible = matchesSearch && matchesCategory;
+      // Apply each result immediately. Delayed hiding from an older query
+      // must never override the current query or leave hidden links focusable.
+      card.hidden = !visible;
+      if (visible) {
         visibleCount += 1;
-        card.style.display = "";
-        setTimeout(() => {
-          card.style.opacity = "1";
-          card.style.transform = "translateY(0)";
-        }, motionDelay(50));
-      } else {
-        card.style.opacity = "0";
-        card.style.transform = "translateY(10px)";
-        setTimeout(() => {
-          card.style.display = "none";
-        }, motionDelay(300)); // Wait for transition
       }
     });
 
