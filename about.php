@@ -49,7 +49,7 @@ include __DIR__ . '/includes/header.php';
             
             <div class="md:col-span-1 text-center md:text-left">
                 <div class="w-48 h-48 mx-auto md:mx-0 bg-slate-200 rounded-full border-4 border-slate-800 overflow-hidden mb-6 flex items-center justify-center">
-                    <img src="<?php echo assetUrl('assets/images/author.png'); ?>" alt="Portrait of Dr. Lubomir Polascin" width="1024" height="1024" loading="lazy" decoding="async" class="w-full h-full object-cover">
+                    <img src="<?php echo assetUrl('assets/images/author.png'); ?>" alt="Portrait of Dr. Lubomir Polascin" width="256" height="256" loading="lazy" decoding="async" class="w-full h-full object-cover">
                 </div>
                 <h3 class="font-cinzel text-xl font-bold text-slate-800">Lubomir Polascin</h3>
                 <p class="font-playfair text-slate-600 italic mb-4">Nephrologist, Writer & Programmer</p>
