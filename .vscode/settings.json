@@ -1,9 +1,9 @@
 {
+  // PHP executable paths are machine-specific — set them in Cursor User settings
+  // (Windows: %APPDATA%\Cursor\User\settings.json), not in this shared workspace file.
+  // Keys: php.validate.executablePath, phpserver.phpPath, fiveServer.php.executable
   "git.autofetch": true,
   "git.autofetchPeriod": 180,
   "git.enableSmartCommit": true,
-  "git.postCommitCommand": "sync",
-  "fiveServer.php.executable": "/opt/homebrew/bin/php",
-  "phpserver.phpPath": "/opt/homebrew/bin/php",
-  "php.validate.executablePath": "/opt/homebrew/bin/php"
+  "git.postCommitCommand": "sync"
 }
