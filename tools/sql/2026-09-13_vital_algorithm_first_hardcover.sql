@@ -1,7 +1,8 @@
 -- books.polascin.net: catalog update, 13 September 2026
 -- Source: Amazon product page https://www.amazon.com/dp/B0G4JLDMWG verified 2026-09-13.
--- Adds the first-edition hardcover of The Vital Algorithm (ASIN B0G4JLDMWG, ISBN-13 979-8276693088).
--- Amazon lists this ASIN/ISBN as Hardcover (Paperback is a separate format option on the same family).
+-- Adds the first-edition print of The Vital Algorithm (ASIN B0G4JLDMWG, ISBN-13 979-8276693088).
+-- NOTE: This insert used the wrong format label (Hardcover). Corrected to Paperback on
+-- 2026-09-15 by tools/sql/2026-09-15_vital_algorithm_1st_paperback_label.sql.
 -- Mirrors data/books.json at the same commit. Insert is skipped when the ISBN already exists.
 
 START TRANSACTION;

@@ -64,8 +64,9 @@ Dôležité: ASIN tlačeného vydania **nie je** ISBN. V `isbn` poli je pre tla�
 | --- | ------------------------------------------------------ | ------------- | ----------------- | ---------- | ---------------- |
 | 1   | Kindle Edition, 2nd ed.                                | B0GGJXHQDH    | B0GGJXHQDH        | 2026-01-13 | Medical Thriller |
 | 2   | Kindle Edition, 1st ed. (title: _The_ Vital Algorithm) | B0FFGG4K4D    | B0FFGG4K4D        | 2025-11-29 | Medical Thriller |
-| 21  | Paperback                                              | 9798243848893 | B0GGQGWGQY        | 2026-01-13 | Medical Thriller |
-| 22  | Hardcover                                              | 9798243857475 | B0GGQL6LTT        | 2026-01-13 | Medical Thriller |
+| 27  | Paperback, 1st ed. (title: _The_ Vital Algorithm)      | 9798276693088 | B0G4JLDMWG        | 2025-11-29 | Medical Thriller |
+| 21  | Paperback, 2nd ed.                                     | 9798243848893 | B0GGQGWGQY        | 2026-01-13 | Medical Thriller |
+| 22  | Hardcover, 2nd ed.                                     | 9798243857475 | B0GGQL6LTT        | 2026-01-13 | Medical Thriller |
 
 ### BLOOD EQUITY: Some Cures Are Deadlier Than Disease
 
@@ -93,14 +94,16 @@ Tieto ASIN už v katalógu sú; nesmieš ich znova vložiť pod iným formátom:
 - `B0G3NXZCNF` = BLOOD EQUITY **Hardcover** (id 24), nie Paperback
 - `B0G3PZ47C1` = BLOOD EQUITY **Paperback** (id 23)
 - `B0G3MLQ1PN` = BLOOD EQUITY **Kindle** (id 3)
-- `B0GGQGWGQY` = Vital Algorithm **Paperback** (id 21), nie Hardcover
-- `B0GGQL6LTT` = Vital Algorithm **Hardcover** (id 22)
+- `B0GGQGWGQY` = Vital Algorithm **Paperback** 2nd ed. (id 21), nie Hardcover
+- `B0GGQL6LTT` = Vital Algorithm **Hardcover** 2nd ed. (id 22)
+- `B0G4JLDMWG` = *The* Vital Algorithm **Paperback** 1st ed. (id 27), nie Hardcover
 - `B0GGJXHQDH` = Vital Algorithm Kindle 2nd ed. (id 1)
 - `B0FFGG4K4D` = _The_ Vital Algorithm Kindle 1st ed. (id 2)
 
-## Aktuálny stav (11. 9. 2026)
+## Aktuálny stav (15. 9. 2026)
 
-- 26 záznamov v katalógu (`data/books.json`). Žiadne nové ASIN na pridanie oproti stavu z 2. 9. 2026; formáty a ASIN vyššie zodpovedajú JSON aj `tools/sql/2026-09-02_catalog_amazon_editions.sql`.
+- 27 záznamov v katalógu (`data/books.json`).
+- Opravené 15. 9. 2026: id 27 (`B0G4JLDMWG` / ISBN `9798276693088`) = *The* Vital Algorithm **Paperback** 1. vydanie (29. 11. 2025, 356 strán), nie Hardcover — SQL `tools/sql/2026-09-15_vital_algorithm_1st_paperback_label.sql`.
 - Pridané 2. 9. 2026: tlačené vydania (Paperback + Hardcover) Vital Algorithm, BLOOD EQUITY a Pulse Of The Body — pozri referenčnú mapu (ISBN-13 v `isbn`, ASIN v `url`).
 - Opravené 2. 9. 2026: id 2 (`B0FFGG4K4D`) = Kindle 1. vydanie „The Vital Algorithm“ (29. 11. 2025), nie paperback; id 4 (`B0DHQY58C8`) = Kindle Pulse Of The Body, nie hardcover; roky id 1–3 zosúladené s Amazonom (2026, 2025, 2025).
 - 11. 9. 2026: dokumentácia doplnená o ASIN/formát mapu po pokuse znova pridať už existujúce ASIN (`B0G2XC7PZ8`, `B0G3NXZCNF`, `B0GGQGWGQY`, `B0G2WW1CKG`) s nesprávnymi formátmi. Dáta v JSON sa nemenili.
