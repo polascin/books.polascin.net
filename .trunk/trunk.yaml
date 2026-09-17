@@ -18,7 +18,7 @@ runtimes:
 # This is the section where you manage your linters. (https://docs.trunk.io/check/configuration)
 lint:
   enabled:
-    - prettier@3.9.6
+    - prettier@3.9.7
   ignore:
     - linters: [prettier]
       paths:
