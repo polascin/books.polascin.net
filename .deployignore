@@ -16,6 +16,7 @@ phpstan.neon.dist
 phpstan-baseline.neon
 .prettierrc
 .php-cs-fixer.dist.php
+.pre-commit-config.yaml
 # Zástupné hodnoty, ale na web root nepatria — prezrádzajú názvy premenných
 # a konvenciu pomenovania databázy.
 .env.example
