@@ -388,5 +388,18 @@
         "web_url": "https://www.forumdiabetologicum.sk/",
         "language": "Slovak",
         "category": "Medical Writing"
+    },
+    {
+        "id": 31,
+        "title": "Chronická choroba obličiek v ambulancii VLD: KDIGO 2024 v klinickej praxi",
+        "author": "MUDr. Ľubomír Polaščín",
+        "year": 2026,
+        "isbn": "VP-2026-3-4-KDIGO",
+        "description": "Odborný článok v časopise Via practica 3-4/2026 (dvojčíslo), rubrika V skratke, ISSN 1339-424X. Praktický postup pre všeobecného lekára pri vyhľadávaní a potvrdení chronickej choroby obličiek podľa KDIGO 2024: eGF a uACR, potvrdenie trvania abnormalít aspoň tri mesiace, klasifikácia CGA a kritériá nefrologického vyšetrenia. Celý text je dostupný len pre predplatiteľov časopisu Via practica.",
+        "cover_image": null,
+        "url": "https://www.solen.sk/sk/casopisy/via-practica/chronicka-choroba-obliciek-v-ambulancii-vld-kdigo-2024-v-klinickej-praxi",
+        "web_url": "https://www.solen.sk/sk/casopisy/via-practica",
+        "language": "Slovak",
+        "category": "Academic Paper"
     }
 ]
