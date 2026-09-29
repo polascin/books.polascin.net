@@ -22,7 +22,7 @@ Pri pridávaní nových záznamov do `books.polascin.net/catalog.php` dodrž tie
 Tieto tituly pridaj až po oficiálnom vydaní:
 
 - `Blood Margin` (medical thriller, 18 kapitol, 389 strán): čaká na publikáciu v KDP.
-- `KDIGO 2024` (Via Practica): prijaté po peer review, čaká na formálne úpravy.
+- Rukopis `KDIGO+ESH` (Via Practica): sleduj oficiálne vydanie pred pridaním.
 
 ## Encoding a databáza
 
