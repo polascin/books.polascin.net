@@ -6,6 +6,8 @@
 .deployignore
 DEPLOY.md
 README.md
+# Interné pokyny pre agentov — na verejný web root nepatria.
+AGENTS.md
 # Interné auditné dokumenty — na server nepatria (.htaccess ich blokuje ako
 # poistku, deploy ich rovno nenahrá).
 .audit.md
