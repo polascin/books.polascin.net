@@ -31,6 +31,53 @@ test("Vital Algorithm 1st edition print is labeled as Hardcover", () => {
   assert.match(book.description, /^Hardcover - November 29, 2025/);
 });
 
+test("SK Nefro Báza 1 is held once, with both verified channels", () => {
+  const primary = "https://nefro.polascin.net/publikacia.php?slug=sk-nefro-baza-1";
+  const secondary = "https://polascin.gumroad.com/l/sk-nefro-baza-1";
+
+  const matches = books.filter(
+    (entry) =>
+      entry.isbn === "NEFRO-SKNB-1" ||
+      entry.url === primary ||
+      entry.web_url === secondary ||
+      entry.title === "SK Nefro Báza 1",
+  );
+  assert.equal(matches.length, 1, "SK Nefro Báza 1 must appear exactly once");
+
+  const [book] = matches;
+  assert.equal(book.author, "MUDr. Ľubomír Polaščín");
+  assert.equal(book.year, 2026);
+  assert.equal(book.language, "Slovak");
+  assert.equal(book.category, "Digital Product");
+
+  // nefro.polascin.net is the primary source: it is the publisher's own
+  // publication page and the only channel that states the full metadata.
+  // Gumroad is the secondary sales channel, kept in web_url.
+  assert.equal(book.url, primary);
+  assert.equal(book.web_url, secondary);
+  assert.equal(
+    book.cover_image,
+    "https://nefro.polascin.net/img/publikacie/sk-nefro-baza-1-obalka.jpg",
+  );
+
+  // Figures as printed on the primary page, verified 2026-10-03.
+  assert.match(book.description, /^E-kniha, 1\. vydanie - október 2026\./u);
+  assert.match(book.description, /405 odborných/u);
+  assert.match(book.description, /1745 strán, 476 ilustrácií/u);
+  assert.match(book.description, /PDF, EPUB, AZW3, DOCX a ODT/u);
+  assert.match(book.description, /7 EUR za jeden formát, 12 EUR za všetky formáty/u);
+
+  // No ISBN and no DOI are published for this title; none may be invented.
+  // The isbn column holds a catalog key derived from the primary source slug,
+  // which getBookIdentifier() renders as "ID" rather than as an ISBN.
+  assert.equal(book.isbn, "NEFRO-SKNB-1");
+  assert.match(book.description, /Bez ISBN a DOI/u);
+  assert.doesNotMatch(book.description, /\bISBN\s*[0-9]/u);
+  assert.doesNotMatch(book.description, /\bdoi\.org|\bDOI\s*:/iu);
+
+  assert.doesNotMatch(JSON.stringify(book), /Ã|Ä|Å/u);
+});
+
 test("Via practica KDIGO 2024 paper has a unique, correctly encoded record", () => {
   const source =
     "https://www.solen.sk/sk/casopisy/via-practica/chronicka-choroba-obliciek-v-ambulancii-vld-kdigo-2024-v-klinickej-praxi";

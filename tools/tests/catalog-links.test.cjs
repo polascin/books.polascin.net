@@ -73,27 +73,39 @@ function checkCatalog(books, source) {
   const targets = new Map();
 
   for (const book of books) {
-    const target = linkTarget(book.url);
-    if (target === null) {
-      continue;
+    // `web_url` is checked too, as of 2026-10-03. It is a secondary channel —
+    // usually an author or landing page, for which linkTarget() returns null —
+    // but when it does name a specific /dp/ edition, that edition must be this
+    // record's own, exactly as for the primary link. Only `url` feeds the
+    // one-record-per-edition map below: several records legitimately share an
+    // author page, and an author page has no target anyway.
+    for (const field of ["url", "web_url"]) {
+      const target = linkTarget(book[field]);
+      if (target === null) {
+        continue;
+      }
+
+      const own = ownIdentifiers(book);
+      assert.ok(
+        own.includes(target),
+        `${source}: entry ${book.isbn} ("${book.title}") links to ${target} in ${field}, ` +
+          `which is not its own identifier (${own.join(", ")}) — ${field}: ${book[field]}`,
+      );
+
+      if (field !== "url") {
+        continue;
+      }
+
+      // The 2026-10-02 bug was one record's link pointing at its neighbour's
+      // title, so a target claimed by two different records is also a failure.
+      const previous = targets.get(target);
+      assert.equal(
+        previous,
+        undefined,
+        `${source}: ${target} is linked by both ${previous} and ${book.isbn}`,
+      );
+      targets.set(target, book.isbn);
     }
-
-    const own = ownIdentifiers(book);
-    assert.ok(
-      own.includes(target),
-      `${source}: entry ${book.isbn} ("${book.title}") links to ${target}, ` +
-        `which is not its own identifier (${own.join(", ")}) — url: ${book.url}`,
-    );
-
-    // The 2026-10-02 bug was one record's link pointing at its neighbour's
-    // title, so a target claimed by two different records is also a failure.
-    const previous = targets.get(target);
-    assert.equal(
-      previous,
-      undefined,
-      `${source}: ${target} is linked by both ${previous} and ${book.isbn}`,
-    );
-    targets.set(target, book.isbn);
   }
 
   return targets.size;
@@ -138,7 +150,7 @@ test("database: every Amazon link resolves to its own record", { skip: !process.
     "php",
     [
       "-r",
-      'require $argv[1]; $pdo = getDbConnection(); if (!$pdo) { fwrite(STDERR, "no db"); exit(1); } echo json_encode($pdo->query("SELECT id, isbn, title, url FROM books ORDER BY id")->fetchAll(), JSON_UNESCAPED_UNICODE);',
+      'require $argv[1]; $pdo = getDbConnection(); if (!$pdo) { fwrite(STDERR, "no db"); exit(1); } echo json_encode($pdo->query("SELECT id, isbn, title, url, web_url FROM books ORDER BY id")->fetchAll(PDO::FETCH_ASSOC), JSON_UNESCAPED_UNICODE);',
       resolve(__dirname, "../../includes/functions.php"),
     ],
     { encoding: "utf8" },

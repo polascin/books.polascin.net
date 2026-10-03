@@ -73,7 +73,7 @@
         "description": "Blood Purification. Extracorporeal elimination treatment. Dialysis interventions to achieve required blood composition changes in men by its artificial machine purification on the principles of diffusion/dialysis, convection (membrane filtration), adsorption and osmosis. A comprehensive textbook about the renal replacement therapy modalities with parts very helpful for people interesting with this topic as a patient, relative, friend of the patient, however, it can bring very valuable clinical information to medical doctors specialized in nephrology and other medical specialities, nurses, dialysis technicians and any other staff of a dialysis center or nephrology clinic. You are to find here descriptions of various features of hemodialysis, hemofiltration, hemodiafiltration, continuous renal replacement therapy, hepatic dialysis, methods to replace not only the function of the kidney but those of the liver too and many more.",
         "cover_image": "https://m.media-amazon.com/images/I/819PGlxOpkL._SY466_.jpg",
         "url": "https://amzn.to/4skC8bk",
-        "web_url": "https://www.google.com/search?q=Blood%20Purification%20Extracorporeal%20Elimination%20Treatment%20Kidney%20Replacement%20Book%201%20Kindle%20Edition%20Lubomir%20Polascin",
+        "web_url": "https://www.amazon.com/Lubomir-Polascin/e/B07PN436VJ",
         "language": "English",
         "category": "Medical"
     },
@@ -388,5 +388,18 @@
         "web_url": "https://www.solen.sk/sk/casopisy/via-practica",
         "language": "Slovak",
         "category": "Academic Paper"
+    },
+    {
+        "id": 31,
+        "title": "SK Nefro Báza 1",
+        "author": "MUDr. Ľubomír Polaščín",
+        "year": 2026,
+        "isbn": "NEFRO-SKNB-1",
+        "description": "E-kniha, 1. vydanie - október 2026. Elektronický súhrn 405 odborných a vzdelávacích článkov z portálu Nefro-projekt Slovensko (nefro.polascin.net) o chronickej chorobe obličiek, dialýze, transplantácii a internej medicíne, tematicky usporiadaných a vzájomne prelinkovaných na čítanie offline. 1745 strán, 476 ilustrácií. Formáty PDF, EPUB, AZW3, DOCX a ODT; 7 EUR za jeden formát, 12 EUR za všetky formáty. Bez ISBN a DOI. Primárny zdroj: nefro.polascin.net; sekundárny predajný kanál: Gumroad (permalink mvktwf).",
+        "cover_image": "https://nefro.polascin.net/img/publikacie/sk-nefro-baza-1-obalka.jpg",
+        "url": "https://nefro.polascin.net/publikacia.php?slug=sk-nefro-baza-1",
+        "web_url": "https://polascin.gumroad.com/l/sk-nefro-baza-1",
+        "language": "Slovak",
+        "category": "Digital Product"
     }
 ]

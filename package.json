@@ -6,7 +6,8 @@
   "scripts": {
     "fonts": "node tools/fetch-fonts.mjs",
     "build:css": "tailwindcss -i tools/tailwind.src.css -o assets/css/tailwind.css --minify",
-    "build": "npm run build:css"
+    "build": "npm run build:css",
+    "test": "node --test \"tools/tests/*.test.cjs\""
   },
   "devDependencies": {
     "tailwindcss": "3.4.17"
