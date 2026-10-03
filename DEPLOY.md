@@ -13,13 +13,14 @@ súboroch, `node --check` na skriptoch a prestavba Tailwind bundle, ktorá zlyh�
 ak je commitnutý `assets/css/tailwind.css` zastaraný. Po rsyncu prebehne smoke
 test na `/`, `/privacy.php` a `/terms.php`.
 
-> **Aktuálny stav (overené 2026-08-27): `DEPLOY_*` secrets nastavené nie sú**,
-> takže job `deploy` sa iba preskočí s upozornením a workflow skončí zeleno.
-> Jediná skutočne fungujúca cesta nasadenia je zatiaľ lokálny `post-commit`
-> hook popísaný nižšie. Job `validate` beží a chráni repozitár aj tak.
+> **Aktuálny stav (overené 2026-10-03): `DEPLOY_*` secrets nastavené sú**
+> (pridané 2026-09-12), takže job `deploy` reálne beží — rsync na web root aj
+> smoke test prebehli pri commite `d34977c`. Nasadenie cez push do `main` je
+> teda plne funkčné; lokálny `post-commit` hook popísaný nižšie je druhá,
+> nezávislá cesta, nie záloha jedinej.
 
-Kým secrets nie sú nastavené, deploy job sa iba preskočí s upozornením
-(workflow nezlyhá).
+Ak by secrets chýbali, deploy job sa iba preskočí s upozornením (workflow
+nezlyhá) — tento stav platil do 2026-09-12.
 
 ## GitHub Secrets (Settings → Secrets and variables → Actions)
 
