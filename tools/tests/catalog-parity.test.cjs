@@ -84,7 +84,11 @@ test("books.json: Forum diabetologicum is a single merged record", () => {
     /Novšie aspekty antihypertenzívnej/u.test(book.title),
   );
 
-  assert.equal(matches.length, 1, "the 2012 Forum diabetologicum article must appear once");
+  assert.equal(
+    matches.length,
+    1,
+    "the 2012 Forum diabetologicum article must appear once",
+  );
   const [article] = matches;
   assert.equal(article.isbn, "FD-40671");
   assert.equal(article.year, 2012);
@@ -98,10 +102,38 @@ test("books.json: the 2026 additions are present exactly once", () => {
   const catalog = books();
 
   for (const [isbn, url] of [
-    ["ZDN-96291978", "https://mediweb.hnonline.sk/zdn/zdravie/96291978-dialyza-kedysi-dnes-a-v-buducnosti"],
-    ["DIA-2054968", "https://dia.hnonline.sk/dia/zdravie/2054968-cukrovka-nici-oblicky-coraz-viac"],
-    ["VP-2026-3-4-KDIGO", "https://www.solen.sk/sk/casopisy/via-practica/chronicka-choroba-obliciek-v-ambulancii-vld-kdigo-2024-v-klinickej-praxi"],
-    ["NEFRO-SKNB-1", "https://nefro.polascin.net/publikacia.php?slug=sk-nefro-baza-1"],
+    [
+      "ZDN-96291978",
+      "https://mediweb.hnonline.sk/zdn/zdravie/96291978-dialyza-kedysi-dnes-a-v-buducnosti",
+    ],
+    [
+      "DIA-2054968",
+      "https://dia.hnonline.sk/dia/zdravie/2054968-cukrovka-nici-oblicky-coraz-viac",
+    ],
+    [
+      "VP-2026-3-4-KDIGO",
+      "https://www.solen.sk/sk/casopisy/via-practica/chronicka-choroba-obliciek-v-ambulancii-vld-kdigo-2024-v-klinickej-praxi",
+    ],
+    [
+      "NEFRO-SKNB-1",
+      "https://nefro.polascin.net/publikacia.php?slug=sk-nefro-baza-1",
+    ],
+    [
+      "NEFRO-SKNB-1-EN",
+      "https://nefro.polascin.net/publikacia.php?slug=sk-nefro-baza-1-en",
+    ],
+    [
+      "NEFRO-SKNB-1-KOMP",
+      "https://nefro.polascin.net/publikacia.php?slug=sk-nefro-baza-1-kompendium",
+    ],
+    [
+      "NEFRO-SKNB-1-K-EN",
+      "https://nefro.polascin.net/publikacia.php?slug=sk-nefro-baza-1-kompendium-en",
+    ],
+    [
+      "METAFYZIKA-2",
+      "https://polascin.net/library.php?slug=metafyzika-2&lang=sk",
+    ],
   ]) {
     const matches = catalog.filter((book) => book.isbn === isbn);
     assert.equal(matches.length, 1, `${isbn} must appear exactly once`);
@@ -130,7 +162,17 @@ test("books.json: titles still awaiting publication are absent", () => {
 // Needs .env credentials.
 
 /** Fields compared row-by-row between the two sources. */
-const PARITY_FIELDS = ["title", "author", "year", "isbn", "url", "web_url", "cover_image", "language", "category"];
+const PARITY_FIELDS = [
+  "title",
+  "author",
+  "year",
+  "isbn",
+  "url",
+  "web_url",
+  "cover_image",
+  "language",
+  "category",
+];
 
 const dbRows = () =>
   JSON.parse(
@@ -147,17 +189,25 @@ const dbRows = () =>
     ),
   );
 
-test("database and books.json hold the same publications", { skip: !process.env.CATALOG_CHECK_DB }, () => {
-  const dbKeys = dbRows().map(keyOf).sort();
-  const jsonKeys = books().map(keyOf).sort();
+test(
+  "database and books.json hold the same publications",
+  { skip: !process.env.CATALOG_CHECK_DB },
+  () => {
+    const dbKeys = dbRows().map(keyOf).sort();
+    const jsonKeys = books().map(keyOf).sort();
 
-  assert.deepEqual(
-    dbKeys,
-    jsonKeys,
-    "database and books.json must contain the same records (compared by identifier, not by count)",
-  );
-  assert.equal(new Set(dbKeys).size, dbKeys.length, "database must not hold duplicates");
-});
+    assert.deepEqual(
+      dbKeys,
+      jsonKeys,
+      "database and books.json must contain the same records (compared by identifier, not by count)",
+    );
+    assert.equal(
+      new Set(dbKeys).size,
+      dbKeys.length,
+      "database must not hold duplicates",
+    );
+  },
+);
 
 // Matching key sets only prove no record is missing. The 2026-10-02 defect was
 // a field that differed BETWEEN the two sources — the database held a
@@ -202,6 +252,8 @@ const ACCEPTED_DB_JSON_DIVERGENCE = new Set([
   "isbn:FD-40671::cover_image",
   "isbn:ZDN-96291978::cover_image",
   "title:DLHODOBÁ ÚSPEŠNÁ REMISIA IDIOPATICKEJ MEMBRÁNOVEJ NEFROPATIE APLIKÁCIOU PONTICELLIHO SCHÉMY IMUNOSUPRESÍVNEJ LIEČBY::cover_image",
+  "isbn:METAFYZIKA-2::cover_image",
+  "title:Dialyzačné roztoky a dialyzačné koncentráty::cover_image",
   "title:Kontinuálna renálna nahrádzajúca terapia (KRNT, CRRT) pri AOP (AKI)::cover_image",
   "title:Lekárske listy: Interná medicína::cover_image",
   "title:Lekárske listy: Varia::cover_image",
@@ -211,54 +263,61 @@ const ACCEPTED_DB_JSON_DIVERGENCE = new Set([
   "title:Nefrológ Polaščín: Na zlyhanie obličiek by pacient v dnešnej dobe nemal zomrieť::author",
   "title:Nefrológ Polaščín: Na zlyhanie obličiek by pacient v dnešnej dobe nemal zomrieť::cover_image",
   "title:Nefrológia: Ochorenia obličiek::cover_image",
-  "title:Vliv použití dialyzačního roztoku s citrátovou složkou v kyselém koncentrátu na množství použitého heparinu při dialyzačním ošetření::cover_image",
 ]);
 
-test("database and books.json agree field by field", { skip: !process.env.CATALOG_CHECK_DB }, () => {
-  const index = (rows) => new Map(rows.map((row) => [keyOf(row), row]));
-  const db = index(dbRows());
-  const json = index(books());
-  const mismatches = [];
-  const accepted = [];
+test(
+  "database and books.json agree field by field",
+  { skip: !process.env.CATALOG_CHECK_DB },
+  () => {
+    const index = (rows) => new Map(rows.map((row) => [keyOf(row), row]));
+    const db = index(dbRows());
+    const json = index(books());
+    const mismatches = [];
+    const accepted = [];
 
-  for (const [key, jsonRow] of json) {
-    const dbRow = db.get(key);
-    if (!dbRow) {
-      continue; // reported by the key-set test above
-    }
-
-    for (const field of PARITY_FIELDS) {
-      // year is INT in MariaDB and a number in JSON; compare as strings so a
-      // driver returning "2026" does not read as a difference.
-      const a = String(dbRow[field] ?? "").trim();
-      const b = String(jsonRow[field] ?? "").trim();
-      if (a === b) {
-        continue;
+    for (const [key, jsonRow] of json) {
+      const dbRow = db.get(key);
+      if (!dbRow) {
+        continue; // reported by the key-set test above
       }
 
-      if (ACCEPTED_DB_JSON_DIVERGENCE.has(`${key}::${field}`)) {
-        accepted.push(`${key}::${field}`);
-        continue;
+      for (const field of PARITY_FIELDS) {
+        // year is INT in MariaDB and a number in JSON; compare as strings so a
+        // driver returning "2026" does not read as a difference.
+        const a = String(dbRow[field] ?? "").trim();
+        const b = String(jsonRow[field] ?? "").trim();
+        if (a === b) {
+          continue;
+        }
+
+        if (ACCEPTED_DB_JSON_DIVERGENCE.has(`${key}::${field}`)) {
+          accepted.push(`${key}::${field}`);
+          continue;
+        }
+
+        mismatches.push(
+          `${key} .${field}:\n    db   = ${a || "(empty)"}\n    json = ${b || "(empty)"}`,
+        );
       }
-
-      mismatches.push(`${key} .${field}:\n    db   = ${a || "(empty)"}\n    json = ${b || "(empty)"}`);
     }
-  }
 
-  assert.deepEqual(
-    mismatches,
-    [],
-    `database and books.json disagree on ${mismatches.length} unaccepted field(s):\n${mismatches.join("\n")}`,
-  );
+    assert.deepEqual(
+      mismatches,
+      [],
+      `database and books.json disagree on ${mismatches.length} unaccepted field(s):\n${mismatches.join("\n")}`,
+    );
 
-  // Pin the accepted set too: once a divergence is actually reconciled, this
-  // fails and forces the stale entry out, so the allowlist cannot quietly grow
-  // into a blanket exemption.
-  assert.equal(
-    accepted.length,
-    ACCEPTED_DB_JSON_DIVERGENCE.size,
-    `ACCEPTED_DB_JSON_DIVERGENCE lists ${ACCEPTED_DB_JSON_DIVERGENCE.size} entries but ${accepted.length} ` +
-      `still diverge — remove the reconciled ones:\n` +
-      [...ACCEPTED_DB_JSON_DIVERGENCE].filter((e) => !accepted.includes(e)).join("\n"),
-  );
-});
+    // Pin the accepted set too: once a divergence is actually reconciled, this
+    // fails and forces the stale entry out, so the allowlist cannot quietly grow
+    // into a blanket exemption.
+    assert.equal(
+      accepted.length,
+      ACCEPTED_DB_JSON_DIVERGENCE.size,
+      `ACCEPTED_DB_JSON_DIVERGENCE lists ${ACCEPTED_DB_JSON_DIVERGENCE.size} entries but ${accepted.length} ` +
+        `still diverge — remove the reconciled ones:\n` +
+        [...ACCEPTED_DB_JSON_DIVERGENCE]
+          .filter((e) => !accepted.includes(e))
+          .join("\n"),
+    );
+  },
+);

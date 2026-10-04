@@ -38,7 +38,7 @@ Pri pridávaní nových záznamov do `books.polascin.net/catalog.php` dodrž tie
   `DIA-2054968`, `FD-40671`, `NEFRO-SKNB-1`. `getBookIdentifier()` ho zobrazí
   ako `ID`, nie ako ISBN.
 - **Kľúč musí mať najviac 20 znakov.** `books.isbn` je `VARCHAR(20)` a server
-  nemá `STRICT_TRANS_TABLES`, takže dlhšiu hodnotu *bez chyby skráti* a potom
+  nemá `STRICT_TRANS_TABLES`, takže dlhšiu hodnotu _bez chyby skráti_ a potom
   ju žiadna migrácia nenájde. Kontroluje to test „every identifier fits the
   isbn column".
 - Predajné ID (napr. Gumroad permalink) daj do popisu ako text, nikdy nie do
@@ -82,6 +82,11 @@ RESOLVE_SHORTLINKS=1 node --test "tools/tests/*.test.cjs"   # + amzn.to redirect
   nie podľa počtu riadkov - rovnaký počet riadkov skryl chybu z 2026-10-02.
 - Kontrolujú sa **všetky** URL polia (`url`, `web_url`, `cover_image`), nie iba
   `url`. Tak sa našiel Google-search odkaz, ktorý prežil v `web_url`.
+
+## Dokončenie práce a nasadenie
+
+- Po úspešnom dokončení akejkoľvek úlohy v repozitári (po validácii a úspešných testoch) vždy automaticky vykonaj commit všetkých zmien, push do vetvy `main` a over nasadenie (deploy).
+- Tento krok je povinnou súčasťou záveru každej úlohy v repozitári.
 
 ## Referenčné zdroje
 

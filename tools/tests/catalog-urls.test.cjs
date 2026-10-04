@@ -27,30 +27,25 @@ const DB_QUERY =
 /** Rows straight from MariaDB, which is what production actually serves. */
 const dbRows = () =>
   JSON.parse(
-    execFileSync("php", ["-r", DB_QUERY, resolve(__dirname, "../../includes/functions.php")], {
-      encoding: "utf8",
-    }),
+    execFileSync(
+      "php",
+      ["-r", DB_QUERY, resolve(__dirname, "../../includes/functions.php")],
+      {
+        encoding: "utf8",
+      },
+    ),
   );
 
 // ---------------------------------------------------------------------------
 // Search-engine placeholders
 // ---------------------------------------------------------------------------
 
-// Conference abstracts and presentations whose primary source is not located.
-// Searched again on 2026-10-03 (web search, the author's own sites
-// sk.polascin.net / nephrosite.polascin.net / polascin.net, and the Czech
-// multidisciplinary nephrology congress proceedings): no conference, journal or
-// institutional landing page was found for any of the three, so the
-// Google-search `url` stays rather than being replaced by an invented address.
-//
-// The allowlist is keyed by field AND title, so a placeholder appearing in a
-// NEW record, or in `web_url` / `cover_image` of these same records, still
-// fails. Remove an entry the moment its real source turns up.
-const SEARCH_URL_ALLOWED = new Set([
-  "url::DLHODOBÁ ÚSPEŠNÁ REMISIA IDIOPATICKEJ MEMBRÁNOVEJ NEFROPATIE APLIKÁCIOU PONTICELLIHO SCHÉMY IMUNOSUPRESÍVNEJ LIEČBY",
-  "url::Kontinuálna renálna nahrádzajúca terapia (KRNT, CRRT) pri AOP (AKI)",
-  "url::Vliv použití dialyzačního roztoku s citrátovou složkou v kyselém koncentrátu na množství použitého heparinu při dialyzačním ošetření",
-]);
+// All three historical Google-search placeholders were replaced on 2026-10-04
+// with verified primary sources (CNNA 2014 program PDF for ID 15, Tigis AVN
+// 2016 congress program PDF for ID 12, and KNS 2013 program PDF for ID 13).
+// The allowlist is now empty so that any future search-engine placeholder will
+// fail immediately.
+const SEARCH_URL_ALLOWED = new Set([]);
 
 const SEARCH_URL =
   /^https?:\/\/(?:[a-z0-9-]+\.)*(?:google|bing|duckduckgo|yandex|ecosia|startpage)\.[a-z.]+\/(?:search|url)\b/iu;
@@ -102,7 +97,11 @@ test("books.json: every URL field is a well-formed absolute https URL", () => {
         continue;
       }
 
-      assert.equal(raw, raw.trim(), `id ${book.id}: ${field} has surrounding whitespace`);
+      assert.equal(
+        raw,
+        raw.trim(),
+        `id ${book.id}: ${field} has surrounding whitespace`,
+      );
       assert.doesNotMatch(
         raw,
         /\s/u,
@@ -153,6 +152,7 @@ const ALLOWED_HOSTS = {
     "www.amazon.com",
     "polascin.gumroad.com",
     "nefro.polascin.net",
+    "polascin.net",
     "dia.hnonline.sk",
     "mediweb.hnonline.sk",
     "www.pravda.sk",
@@ -160,18 +160,22 @@ const ALLOWED_HOSTS = {
     "www.researchgate.net",
     "www.solen.sk",
     "zona.fmed.uniba.sk",
-    "www.google.com", // only the three allowlisted placeholders above
+    "www.cnna.cz",
+    "www.tigis.cz",
+    "www.nefro.sk",
   ]),
   web_url: new Set([
     "www.amazon.com",
     "polascin.gumroad.com",
     "www.polascin.net",
+    "polascin.net",
     "dia.hnonline.sk",
     "mediweb.hnonline.sk",
     "www.forumdiabetologicum.sk",
     "www.researchgate.net",
     "www.solen.sk",
     "www.sllk.sk",
+    "www.nefro.sk",
   ]),
   cover_image: new Set([
     "m.media-amazon.com",
@@ -253,11 +257,16 @@ test("books.json: a shared web_url is a known landing page, not a stray copy", (
       `web_url ${url} is reused by ${count} records but is not a known shared landing ` +
         `page — a product or article link must belong to one record only`,
     );
-    assert.equal(count, expected, `web_url ${url} is now on ${count} records, recorded as ${expected}`);
+    assert.equal(
+      count,
+      expected,
+      `web_url ${url} is now on ${count} records, recorded as ${expected}`,
+    );
   }
 });
 
-const GUMROAD_PRODUCT = /^https:\/\/polascin\.gumroad\.com\/l\/([A-Za-z0-9-]+)/u;
+const GUMROAD_PRODUCT =
+  /^https:\/\/polascin\.gumroad\.com\/l\/([A-Za-z0-9-]+)/u;
 
 // Each Gumroad product belongs to exactly one catalog record, but it is not
 // always that record's primary `url`:
@@ -294,8 +303,13 @@ test("books.json: every Gumroad product belongs to exactly one record", () => {
     }
   }
 
-  // veszhk (id 18), hcilux (id 19) and sk-nefro-baza-1 (id 31).
-  assert.equal(owners.size, 3, `expected 3 distinct Gumroad products, found ${owners.size}`);
+  // veszhk (id 18), hcilux (id 19), sk-nefro-baza-1 (id 31), sk-nefro-baza-1-en (id 32),
+  // sk-nefro-baza-1-kompendium (id 33) and sk-nefro-baza-1-kompendium-en (id 34).
+  assert.equal(
+    owners.size,
+    6,
+    `expected 6 distinct Gumroad products, found ${owners.size}`,
+  );
 });
 
 // A product cited by the storefront record must be one the catalog actually
@@ -377,48 +391,56 @@ test(
 // Opt-in: hits the network. Non-Amazon sources only — Amazon answers bots with
 // 403/503 whether or not the link is good, and the amzn.to shortlinks have
 // their own resolver test in catalog-links.test.cjs.
-test("non-Amazon source links still resolve", { skip: !process.env.CATALOG_CHECK_URLS }, () => {
-  const AMAZON = /(?:^|\.)(?:amazon\.[a-z.]+|amzn\.to|media-amazon\.com)$/u;
-  // These answer any non-browser request with 403 (bot wall, not a dead link);
-  // noted for ResearchGate in 2026-10-02_catalog_source_url_sync.sql.
-  const BOT_WALLED = new Set(["www.researchgate.net", "www.prolekare.cz"]);
-  const failures = [];
+test(
+  "non-Amazon source links still resolve",
+  { skip: !process.env.CATALOG_CHECK_URLS },
+  () => {
+    const AMAZON = /(?:^|\.)(?:amazon\.[a-z.]+|amzn\.to|media-amazon\.com)$/u;
+    // These answer any non-browser request with 403 (bot wall, not a dead link);
+    // noted for ResearchGate in 2026-10-02_catalog_source_url_sync.sql.
+    const BOT_WALLED = new Set(["www.researchgate.net", "www.prolekare.cz"]);
+    const failures = [];
 
-  for (const book of books()) {
-    for (const field of URL_FIELDS) {
-      const raw = value(book, field);
-      if (raw === "" || raw.startsWith("data:") || SEARCH_URL.test(raw)) {
-        continue;
-      }
+    for (const book of books()) {
+      for (const field of URL_FIELDS) {
+        const raw = value(book, field);
+        if (raw === "" || raw.startsWith("data:") || SEARCH_URL.test(raw)) {
+          continue;
+        }
 
-      const { host } = new URL(raw);
-      if (AMAZON.test(host)) {
-        continue;
-      }
+        const { host } = new URL(raw);
+        if (AMAZON.test(host)) {
+          continue;
+        }
 
-      const status = execFileSync(
-        "curl",
-        [
-          "-s",
-          "-L",
-          "-o",
-          process.platform === "win32" ? "NUL" : "/dev/null",
-          "--max-time",
-          "30",
-          "-A",
-          "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/131.0 Safari/537.36",
-          "-w",
-          "%{http_code}",
-          raw,
-        ],
-        { encoding: "utf8" },
-      ).trim();
+        const status = execFileSync(
+          "curl",
+          [
+            "-s",
+            "-L",
+            "-o",
+            process.platform === "win32" ? "NUL" : "/dev/null",
+            "--max-time",
+            "30",
+            "-A",
+            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/131.0 Safari/537.36",
+            "-w",
+            "%{http_code}",
+            raw,
+          ],
+          { encoding: "utf8" },
+        ).trim();
 
-      if (status !== "200" && !(BOT_WALLED.has(host) && status === "403")) {
-        failures.push(`id ${book.id} ${field} -> HTTP ${status}: ${raw}`);
+        if (status !== "200" && !(BOT_WALLED.has(host) && status === "403")) {
+          failures.push(`id ${book.id} ${field} -> HTTP ${status}: ${raw}`);
+        }
       }
     }
-  }
 
-  assert.deepEqual(failures, [], `unreachable source links:\n${failures.join("\n")}`);
-});
+    assert.deepEqual(
+      failures,
+      [],
+      `unreachable source links:\n${failures.join("\n")}`,
+    );
+  },
+);
