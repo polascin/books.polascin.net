@@ -453,5 +453,31 @@
     "web_url": "https://polascin.net/library_file.php?slug=metafyzika-2",
     "language": "Slovak",
     "category": "Philosophy"
+  },
+  {
+    "id": 36,
+    "title": "Dopad voľby dialyzačnej membrány na hladinu albumínu",
+    "author": "Ľ. Polaščín, J. Kalatová, G. Karasová, L. Slezáková",
+    "year": 2016,
+    "isbn": "AVN-2016-MEMB",
+    "description": "Programový záznam odbornej prednášky na 38. kongrese Slovenskej nefrologickej spoločnosti s medzinárodnou účasťou, uverejnený v programe časopisu Aktuality v nefrologii (roč. 22, 2016, č. 3, s. 81). Dátum 20. 10. 2016 (štvrtok), blok Dialýza a transplantácia (16.40–17.40, 12 + 3 min.). Prednášajúci: Ľ. Polaščín, J. Kalatová, G. Karasová, L. Slezáková (Bratislava). Ide o kongresovú prednášku zaznamenanú v programe, nie o plný text článku ani abstraktu.",
+    "cover_image": null,
+    "url": "https://www.tigis.cz/images/stories/Aktuality_nefro/2016/03/AVN_program_3_2016.pdf",
+    "web_url": null,
+    "language": "Slovak",
+    "category": "Academic Paper"
+  },
+  {
+    "id": 37,
+    "title": "Ekonomika nefrologickej ambulancie",
+    "author": "M. Alaxinová, Ľ. Polaščín",
+    "year": 2016,
+    "isbn": "AVN-2016-AMB",
+    "description": "Programový záznam odbornej prednášky na 38. kongrese Slovenskej nefrologickej spoločnosti s medzinárodnou účasťou, uverejnený v programe časopisu Aktuality v nefrologii (roč. 22, 2016, č. 3, s. 82). Dátum 21. 10. 2016 (piatok), blok Ekonomika v nefrológii (9.30–11.00, 12 + 3 min.). Prednášajúci: M. Alaxinová, Ľ. Polaščín (Bratislava). Ide o kongresovú prednášku zaznamenanú v programe, nie o plný text článku ani abstraktu.",
+    "cover_image": null,
+    "url": "https://www.tigis.cz/images/stories/Aktuality_nefro/2016/03/AVN_program_3_2016.pdf",
+    "web_url": null,
+    "language": "Slovak",
+    "category": "Academic Paper"
   }
 ]

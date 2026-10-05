@@ -10,7 +10,7 @@ test("catalog distinguishes ISBNs, ASINs, other IDs and missing identifiers", ()
       "-r",
       `
     require $argv[1];
-    $values = ['9798243848893', '1090110758', 'B0GGJXHQDH', '323586471', 'N/A', '', ' n/a '];
+    $values = ['9798243848893', '1090110758', 'B0GGJXHQDH', '323586471', 'N/A', '', ' n/a ', 'AVN-2016-MEMB', 'AVN-2016-AMB'];
     echo json_encode(array_map('getBookIdentifier', $values));
   `,
       resolve(__dirname, "../../includes/functions.php"),
@@ -25,5 +25,7 @@ test("catalog distinguishes ISBNs, ASINs, other IDs and missing identifiers", ()
     null,
     null,
     null,
+    { label: "ID", value: "AVN-2016-MEMB" },
+    { label: "ID", value: "AVN-2016-AMB" },
   ]);
 });

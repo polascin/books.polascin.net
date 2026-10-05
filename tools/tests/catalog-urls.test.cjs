@@ -213,18 +213,44 @@ test("books.json: every URL field points at a known host", () => {
 // which is exactly how both the 2026-10-02 shortlink shift and the
 // double-held Forum diabetologicum record presented themselves.
 
+// Same exception as catalog-parity.test.cjs: one AVN 2016 program PDF is the
+// primary source of the page-80 poster and of talks AVN-2016-MEMB (p. 81) and
+// AVN-2016-AMB (p. 82). There is no separate page to cite.
+const SHARED_PRIMARY_URL = new Map([
+  [
+    "https://www.tigis.cz/images/stories/Aktuality_nefro/2016/03/AVN_program_3_2016.pdf",
+    3,
+  ],
+]);
+
 test("books.json: no two records share a primary url", () => {
-  const seen = new Map();
+  const counts = new Map();
 
   for (const book of books()) {
     const url = value(book, "url");
-    const previous = seen.get(url);
-    assert.equal(
-      previous,
-      undefined,
-      `url ${url} is the primary source of both id ${previous} and id ${book.id}`,
+    counts.set(url, (counts.get(url) ?? 0) + 1);
+  }
+
+  for (const [url, count] of counts) {
+    if (count === 1) {
+      continue;
+    }
+
+    const expected = SHARED_PRIMARY_URL.get(url);
+    assert.ok(
+      expected !== undefined,
+      `url ${url} is the primary source of ${count} records — a source link ` +
+        `must belong to one record unless it is a known shared congress program`,
     );
-    seen.set(url, book.id);
+    assert.equal(
+      count,
+      expected,
+      `url ${url} is now on ${count} records, recorded as ${expected}`,
+    );
+  }
+
+  for (const [url, expected] of SHARED_PRIMARY_URL) {
+    assert.equal(counts.get(url), expected);
   }
 });
 

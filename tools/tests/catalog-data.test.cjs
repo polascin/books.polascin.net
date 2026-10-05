@@ -137,10 +137,13 @@ test("ID 15: Polaščín 2014 CNNA presentation is correctly titled and attribut
 });
 
 test("ID 12 and ID 13: verified historical conference programs and authorship", () => {
-  // ID 12: Tigis 2016 program
+  // ID 12: Tigis 2016 program. The same PDF is also the only source for the
+  // two talks on printed pages 81 and 82, so the URL is shared on purpose.
   const tigisUrl =
     "https://www.tigis.cz/images/stories/Aktuality_nefro/2016/03/AVN_program_3_2016.pdf";
-  const b12 = books.find((b) => b.url === tigisUrl);
+  const tigis = books.filter((b) => b.url === tigisUrl);
+  assert.equal(tigis.length, 3, "AVN 2016 program PDF is shared by three items");
+  const b12 = tigis.find((b) => /PONTICELLIHO SCHÉMY/i.test(b.title));
   assert.ok(b12, "ID 12 must link to verified Tigis program PDF");
   assert.match(b12.title, /PONTICELLIHO SCHÉMY/i);
   assert.match(b12.description, /programový záznam/i);
@@ -212,4 +215,68 @@ test("New editions (A, B, C, D) are held with verified metadata and channels", (
     d.web_url,
     "https://polascin.net/library_file.php?slug=metafyzika-2",
   );
+});
+
+const AVN_PROGRAM =
+  "https://www.tigis.cz/images/stories/Aktuality_nefro/2016/03/AVN_program_3_2016.pdf";
+
+test("AVN 2016 congress talks are program records, not articles", () => {
+  const talks = [
+    {
+      isbn: "AVN-2016-MEMB",
+      title: "Dopad voľby dialyzačnej membrány na hladinu albumínu",
+      author: "Ľ. Polaščín, J. Kalatová, G. Karasová, L. Slezáková",
+      page: /s\. 81/u,
+      date: /20\. 10\. 2016/u,
+    },
+    {
+      isbn: "AVN-2016-AMB",
+      title: "Ekonomika nefrologickej ambulancie",
+      author: "M. Alaxinová, Ľ. Polaščín",
+      page: /s\. 82/u,
+      date: /21\. 10\. 2016/u,
+    },
+  ];
+
+  for (const expected of talks) {
+    const matches = books.filter(
+      (entry) => entry.isbn === expected.isbn || entry.title === expected.title,
+    );
+    assert.equal(matches.length, 1, `${expected.isbn} must appear exactly once`);
+
+    const [talk] = matches;
+    assert.equal(talk.isbn, expected.isbn);
+    assert.ok(talk.isbn.length <= 20, `${talk.isbn} must fit VARCHAR(20)`);
+    assert.equal(talk.title, expected.title);
+    assert.equal(talk.author, expected.author);
+    assert.equal(talk.year, 2016);
+    assert.equal(talk.language, "Slovak");
+    assert.equal(talk.category, "Academic Paper");
+    assert.equal(talk.url, AVN_PROGRAM);
+    assert.equal(talk.web_url, null);
+
+    assert.match(talk.description, /programový záznam odbornej prednášky/iu);
+    assert.match(talk.description, /kongresovú prednášku/iu);
+    assert.match(talk.description, expected.page);
+    assert.match(talk.description, expected.date);
+    assert.match(talk.description, /nie o plný text článku ani abstraktu/u);
+    assert.doesNotMatch(talk.description, /Odborný článok/u);
+    assert.doesNotMatch(JSON.stringify(talk), /Ã|Ä|Å/u);
+
+    for (const name of expected.author.split(", ")) {
+      assert.ok(
+        talk.author.includes(name) && talk.description.includes(name),
+        `${expected.isbn} must attribute ${name} in the author field and the description`,
+      );
+    }
+  }
+
+  const membrane = books.find((entry) => entry.isbn === "AVN-2016-MEMB");
+  const clinic = books.find((entry) => entry.isbn === "AVN-2016-AMB");
+  assert.equal(
+    clinic.author.indexOf("M. Alaxinová"),
+    0,
+    "the clinic-economics talk is led by M. Alaxinová",
+  );
+  assert.ok(membrane.author.startsWith("Ľ. Polaščín"));
 });

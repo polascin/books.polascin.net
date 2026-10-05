@@ -27,13 +27,24 @@ const normalizeTitle = (title) =>
     .replace(/[^\p{L}\p{N}]+/gu, " ")
     .trim();
 
+// The AVN 3/2016 program is one PDF and has no per-item URL. Three distinct
+// works cite it: the page-80 poster and the talks on pages 81 and 82
+// (AVN-2016-MEMB, AVN-2016-AMB). Sharing that URL is the source, not a
+// duplicate record. Any other repeated primary URL is still a failure.
+const SHARED_PRIMARY_URL = new Map([
+  [
+    "https://www.tigis.cz/images/stories/Aktuality_nefro/2016/03/AVN_program_3_2016.pdf",
+    3,
+  ],
+]);
+
 test("books.json: every record is unique by identifier, URL and title", () => {
-  const seen = { key: new Map(), url: new Map(), title: new Map() };
+  const seen = { key: new Map(), title: new Map() };
+  const urlCounts = new Map();
 
   for (const book of books()) {
     for (const [field, value] of [
       ["key", keyOf(book)],
-      ["url", String(book.url ?? "")],
       ["title", normalizeTitle(book.title)],
     ]) {
       const previous = seen[field].get(value);
@@ -44,6 +55,29 @@ test("books.json: every record is unique by identifier, URL and title", () => {
       );
       seen[field].set(value, book.id);
     }
+
+    const url = String(book.url ?? "");
+    urlCounts.set(url, (urlCounts.get(url) ?? 0) + 1);
+  }
+
+  for (const [url, count] of urlCounts) {
+    if (count === 1) {
+      continue;
+    }
+
+    assert.equal(
+      SHARED_PRIMARY_URL.get(url),
+      count,
+      `url ${url} is shared by ${count} records and is not a known congress program`,
+    );
+  }
+
+  for (const [url, expected] of SHARED_PRIMARY_URL) {
+    assert.equal(
+      urlCounts.get(url),
+      expected,
+      `shared program ${url} should be on ${expected} records`,
+    );
   }
 });
 
