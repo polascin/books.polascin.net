@@ -16,11 +16,13 @@ function catalog(reducedMotion) {
       title: "Vital Algorithm",
       author: "Walter",
       category: "Medical Thriller",
+      language: "English",
     },
     {
       title: "Pulse Of The Body",
       author: "Walter",
       category: "Medical Fiction",
+      language: "German",
     },
   ].map((data) => ({
     hidden: false,
@@ -36,6 +38,7 @@ function catalog(reducedMotion) {
   const elements = {
     "search-books": input(),
     "category-filter": input(),
+    "language-filter": input(),
     "results-count": { textContent: "" },
     "no-results": {
       classList: {
@@ -64,6 +67,10 @@ function catalog(reducedMotion) {
     category(value) {
       elements["category-filter"].value = value;
       elements["category-filter"].change();
+    },
+    language(value) {
+      elements["language-filter"].value = value;
+      elements["language-filter"].change();
     },
     flush() {
       timers
@@ -104,4 +111,19 @@ test("combined filters hide unmatched cards immediately and update empty state",
   );
   assert.equal(c.elements["results-count"].textContent, "1");
   assert.equal(c.elements["no-results"].classList.hidden, true);
+});
+
+test("language filter isolates German records and composes with search", () => {
+  const c = catalog(false);
+  c.language("German");
+  assert.deepEqual(
+    c.cards.map((card) => card.hidden),
+    [true, false],
+  );
+  assert.equal(c.elements["results-count"].textContent, "1");
+
+  c.search("vital");
+  assert.ok(c.cards.every((card) => card.hidden));
+  assert.equal(c.elements["results-count"].textContent, "0");
+  assert.equal(c.elements["no-results"].classList.hidden, false);
 });

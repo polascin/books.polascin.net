@@ -22,6 +22,9 @@ foreach ($books as $book) {
 $categoryList = array_keys($categories);
 sort($categoryList, SORT_NATURAL | SORT_FLAG_CASE);
 
+$languageList = array_keys($languages);
+sort($languageList, SORT_NATURAL | SORT_FLAG_CASE);
+
 $languageCount = count($languages);
 $featuredCategory = $categoryList[0] ?? 'Curated Collection';
 
@@ -163,6 +166,16 @@ include __DIR__ . '/includes/header.php';
                     <?php endforeach; ?>
                 </select>
             </div>
+
+            <div class="w-full md:w-64">
+                <label for="language-filter" class="sr-only">Filter by language</label>
+                <select id="language-filter" class="catalog-select w-full px-4 py-3 bg-white/90 border border-slate-300 rounded-2xl focus:outline-none focus:ring-2 focus:ring-slate-800 transition-shadow">
+                    <option value="">All languages</option>
+                    <?php foreach ($languageList as $language): ?>
+                        <option value="<?php echo esc_html($language); ?>"><?php echo esc_html($language); ?></option>
+                    <?php endforeach; ?>
+                </select>
+            </div>
         </div>
 
         <div class="catalog-toolbar-meta mt-4 flex flex-col gap-2 md:flex-row md:items-center md:justify-between">
@@ -233,7 +246,8 @@ include __DIR__ . '/includes/header.php';
                  <article id="book-<?php echo (int)($book['id'] ?? ($index + 1)); ?>" class="book-item book-card paper-texture rounded-[1.5rem] overflow-hidden flex flex-col transition-all duration-300 transform" 
                      data-title="<?php echo esc_html($bookTitleText); ?>" 
                      data-author="<?php echo esc_html($bookAuthorText); ?>"
-                     data-category="<?php echo esc_html($bookCategory); ?>">
+                     data-category="<?php echo esc_html($bookCategory); ?>"
+                     data-language="<?php echo esc_html($bookLanguage); ?>">
                     
                     <div class="book-card-inner paper-texture h-full flex flex-col border border-transparent hover:border-slate-300 rounded-[1.5rem] overflow-hidden">
                         <div class="catalog-card-header border-b border-slate-300/80 px-6 py-5 md:px-7">

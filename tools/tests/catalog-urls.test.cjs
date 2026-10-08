@@ -294,6 +294,93 @@ test("books.json: a shared web_url is a known landing page, not a stray copy", (
 const GUMROAD_PRODUCT =
   /^https:\/\/polascin\.gumroad\.com\/l\/([A-Za-z0-9-]+)/u;
 
+test(
+  "free SK Nefro editorials return PDF MIME and matching filenames for all requested formats",
+  { skip: !process.env.CATALOG_CHECK_URLS },
+  () => {
+    const editions = [
+      {
+        slug: "sk-nefro-dokazane-pravdepodobne-otvorene",
+        filename: "2026-10-06-sk-nefro-dokazane-pravdepodobne-otvorene.pdf",
+      },
+      {
+        slug: "sk-nefro-proven-probable-open",
+        filename: "2026-10-06-sk-nefro-dokazane-pravdepodobne-otvorene-en.pdf",
+      },
+      {
+        slug: "sk-nefro-belegt-wahrscheinlich-offen",
+        filename: "2026-10-06-sk-nefro-belegt-wahrscheinlich-offen-de.pdf",
+      },
+    ];
+    const formats = ["pdf", "epub", "azw3", "docx", "odt"];
+    const failures = [];
+
+    for (const edition of editions) {
+      for (const format of formats) {
+        const url = new URL(
+          `https://polascin.net/library_file.php?slug=${edition.slug}&download=1`,
+        );
+        url.searchParams.set("format", format);
+
+        const response = execFileSync(
+          "curl",
+          [
+            "-sS",
+            "-L",
+            "--dump-header",
+            "-",
+            "-o",
+            process.platform === "win32" ? "NUL" : "/dev/null",
+            "--max-time",
+            "30",
+            "-w",
+            "\n__STATUS__%{http_code}",
+            url.toString(),
+          ],
+          { encoding: "utf8" },
+        );
+        const statusMarker = response.lastIndexOf("\n__STATUS__");
+        const headerDump =
+          statusMarker === -1 ? response : response.slice(0, statusMarker);
+        const status =
+          statusMarker === -1
+            ? "missing"
+            : response.slice(statusMarker + "\n__STATUS__".length);
+        const finalHeaders = headerDump
+          .trim()
+          .split(/\r?\n\r?\n/u)
+          .filter((block) => block.startsWith("HTTP/"))
+          .at(-1);
+        const contentType = finalHeaders?.match(
+          /^Content-Type:\s*([^\r\n]+)/imu,
+        )?.[1];
+        const encodedFilename = finalHeaders?.match(
+          /filename\*=UTF-8''([^;\r\n]+)/iu,
+        )?.[1];
+
+        if (
+          status !== "200" ||
+          !/^application\/pdf(?:;|$)/iu.test(contentType ?? "") ||
+          !encodedFilename ||
+          decodeURIComponent(encodedFilename) !== edition.filename
+        ) {
+          failures.push(
+            `${edition.slug} (${format}): HTTP ${status}, ` +
+              `Content-Type ${contentType ?? "(missing)"}, ` +
+              `filename ${encodedFilename ? decodeURIComponent(encodedFilename) : "(missing)"}`,
+          );
+        }
+      }
+    }
+
+    assert.deepEqual(
+      failures,
+      [],
+      `free editorial downloads must identify their actual PDF bytes consistently:\n${failures.join("\n")}`,
+    );
+  },
+);
+
 // Each Gumroad product belongs to exactly one catalog record, but it is not
 // always that record's primary `url`:
 //   * ids 18 and 19 are sold on Gumroad only, so Gumroad is their `url`;

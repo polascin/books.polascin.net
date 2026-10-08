@@ -6,6 +6,13 @@ const { test } = require("node:test");
 const books = JSON.parse(
   readFileSync(resolve(__dirname, "../../data/books.json"), "utf8"),
 );
+const catalogMigration = readFileSync(
+  resolve(
+    __dirname,
+    "../sql/2026-10-08_nefro_editorials_and_german_editions.sql",
+  ),
+  "utf8",
+);
 
 test("Vital Algorithm descriptions use the correct Slovak diacritics", () => {
   for (const asin of [
@@ -63,8 +70,9 @@ test("SK Nefro Báza 1 is held once, with both verified channels", () => {
 
   // Figures as printed on the primary page, verified 2026-10-03.
   assert.match(book.description, /^E-kniha, 1\. vydanie - október 2026\./u);
-  assert.match(book.description, /405 odborných/u);
-  assert.match(book.description, /1745 strán, 476 ilustrácií/u);
+  assert.match(book.description, /387 odborných článkov/u);
+  assert.match(book.description, /1745 strán, 393 ilustrácií, 579608 slov/u);
+  assert.doesNotMatch(book.description, /405|476/u);
   assert.match(book.description, /PDF, EPUB, AZW3, DOCX a ODT/u);
   assert.match(
     book.description,
@@ -279,4 +287,115 @@ test("AVN 2016 congress talks are program records, not articles", () => {
     "the clinic-economics talk is led by M. Alaxinová",
   );
   assert.ok(membrane.author.startsWith("Ľ. Polaščín"));
+});
+
+test("2026 editions: new language records, verified metadata and unchanged totals", () => {
+  const catalog = books;
+  const additions = [
+    {
+      isbn: "NEFRO-DPO-SK",
+      title: "SK Nefro: Dokázané, pravdepodobné, otvorené",
+      language: "Slovak",
+      pages: /94 strán/u,
+      url: "https://polascin.net/library.php?slug=sk-nefro-dokazane-pravdepodobne-otvorene&lang=sk",
+    },
+    {
+      isbn: "NEFRO-PPO-EN",
+      title: "SK Nefro: Proven, Probable, Open",
+      language: "English",
+      pages: /97 pages/u,
+      url: "https://polascin.net/library.php?slug=sk-nefro-proven-probable-open&lang=sk",
+    },
+    {
+      isbn: "NEFRO-BWO-DE",
+      title: "SK Nefro: Belegt, wahrscheinlich, offen",
+      language: "German",
+      pages: /105 Seiten/u,
+      url: "https://polascin.net/library.php?slug=sk-nefro-belegt-wahrscheinlich-offen&lang=sk",
+    },
+    {
+      isbn: "NEFRO-SKNB-1-DE",
+      title: "SK Nefro Báza 1 — Deutsche Ausgabe",
+      language: "German",
+      pages: /387 odborných článkov na 1912 stranách, 393 ilustrácií a 652560 slov/u,
+      url: "https://nefro.polascin.net/publikacia.php?slug=sk-nefro-baza-1-de",
+    },
+    {
+      isbn: "NEFRO-SKNB-1-K-DE",
+      title: "SK Nefro Báza 1 Kompendium — Deutsche Ausgabe",
+      language: "German",
+      pages: /387 odborných článkov.*300 stranách; 137769 slov, bez ilustrácií/u,
+      url: "https://nefro.polascin.net/publikacia.php?slug=sk-nefro-baza-1-kompendium-de",
+    },
+    {
+      isbn: "METAFYZIKA",
+      title: "Metafyzika",
+      language: "Slovak",
+      pages: /27\. septembra 2026.*1\. októbra 2026.*29 strán/u,
+      url: "https://polascin.net/library.php?slug=metafyzika&lang=sk",
+    },
+  ];
+
+  for (const expected of additions) {
+    const matches = catalog.filter(
+      (entry) =>
+        entry.isbn === expected.isbn ||
+        (entry.title === expected.title &&
+          entry.language === expected.language &&
+          entry.url === expected.url),
+    );
+    assert.equal(matches.length, 1, `${expected.title} must appear exactly once`);
+
+    const [entry] = matches;
+    assert.equal(entry.title, expected.title);
+    assert.equal(entry.language, expected.language);
+    assert.equal(entry.category, expected.isbn === "METAFYZIKA" ? "Philosophy" : "Digital Product");
+    assert.equal(entry.url, expected.url);
+    assert.match(entry.description, expected.pages);
+    assert.ok(entry.isbn.length <= 20, `${entry.isbn} must fit VARCHAR(20)`);
+  }
+
+  for (const key of ["NEFRO-DPO-SK", "NEFRO-PPO-EN", "NEFRO-BWO-DE"]) {
+    const entry = catalog.find((book) => book.isbn === key);
+    assert.match(entry.description, /16/u);
+    assert.match(entry.description, /387/u);
+    assert.match(entry.description, /not the complete|nejde o úplný|kein vollständiger/u);
+    assert.match(entry.description, /all rights reserved|všetky práva vyhradené|alle Rechte vorbehalten/u);
+    assert.match(
+      entry.description,
+      /does not grant an open license|neudeľuje otvorenú licenciu|keine offene Lizenz/u,
+    );
+  }
+
+  assert.equal(catalog.length, 43);
+  assert.equal(
+    catalog.filter((entry) => entry.isbn !== "METAFYZIKA").length,
+    42,
+  );
+  assert.equal(new Set(catalog.map((entry) => entry.category)).size, 9);
+  assert.equal(new Set(catalog.map((entry) => entry.language)).size, 3);
+  assert.equal(catalog.filter((entry) => entry.language === "German").length, 3);
+});
+
+test("catalog migration mirrors the changed JSON record descriptions", () => {
+  for (const key of [
+    "NEFRO-SKNB-1",
+    "NEFRO-DPO-SK",
+    "NEFRO-PPO-EN",
+    "NEFRO-BWO-DE",
+    "NEFRO-SKNB-1-DE",
+    "NEFRO-SKNB-1-K-DE",
+    "METAFYZIKA",
+  ]) {
+    const entry = books.find((book) => book.isbn === key);
+    assert.ok(entry, `${key} must exist in books.json`);
+    assert.ok(
+      catalogMigration.includes(entry.description),
+      `${key}: SQL migration description must match data/books.json`,
+    );
+    assert.ok(
+      catalogMigration.includes(`'${key}'`),
+      `${key}: SQL migration must use the stable catalog key`,
+    );
+  }
 });
