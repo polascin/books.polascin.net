@@ -68,6 +68,10 @@ test("SK Nefro Báza 1 Kindle editions have distinct verified catalog records", 
     assert.doesNotMatch(JSON.stringify(entry), /Ã|Ä|Å/u);
   }
 });
+const salesSourceMigration = readFileSync(
+  resolve(__dirname, "../sql/2026-10-11_nefro_bwo_de_sales_source.sql"),
+  "utf8",
+);
 
 test("Vital Algorithm descriptions use the correct Slovak diacritics", () => {
   for (const asin of [
@@ -143,6 +147,46 @@ test("SK Nefro Báza 1 is held once, with both verified channels", () => {
   assert.doesNotMatch(book.description, /\bdoi\.org|\bDOI\s*:/iu);
 
   assert.doesNotMatch(JSON.stringify(book), /Ã|Ä|Å/u);
+});
+
+test("NEFRO-BWO-DE keeps the free PDF primary and adds the paid Gumroad bundle", () => {
+  const matches = books.filter((entry) => entry.isbn === "NEFRO-BWO-DE");
+  assert.equal(matches.length, 1, "NEFRO-BWO-DE must remain a single catalog record");
+
+  const [book] = matches;
+  assert.equal(book.title, "SK Nefro: Belegt, wahrscheinlich, offen");
+  assert.equal(book.language, "German");
+  assert.equal(book.category, "Digital Product");
+  assert.equal(
+    book.url,
+    "https://polascin.net/library.php?slug=sk-nefro-belegt-wahrscheinlich-offen&lang=sk",
+  );
+  assert.equal(
+    book.web_url,
+    "https://polascin.gumroad.com/l/sk-nefro-belegt-wahrscheinlich-offen-de",
+  );
+  assert.match(book.description, /^Kostenloses PDF \(105 Seiten\)/u);
+  assert.match(book.description, /16 Kapitel-Editorials und einem Editorial zum Anhang/u);
+  assert.match(book.description, /separates kostenpflichtiges Gumroad-Paket/iu);
+  assert.match(book.description, /17 erweiterte Kapitel-Editorials zu 387 Fachartikeln/u);
+  assert.match(book.description, /PDF, EPUB, AZW3, DOCX und ODT; ohne DRM/u);
+  assert.match(book.description, /keine offene Lizenz/u);
+  assert.match(book.description, /Ohne ISBN und DOI/u);
+  assert.doesNotMatch(book.description, /Ã|Ä|Å/u);
+
+  assert.match(salesSourceMigration, /CREATE TABLE IF NOT EXISTS[\s\S]*?START TRANSACTION/u);
+  assert.match(salesSourceMigration, /WHERE isbn = 'NEFRO-BWO-DE'/u);
+  assert.match(salesSourceMigration, /NOT \(description <=>/u);
+  assert.match(salesSourceMigration, /NOT \(web_url <=>/u);
+  assert.match(salesSourceMigration, /COMMIT;[\s\S]*?Rollback/u);
+  assert.ok(
+    salesSourceMigration.includes(book.description),
+    "SQL migration must contain the exact JSON description",
+  );
+  assert.ok(
+    salesSourceMigration.includes(`'${book.web_url}'`),
+    "SQL migration must contain the exact JSON secondary URL",
+  );
 });
 
 test("Via practica KDIGO 2024 paper has a unique, correctly encoded record", () => {
@@ -437,7 +481,6 @@ test("catalog migration mirrors the changed JSON record descriptions", () => {
     "NEFRO-SKNB-1",
     "NEFRO-DPO-SK",
     "NEFRO-PPO-EN",
-    "NEFRO-BWO-DE",
     "NEFRO-SKNB-1-DE",
     "NEFRO-SKNB-1-K-DE",
     "METAFYZIKA",
