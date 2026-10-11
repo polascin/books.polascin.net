@@ -201,12 +201,16 @@ const PARITY_FIELDS = [
   "author",
   "year",
   "isbn",
+  "description",
   "url",
   "web_url",
   "cover_image",
   "language",
   "category",
 ];
+// An isolated database seeded from books.json should be byte-for-byte
+// equivalent. Production parity retains its reviewed divergence allowlist.
+const EXPECT_DB_JSON_EXACT = Boolean(process.env.CATALOG_CHECK_DB_EXACT);
 
 const dbRows = () =>
   JSON.parse(
@@ -215,7 +219,7 @@ const dbRows = () =>
       [
         "-r",
         'require $argv[1]; $pdo = getDbConnection(); if (!$pdo) { fwrite(STDERR, "no db"); exit(1); } ' +
-          'echo json_encode($pdo->query("SELECT id, title, author, year, isbn, url, web_url, cover_image, language, category FROM books ORDER BY id")' +
+          'echo json_encode($pdo->query("SELECT id, title, author, year, isbn, description, url, web_url, cover_image, language, category FROM books ORDER BY id")' +
           "->fetchAll(PDO::FETCH_ASSOC), JSON_UNESCAPED_UNICODE);",
         resolve(__dirname, "../../includes/functions.php"),
       ],
@@ -344,14 +348,19 @@ test(
     // Pin the accepted set too: once a divergence is actually reconciled, this
     // fails and forces the stale entry out, so the allowlist cannot quietly grow
     // into a blanket exemption.
+    const expectedAcceptedDivergences = EXPECT_DB_JSON_EXACT
+      ? 0
+      : ACCEPTED_DB_JSON_DIVERGENCE.size;
     assert.equal(
       accepted.length,
-      ACCEPTED_DB_JSON_DIVERGENCE.size,
-      `ACCEPTED_DB_JSON_DIVERGENCE lists ${ACCEPTED_DB_JSON_DIVERGENCE.size} entries but ${accepted.length} ` +
-        `still diverge — remove the reconciled ones:\n` +
-        [...ACCEPTED_DB_JSON_DIVERGENCE]
-          .filter((e) => !accepted.includes(e))
-          .join("\n"),
+      expectedAcceptedDivergences,
+      EXPECT_DB_JSON_EXACT
+        ? `isolated database has ${accepted.length} unexpected allowed divergence(s):\n${accepted.join("\n")}`
+        : `ACCEPTED_DB_JSON_DIVERGENCE lists ${ACCEPTED_DB_JSON_DIVERGENCE.size} entries but ${accepted.length} ` +
+            `still diverge — remove the reconciled ones:\n` +
+            [...ACCEPTED_DB_JSON_DIVERGENCE]
+              .filter((e) => !accepted.includes(e))
+              .join("\n"),
     );
   },
 );
