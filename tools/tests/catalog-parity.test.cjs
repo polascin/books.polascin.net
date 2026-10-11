@@ -201,6 +201,7 @@ const PARITY_FIELDS = [
   "author",
   "year",
   "isbn",
+  "description",
   "url",
   "web_url",
   "cover_image",
@@ -218,7 +219,7 @@ const dbRows = () =>
       [
         "-r",
         'require $argv[1]; $pdo = getDbConnection(); if (!$pdo) { fwrite(STDERR, "no db"); exit(1); } ' +
-          'echo json_encode($pdo->query("SELECT id, title, author, year, isbn, url, web_url, cover_image, language, category FROM books ORDER BY id")' +
+          'echo json_encode($pdo->query("SELECT id, title, author, year, isbn, description, url, web_url, cover_image, language, category FROM books ORDER BY id")' +
           "->fetchAll(PDO::FETCH_ASSOC), JSON_UNESCAPED_UNICODE);",
         resolve(__dirname, "../../includes/functions.php"),
       ],

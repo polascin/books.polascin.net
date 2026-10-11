@@ -132,6 +132,12 @@ record). Neither is deployed — both are listed in `.deployignore`.
 
 `.github/workflows/secret-scan.yml` runs on every push and pull request, scanning newly introduced commits with the same pattern set as the local hooks.
 
+For a new branch, CI also scans its reachable history. Empty assignment names
+inside Markdown code spans are treated as documentation, not credential values;
+nonempty assignments and other credentials on the same line remain scanned.
+`tools/tests/secret-scan.test.cjs` exercises the actual workflow scan block
+against the historical documentation and synthetic credential fixtures.
+
 `.github/workflows/deploy.yml` runs a `validate` job first — `php -l` over every
 tracked PHP file, `node --check` over the scripts, and a rebuild of the Tailwind
 bundle that fails if the committed `assets/css/tailwind.css` is stale — and only
