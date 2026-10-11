@@ -150,6 +150,7 @@ const ALLOWED_HOSTS = {
   url: new Set([
     "amzn.to",
     "www.amazon.com",
+    "www.amazon.co.uk",
     "polascin.gumroad.com",
     "nefro.polascin.net",
     "polascin.net",
@@ -166,9 +167,11 @@ const ALLOWED_HOSTS = {
   ]),
   web_url: new Set([
     "www.amazon.com",
+    "www.amazon.co.uk",
     "polascin.gumroad.com",
     "www.polascin.net",
     "polascin.net",
+    "nefro.polascin.net",
     "dia.hnonline.sk",
     "mediweb.hnonline.sk",
     "www.forumdiabetologicum.sk",

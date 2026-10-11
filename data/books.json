@@ -557,5 +557,31 @@
     "web_url": "https://polascin.net/library_file.php?slug=metafyzika&download=1",
     "language": "Slovak",
     "category": "Philosophy"
+  },
+  {
+    "id": 44,
+    "title": "SK Nefro Báza 1: Súhrn odborných článkov z portálu nefro.polascin.net, apríl - október 2026 (Kindle Edition)",
+    "author": "MUDr. Ľubomír Polaščín",
+    "year": 2026,
+    "isbn": "B0HM2VHKFV",
+    "description": "Kindle Edition, 1. vydanie - 6. októbra 2026. Súhrn 405 odborných článkov vrátane ťahákov a textov pre pacientov; 1 745 strán. Primárny zdroj: Amazon.co.uk; sekundárny zdroj: nefro.polascin.net (ASIN B0HM2VHKFV).",
+    "cover_image": null,
+    "url": "https://www.amazon.co.uk/SK-Nefro-B%C3%A1za-odborn%C3%BDch-nefro-polascin-net-ebook/dp/B0HM2VHKFV",
+    "web_url": "https://nefro.polascin.net/publikacia.php?slug=sk-nefro-baza-1",
+    "language": "Slovak",
+    "category": "Medical"
+  },
+  {
+    "id": 45,
+    "title": "SK Nefro Báza 1 - English edition: Collected specialist articles from nefro.polascin.net, April - October 2026 (Kindle Edition)",
+    "author": "Ľubomír Polaščín",
+    "year": 2026,
+    "isbn": "B0HM3F4F8T",
+    "description": "Kindle Edition, 1st edition - October 6, 2026. English collection of 387 specialist articles, including cheat sheets; 1,782 pages and 393 illustrations. Primary source: Amazon.co.uk; secondary source: nefro.polascin.net (ASIN B0HM3F4F8T).",
+    "cover_image": null,
+    "url": "https://www.amazon.co.uk/Nefro-B%C3%A1za-Collected-specialist-nefro-polascin-net-ebook/dp/B0HM3F4F8T",
+    "web_url": "https://nefro.polascin.net/publikacia.php?slug=sk-nefro-baza-1-en",
+    "language": "English",
+    "category": "Medical"
   }
 ]

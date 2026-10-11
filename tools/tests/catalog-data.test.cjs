@@ -13,6 +13,61 @@ const catalogMigration = readFileSync(
   ),
   "utf8",
 );
+const kindleMigration = readFileSync(
+  resolve(__dirname, "../sql/2026-10-11_nefro_baza_1_kindle_editions.sql"),
+  "utf8",
+);
+
+test("SK Nefro Báza 1 Kindle editions have distinct verified catalog records", () => {
+  const expected = [
+    {
+      isbn: "B0HM2VHKFV",
+      title:
+        "SK Nefro Báza 1: Súhrn odborných článkov z portálu nefro.polascin.net, apríl - október 2026 (Kindle Edition)",
+      language: "Slovak",
+      author: "MUDr. Ľubomír Polaščín",
+      url: "https://www.amazon.co.uk/SK-Nefro-B%C3%A1za-odborn%C3%BDch-nefro-polascin-net-ebook/dp/B0HM2VHKFV",
+      webUrl: "https://nefro.polascin.net/publikacia.php?slug=sk-nefro-baza-1",
+      description: /405 odborných článkov.*1 745 strán/u,
+    },
+    {
+      isbn: "B0HM3F4F8T",
+      title:
+        "SK Nefro Báza 1 - English edition: Collected specialist articles from nefro.polascin.net, April - October 2026 (Kindle Edition)",
+      language: "English",
+      author: "Ľubomír Polaščín",
+      url: "https://www.amazon.co.uk/Nefro-B%C3%A1za-Collected-specialist-nefro-polascin-net-ebook/dp/B0HM3F4F8T",
+      webUrl: "https://nefro.polascin.net/publikacia.php?slug=sk-nefro-baza-1-en",
+      description: /387 specialist articles.*1,782 pages and 393 illustrations/u,
+    },
+  ];
+
+  for (const expectedEntry of expected) {
+    const matches = books.filter(
+      (entry) =>
+        entry.isbn === expectedEntry.isbn ||
+        entry.title === expectedEntry.title,
+    );
+    assert.equal(matches.length, 1, `${expectedEntry.isbn} must appear once`);
+
+    const [entry] = matches;
+    assert.equal(entry.title, expectedEntry.title);
+    assert.equal(entry.author, expectedEntry.author);
+    assert.equal(entry.year, 2026);
+    assert.equal(entry.isbn.length <= 20, true);
+    assert.equal(entry.url, expectedEntry.url);
+    assert.equal(entry.web_url, expectedEntry.webUrl);
+    assert.equal(entry.language, expectedEntry.language);
+    assert.equal(entry.category, "Medical");
+    assert.match(entry.description, expectedEntry.description);
+    assert.ok(kindleMigration.includes(`'${entry.title}'`));
+    assert.ok(kindleMigration.includes(`'${entry.url}'`));
+    assert.ok(kindleMigration.includes(`'${entry.web_url}'`));
+    assert.ok(kindleMigration.includes(`'${expectedEntry.isbn}'`));
+    assert.ok(kindleMigration.includes(entry.description));
+    assert.doesNotMatch(JSON.stringify(entry), /Ã|Ä|Å/u);
+  }
+});
 
 test("Vital Algorithm descriptions use the correct Slovak diacritics", () => {
   for (const asin of [
@@ -367,10 +422,10 @@ test("2026 editions: new language records, verified metadata and unchanged total
     );
   }
 
-  assert.equal(catalog.length, 43);
+  assert.equal(catalog.length, 45);
   assert.equal(
     catalog.filter((entry) => entry.isbn !== "METAFYZIKA").length,
-    42,
+    44,
   );
   assert.equal(new Set(catalog.map((entry) => entry.category)).size, 9);
   assert.equal(new Set(catalog.map((entry) => entry.language)).size, 3);
