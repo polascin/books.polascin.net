@@ -168,10 +168,29 @@ test("books.json: the 2026 additions are present exactly once", () => {
       "METAFYZIKA-2",
       "https://polascin.net/library.php?slug=metafyzika-2&lang=sk",
     ],
+    [
+      "METAFYZIKA-3",
+      "https://polascin.net/library.php?slug=metafyzika-3&lang=sk",
+    ],
+    [
+      "GENERACIE-HIST",
+      "https://polascin.net/library.php?slug=generacie-v-dejinach-a-sucasnosti&lang=sk",
+    ],
+    [
+      "NEFRO-DPA-IT",
+      "https://polascin.net/library.php?slug=sk-nefro-dimostrato-probabile-aperto&lang=sk",
+    ],
   ]) {
     const matches = catalog.filter((book) => book.isbn === isbn);
     assert.equal(matches.length, 1, `${isbn} must appear exactly once`);
     assert.equal(matches[0].url, url);
+  }
+
+  for (const isbn of ["METAFYZIKA-3", "GENERACIE-HIST", "NEFRO-DPA-IT"]) {
+    const book = catalog.find((item) => item.isbn === isbn);
+    assert.equal(book.language, isbn === "NEFRO-DPA-IT" ? "Italian" : "Slovak");
+    assert.equal(book.category, "Digital Product");
+    assert.equal(book.author, "MUDr. Ľubomír Polaščín");
   }
 });
 

@@ -17,6 +17,10 @@ const kindleMigration = readFileSync(
   resolve(__dirname, "../sql/2026-10-11_nefro_baza_1_kindle_editions.sql"),
   "utf8",
 );
+const newPublicationsMigration = readFileSync(
+  resolve(__dirname, "../sql/2026-10-18_metafyzika_3_and_generacie.sql"),
+  "utf8",
+);
 
 test("SK Nefro Báza 1 Kindle editions have distinct verified catalog records", () => {
   const expected = [
@@ -388,7 +392,7 @@ test("AVN 2016 congress talks are program records, not articles", () => {
   assert.ok(membrane.author.startsWith("Ľ. Polaščín"));
 });
 
-test("2026 editions: new language records, verified metadata and unchanged totals", () => {
+test("2026 editions: new language records, verified metadata and catalog totals", () => {
   const catalog = books;
   const additions = [
     {
@@ -433,6 +437,27 @@ test("2026 editions: new language records, verified metadata and unchanged total
       pages: /27\. septembra 2026.*1\. októbra 2026.*29 strán/u,
       url: "https://polascin.net/library.php?slug=metafyzika&lang=sk",
     },
+    {
+      isbn: "METAFYZIKA-3",
+      title: "Metafyzika 3",
+      language: "Slovak",
+      pages: /18\. októbra 2026.*17\. októbra 2026.*25 strán, 359 kB/u,
+      url: "https://polascin.net/library.php?slug=metafyzika-3&lang=sk",
+    },
+    {
+      isbn: "GENERACIE-HIST",
+      title: "Generácie v dejinách a v súčasnosti",
+      language: "Slovak",
+      pages: /17\. októbra 2026.*35 strán, 256 kB/u,
+      url: "https://polascin.net/library.php?slug=generacie-v-dejinach-a-sucasnosti&lang=sk",
+    },
+    {
+      isbn: "NEFRO-DPA-IT",
+      title: "SK Nefro: Dimostrato, probabile, aperto",
+      language: "Italian",
+      pages: /13\. októbra 2026.*1,1 MB/u,
+      url: "https://polascin.net/library.php?slug=sk-nefro-dimostrato-probabile-aperto&lang=sk",
+    },
   ];
 
   for (const expected of additions) {
@@ -466,14 +491,15 @@ test("2026 editions: new language records, verified metadata and unchanged total
     );
   }
 
-  assert.equal(catalog.length, 45);
+  assert.equal(catalog.length, 48);
   assert.equal(
     catalog.filter((entry) => entry.isbn !== "METAFYZIKA").length,
-    44,
+    47,
   );
   assert.equal(new Set(catalog.map((entry) => entry.category)).size, 9);
-  assert.equal(new Set(catalog.map((entry) => entry.language)).size, 3);
+  assert.equal(new Set(catalog.map((entry) => entry.language)).size, 4);
   assert.equal(catalog.filter((entry) => entry.language === "German").length, 3);
+  assert.equal(catalog.filter((entry) => entry.language === "Italian").length, 1);
 });
 
 test("catalog migration mirrors the changed JSON record descriptions", () => {
@@ -496,4 +522,21 @@ test("catalog migration mirrors the changed JSON record descriptions", () => {
       `${key}: SQL migration must use the stable catalog key`,
     );
   }
+});
+
+test("new publication migration matches its JSON records and backs up before transaction", () => {
+  for (const key of ["METAFYZIKA-3", "GENERACIE-HIST", "NEFRO-DPA-IT"]) {
+    const entry = books.find((book) => book.isbn === key);
+    assert.ok(entry, `${key} must exist in books.json`);
+    assert.ok(newPublicationsMigration.includes(entry.description));
+    assert.ok(newPublicationsMigration.includes(`'${key}'`));
+    assert.ok(newPublicationsMigration.includes(`'${entry.url}'`));
+    assert.ok(newPublicationsMigration.includes(`'${entry.web_url}'`));
+  }
+
+  assert.ok(
+    newPublicationsMigration.indexOf("CREATE TABLE IF NOT EXISTS") <
+      newPublicationsMigration.indexOf("\nSTART TRANSACTION;"),
+    "backup table must be created before the transaction starts",
+  );
 });

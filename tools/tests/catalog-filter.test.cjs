@@ -24,6 +24,12 @@ function catalog(reducedMotion) {
       category: "Medical Fiction",
       language: "German",
     },
+    {
+      title: "SK Nefro: Dimostrato, probabile, aperto",
+      author: "Lubomir",
+      category: "Digital Product",
+      language: "Italian",
+    },
   ].map((data) => ({
     hidden: false,
     style: {},
@@ -88,11 +94,11 @@ for (const reducedMotion of [false, true]) {
     c.search("missing");
     c.search("");
     c.flush();
-    assert.equal(c.elements["results-count"].textContent, "2");
+    assert.equal(c.elements["results-count"].textContent, "3");
     assert.equal(
       c.cards.filter((card) => !card.hidden && card.style.display !== "none")
         .length,
-      2,
+      3,
     );
   });
 }
@@ -107,7 +113,7 @@ test("combined filters hide unmatched cards immediately and update empty state",
   c.search("walter");
   assert.deepEqual(
     c.cards.map((card) => card.hidden),
-    [true, false],
+    [true, false, true],
   );
   assert.equal(c.elements["results-count"].textContent, "1");
   assert.equal(c.elements["no-results"].classList.hidden, true);
@@ -118,7 +124,7 @@ test("language filter isolates German records and composes with search", () => {
   c.language("German");
   assert.deepEqual(
     c.cards.map((card) => card.hidden),
-    [true, false],
+    [true, false, true],
   );
   assert.equal(c.elements["results-count"].textContent, "1");
 
@@ -126,4 +132,14 @@ test("language filter isolates German records and composes with search", () => {
   assert.ok(c.cards.every((card) => card.hidden));
   assert.equal(c.elements["results-count"].textContent, "0");
   assert.equal(c.elements["no-results"].classList.hidden, false);
+});
+
+test("language filter supports Italian records", () => {
+  const c = catalog(false);
+  c.language("Italian");
+  assert.deepEqual(
+    c.cards.map((card) => card.hidden),
+    [true, true, false],
+  );
+  assert.equal(c.elements["results-count"].textContent, "1");
 });

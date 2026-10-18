@@ -583,5 +583,44 @@
     "web_url": "https://nefro.polascin.net/publikacia.php?slug=sk-nefro-baza-1-en",
     "language": "English",
     "category": "Medical"
+  },
+  {
+    "id": 46,
+    "title": "Metafyzika 3",
+    "author": "MUDr. Ľubomír Polaščín",
+    "year": 2026,
+    "isbn": "METAFYZIKA-3",
+    "description": "PDF, slovenské vydanie na 18. októbra 2026; do knižnice pridané 17. októbra 2026. Tretí diel Nedeľnej metafyziky: analytický spis o gnóze a gnosticizme, pôvode človeka, nedokonalosti sveta a poznaní, ktoré má oslobodzovať. 25 strán, 359 kB. Bez ISBN a DOI (interný katalógový identifikátor: METAFYZIKA-3).",
+    "cover_image": null,
+    "url": "https://polascin.net/library.php?slug=metafyzika-3&lang=sk",
+    "web_url": "https://polascin.net/library_file.php?slug=metafyzika-3&download=1",
+    "language": "Slovak",
+    "category": "Digital Product"
+  },
+  {
+    "id": 47,
+    "title": "Generácie v dejinách a v súčasnosti",
+    "author": "MUDr. Ľubomír Polaščín",
+    "year": 2026,
+    "isbn": "GENERACIE-HIST",
+    "description": "PDF, rozšírené vydanie zo 17. októbra 2026; do knižnice pridané 17. októbra 2026. Kritická analytická štúdia o vzniku, pomenovaniach a charakteristikách generácií a medzigeneračných vzťahoch, v medzinárodnom prehľade so slovenským a československým kontextom, vrátane jazyka, slangu, zdravotníctva a vzdelávania. 35 strán, 256 kB. Bez ISBN a DOI (interný katalógový identifikátor: GENERACIE-HIST).",
+    "cover_image": null,
+    "url": "https://polascin.net/library.php?slug=generacie-v-dejinach-a-sucasnosti&lang=sk",
+    "web_url": "https://polascin.net/library_file.php?slug=generacie-v-dejinach-a-sucasnosti&download=1",
+    "language": "Slovak",
+    "category": "Digital Product"
+  },
+  {
+    "id": 48,
+    "title": "SK Nefro: Dimostrato, probabile, aperto",
+    "author": "MUDr. Ľubomír Polaščín",
+    "year": 2026,
+    "isbn": "NEFRO-DPA-IT",
+    "description": "PDF, talianske vydanie; do knižnice pridané 13. októbra 2026. Kapitolové úvodníky k publikácii SK Nefro Báza 1 o nefrológii a internej medicíne, pokrývajúce články z obdobia 25. apríla až 2. októbra 2026. Veľkosť 1,1 MB. Bez ISBN a DOI (interný katalógový identifikátor: NEFRO-DPA-IT).",
+    "cover_image": null,
+    "url": "https://polascin.net/library.php?slug=sk-nefro-dimostrato-probabile-aperto&lang=sk",
+    "web_url": "https://polascin.net/library_file.php?slug=sk-nefro-dimostrato-probabile-aperto&download=1",
+    "language": "Italian",
+    "category": "Digital Product"
   }
 ]
