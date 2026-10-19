@@ -21,6 +21,24 @@ const newPublicationsMigration = readFileSync(
   resolve(__dirname, "../sql/2026-10-18_metafyzika_3_and_generacie.sql"),
   "utf8",
 );
+const italianMigration = readFileSync(
+  resolve(__dirname, "../sql/2026-10-19_italian_sknb_editions.sql"),
+  "utf8",
+);
+
+test("Italian SK Nefro migration mirrors JSON and backs up before transaction", () => {
+  for (const key of ["NEFRO-SKNB-1-IT", "NEFRO-SKNB-1-K-IT"]) {
+    const entry = books.find((book) => book.isbn === key);
+    assert.ok(entry, `${key} must exist in books.json`);
+    for (const field of ["description", "cover_image", "url", "web_url", "title"]) {
+      assert.ok(italianMigration.includes(entry[field]), `${key}: ${field}`);
+    }
+  }
+  assert.ok(
+    italianMigration.indexOf("CREATE TABLE IF NOT EXISTS") <
+      italianMigration.indexOf("\nSTART TRANSACTION;"),
+  );
+});
 
 test("SK Nefro Báza 1 Kindle editions have distinct verified catalog records", () => {
   const expected = [
@@ -458,6 +476,20 @@ test("2026 editions: new language records, verified metadata and catalog totals"
       pages: /13\. októbra 2026.*1,1 MB/u,
       url: "https://polascin.net/library.php?slug=sk-nefro-dimostrato-probabile-aperto&lang=sk",
     },
+    {
+      isbn: "NEFRO-SKNB-1-IT",
+      title: "SK Nefro Báza 1 — Edizione italiana",
+      language: "Italian",
+      pages: /387 odborných článkov na 1853 stranách, 393 ilustrácií a 722612 slov/u,
+      url: "https://nefro.polascin.net/publikacia.php?slug=sk-nefro-baza-1-it",
+    },
+    {
+      isbn: "NEFRO-SKNB-1-K-IT",
+      title: "SK Nefro Báza 1 Compendio — Edizione italiana",
+      language: "Italian",
+      pages: /387 odborných článkov.*290 stranách; 154412 slov, bez ilustrácií/u,
+      url: "https://nefro.polascin.net/publikacia.php?slug=sk-nefro-baza-1-kompendium-it",
+    },
   ];
 
   for (const expected of additions) {
@@ -491,15 +523,19 @@ test("2026 editions: new language records, verified metadata and catalog totals"
     );
   }
 
-  assert.equal(catalog.length, 48);
+  assert.equal(catalog.length, 50);
   assert.equal(
     catalog.filter((entry) => entry.isbn !== "METAFYZIKA").length,
-    47,
+    49,
   );
   assert.equal(new Set(catalog.map((entry) => entry.category)).size, 9);
   assert.equal(new Set(catalog.map((entry) => entry.language)).size, 4);
   assert.equal(catalog.filter((entry) => entry.language === "German").length, 3);
-  assert.equal(catalog.filter((entry) => entry.language === "Italian").length, 1);
+  assert.equal(catalog.filter((entry) => entry.language === "Italian").length, 3);
+  assert.deepEqual(
+    catalog.map((entry) => entry.id),
+    Array.from({ length: 50 }, (_, i) => i + 1),
+  );
 });
 
 test("catalog migration mirrors the changed JSON record descriptions", () => {

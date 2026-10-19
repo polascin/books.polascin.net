@@ -477,11 +477,12 @@ test("books.json: every Gumroad product belongs to exactly one record", () => {
 
   // veszhk (id 18), hcilux (id 19), sk-nefro-baza-1 (id 31), sk-nefro-baza-1-en (id 32),
   // sk-nefro-baza-1-kompendium (id 33), sk-nefro-baza-1-kompendium-en (id 34), and
-  // sk-nefro-belegt-wahrscheinlich-offen-de (id 40).
+  // sk-nefro-belegt-wahrscheinlich-offen-de (id 40), sk-nefro-baza-1-it (id 49), and
+  // sk-nefro-baza-1-compendio-it (id 50).
   assert.equal(
     owners.size,
-    7,
-    `expected 7 distinct Gumroad products, found ${owners.size}`,
+    9,
+    `expected 9 distinct Gumroad products, found ${owners.size}`,
   );
 });
 

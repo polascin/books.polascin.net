@@ -622,5 +622,31 @@
     "web_url": "https://polascin.net/library_file.php?slug=sk-nefro-dimostrato-probabile-aperto&download=1",
     "language": "Italian",
     "category": "Digital Product"
+  },
+  {
+    "id": 49,
+    "title": "SK Nefro Báza 1 — Edizione italiana",
+    "author": "MUDr. Ľubomír Polaščín",
+    "year": 2026,
+    "isbn": "NEFRO-SKNB-1-IT",
+    "description": "E-kniha, 1. vydanie - október 2026. Talianske vydanie prvého zväzku série SK Nefro Báza: 387 odborných článkov na 1853 stranách, 393 ilustrácií a 722612 slov. Formáty PDF, EPUB, AZW3, DOCX a ODT; 7 EUR za jeden formát a 12 EUR za všetky formáty. Bez ISBN a DOI (interný katalógový identifikátor: NEFRO-SKNB-1-IT). Primárny zdroj: nefro.polascin.net; sekundárny predajný kanál: Gumroad (sk-nefro-baza-1-it).",
+    "cover_image": "https://nefro.polascin.net/img/publikacie/sk-nefro-baza-1-it-obalka.jpg",
+    "url": "https://nefro.polascin.net/publikacia.php?slug=sk-nefro-baza-1-it",
+    "web_url": "https://polascin.gumroad.com/l/sk-nefro-baza-1-it?layout=profile",
+    "language": "Italian",
+    "category": "Digital Product"
+  },
+  {
+    "id": 50,
+    "title": "SK Nefro Báza 1 Compendio — Edizione italiana",
+    "author": "MUDr. Ľubomír Polaščín",
+    "year": 2026,
+    "isbn": "NEFRO-SKNB-1-K-IT",
+    "description": "E-kniha, 1. vydanie - október 2026. Talianske vydanie kompendia: 387 odborných článkov spracovaných do abstraktov a stručných zhrnutí na 290 stranách; 154412 slov, bez ilustrácií. Formáty PDF, EPUB, AZW3, DOCX a ODT; 7 EUR za jeden formát a 12 EUR za všetky formáty. Bez ISBN a DOI (interný katalógový identifikátor: NEFRO-SKNB-1-K-IT). Primárny zdroj: nefro.polascin.net; sekundárny predajný kanál: Gumroad (sk-nefro-baza-1-compendio-it).",
+    "cover_image": "https://nefro.polascin.net/img/publikacie/sk-nefro-baza-1-kompendium-it-obalka.jpg",
+    "url": "https://nefro.polascin.net/publikacia.php?slug=sk-nefro-baza-1-kompendium-it",
+    "web_url": "https://polascin.gumroad.com/l/sk-nefro-baza-1-compendio-it?layout=profile",
+    "language": "Italian",
+    "category": "Digital Product"
   }
 ]
