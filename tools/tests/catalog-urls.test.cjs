@@ -384,6 +384,62 @@ test(
   },
 );
 
+const GENERACIE_SLUG = "generacie-v-dejinach-a-v-sucasnosti";
+
+test("GENERACIE-HIST uses the published slug in url and web_url", () => {
+  const entry = JSON.parse(
+    require("node:fs").readFileSync(
+      require("node:path").resolve(__dirname, "../../data/books.json"),
+      "utf8",
+    ),
+  ).find((book) => book.isbn === "GENERACIE-HIST");
+  assert.ok(entry, "GENERACIE-HIST must exist");
+  assert.equal(
+    entry.url,
+    `https://polascin.net/library.php?slug=${GENERACIE_SLUG}&lang=sk`,
+  );
+  assert.equal(
+    entry.web_url,
+    `https://polascin.net/library_file.php?slug=${GENERACIE_SLUG}&download=1`,
+  );
+});
+
+test(
+  "GENERACIE-HIST detail returns HTML 200 and the file returns application/pdf 200",
+  { skip: !process.env.CATALOG_CHECK_URLS },
+  () => {
+    const probe = (url) => {
+      const out = execFileSync(
+        "curl",
+        [
+          "-sS",
+          "-L",
+          "-o",
+          process.platform === "win32" ? "NUL" : "/dev/null",
+          "--max-time",
+          "30",
+          "-w",
+          "%{http_code} %{content_type}",
+          url,
+        ],
+        { encoding: "utf8" },
+      );
+      const [status, ...type] = out.trim().split(" ");
+      return { status, type: type.join(" ") };
+    };
+    const detail = probe(
+      `https://polascin.net/library.php?slug=${GENERACIE_SLUG}&lang=sk`,
+    );
+    const file = probe(
+      `https://polascin.net/library_file.php?slug=${GENERACIE_SLUG}&download=1`,
+    );
+    assert.equal(detail.status, "200");
+    assert.match(detail.type, /^text\/html/iu);
+    assert.equal(file.status, "200");
+    assert.match(file.type, /^application\/pdf/iu);
+  },
+);
+
 // Each Gumroad product belongs to exactly one catalog record, but it is not
 // always that record's primary `url`:
 //   * ids 18 and 19 are sold on Gumroad only, so Gumroad is their `url`;

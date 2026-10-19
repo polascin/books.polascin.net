@@ -174,7 +174,7 @@ test("books.json: the 2026 additions are present exactly once", () => {
     ],
     [
       "GENERACIE-HIST",
-      "https://polascin.net/library.php?slug=generacie-v-dejinach-a-sucasnosti&lang=sk",
+      "https://polascin.net/library.php?slug=generacie-v-dejinach-a-v-sucasnosti&lang=sk",
     ],
     [
       "NEFRO-DPA-IT",

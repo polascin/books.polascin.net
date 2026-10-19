@@ -449,7 +449,7 @@ test("2026 editions: new language records, verified metadata and catalog totals"
       title: "Generácie v dejinách a v súčasnosti",
       language: "Slovak",
       pages: /17\. októbra 2026.*35 strán, 256 kB/u,
-      url: "https://polascin.net/library.php?slug=generacie-v-dejinach-a-sucasnosti&lang=sk",
+      url: "https://polascin.net/library.php?slug=generacie-v-dejinach-a-v-sucasnosti&lang=sk",
     },
     {
       isbn: "NEFRO-DPA-IT",

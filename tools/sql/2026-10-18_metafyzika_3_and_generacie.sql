@@ -1,7 +1,7 @@
 -- Add three verified PDF publications from their public library pages.
 -- Primary metadata sources:
 --   https://polascin.net/library.php?slug=metafyzika-3&lang=sk
---   https://polascin.net/library.php?slug=generacie-v-dejinach-a-sucasnosti&lang=sk
+--   https://polascin.net/library.php?slug=generacie-v-dejinach-a-v-sucasnosti&lang=sk
 --   https://polascin.net/library.php?slug=sk-nefro-dimostrato-probabile-aperto&lang=sk
 -- The Slovak PDFs were reachable on 2026-10-18; the Italian PDF was added
 -- on 2026-10-13. None has an ISBN or DOI; internal catalog identifiers fit
@@ -21,7 +21,7 @@ SELECT *
        )
     OR url IN (
          'https://polascin.net/library.php?slug=metafyzika-3&lang=sk',
-         'https://polascin.net/library.php?slug=generacie-v-dejinach-a-sucasnosti&lang=sk',
+         'https://polascin.net/library.php?slug=generacie-v-dejinach-a-v-sucasnosti&lang=sk',
          'https://polascin.net/library.php?slug=sk-nefro-dimostrato-probabile-aperto&lang=sk'
        );
 
@@ -53,8 +53,8 @@ INSERT INTO books (title, author, year, isbn, description, cover_image, url, web
          'GENERACIE-HIST',
          'PDF, rozšírené vydanie zo 17. októbra 2026; do knižnice pridané 17. októbra 2026. Kritická analytická štúdia o vzniku, pomenovaniach a charakteristikách generácií a medzigeneračných vzťahoch, v medzinárodnom prehľade so slovenským a československým kontextom, vrátane jazyka, slangu, zdravotníctva a vzdelávania. 35 strán, 256 kB. Bez ISBN a DOI (interný katalógový identifikátor: GENERACIE-HIST).',
          NULL,
-         'https://polascin.net/library.php?slug=generacie-v-dejinach-a-sucasnosti&lang=sk',
-         'https://polascin.net/library_file.php?slug=generacie-v-dejinach-a-sucasnosti&download=1',
+         'https://polascin.net/library.php?slug=generacie-v-dejinach-a-v-sucasnosti&lang=sk',
+         'https://polascin.net/library_file.php?slug=generacie-v-dejinach-a-v-sucasnosti&download=1',
          'Slovak',
          'Digital Product'
   FROM DUAL
@@ -62,7 +62,7 @@ INSERT INTO books (title, author, year, isbn, description, cover_image, url, web
     SELECT 1 FROM books
      WHERE isbn = 'GENERACIE-HIST'
         OR title = 'Generácie v dejinách a v súčasnosti'
-        OR url = 'https://polascin.net/library.php?slug=generacie-v-dejinach-a-sucasnosti&lang=sk'
+        OR url = 'https://polascin.net/library.php?slug=generacie-v-dejinach-a-v-sucasnosti&lang=sk'
   );
 
 INSERT INTO books (title, author, year, isbn, description, cover_image, url, web_url, language, category)
