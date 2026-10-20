@@ -1,4 +1,8 @@
 -- Add the two paid Italian SK Nefro Báza 1 editions (catalog ids 49 and 50).
+-- NOTE 2026-10-20: this file was committed and deployed in git but never applied to
+-- the production DB (no books_backup_2026_10_19_italian_editions table). Production
+-- was brought in line by tools/sql/2026-10-20_italian_sknb_editions_prod_apply.sql,
+-- which also sets the ids to 49/50 as in data/books.json. Keep for history only.
 --
 -- Primary sources (checked 2026-10-19, HTTP 200):
 --   https://nefro.polascin.net/publikacia.php?slug=sk-nefro-baza-1-it

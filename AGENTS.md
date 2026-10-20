@@ -80,6 +80,14 @@ RESOLVE_SHORTLINKS=1 node --test "tools/tests/*.test.cjs"   # + amzn.to redirect
 
 - Parita DB/JSON sa porovnáva podľa stabilných identifikátorov a **po poliach**,
   nie podľa počtu riadkov - rovnaký počet riadkov skryl chybu z 2026-10-02.
+- **Migrácia v `tools/sql/` sa nenasadzuje ani nespúšťa sama** (`tools` je
+  v `.deployignore`). Po pushi ju treba uplatniť ručne cez SSH
+  (`ssh websupport`, `mariadb --defaults-extra-file=<klient z .env> <DB> < súbor.sql`)
+  a potom spustiť `CATALOG_CHECK_DB=1` paritu (na serveri, lokálne DB nie je
+  dostupná). Dňa 2026-10-19 ostali neuplatnené dve migrácie (talianske edície,
+  slug Generácií); live katalóg preto ukazoval 49 záznamov a Marža z krvi
+  dostala id 49 namiesto 51. Dôkaz uplatnenia je záložná tabuľka
+  `books_backup_<dátum>_<názov>` v DB.
 - Kontrolujú sa **všetky** URL polia (`url`, `web_url`, `cover_image`), nie iba
   `url`. Tak sa našiel Google-search odkaz, ktorý prežil v `web_url`.
 
