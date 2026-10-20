@@ -648,5 +648,18 @@
     "web_url": "https://polascin.gumroad.com/l/sk-nefro-baza-1-compendio-it?layout=profile",
     "language": "Italian",
     "category": "Digital Product"
+  },
+  {
+    "id": 51,
+    "title": "Marža z krvi: Triler o ukradnutých minútach (e-kniha)",
+    "author": "MUDr. Ľubomír Polaščín",
+    "year": 2026,
+    "isbn": "MARZA-Z-KRVI",
+    "description": "E-kniha, 1. slovenské vydanie - 20. októbra 2026. Ilustrovaný medicínsky triler o ukradnutých minútach, moci a cene ľudského života v prostredí dialyzačnej starostlivosti. Dokáže nezávislý nefrológ odhaliť systém, ktorý mení pacientov na finančnú záťaž, skôr než zničí jeho aj všetkých, ktorí mu pomáhajú? Za číslami a rozhodnutiami sa skrývajú pacienti, ktorým ubúda čas. Pátranie po pravde sa mení na zápas so systémom, ktorý má čo stratiť. Kompletné slovenské vydanie vo formátoch EPUB, PDF a AZW3 je dostupné cez Gumroad za 20 €; všetky tri formáty sú zahrnuté v jednej cene. Digitálna publikácia, nie tlačená kniha. Román je fikcia a nie je zdrojom medicínskych ani právnych rád. Bez ISBN a DOI (interný katalógový identifikátor: MARZA-Z-KRVI).",
+    "cover_image": "https://books.polascin.net/assets/images/marza-z-krvi-obalka.jpg",
+    "url": "https://polascin.gumroad.com/l/marza-z-krvi",
+    "web_url": null,
+    "language": "Slovak",
+    "category": "Medical Thriller"
   }
 ]

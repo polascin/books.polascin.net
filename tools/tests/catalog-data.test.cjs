@@ -523,10 +523,10 @@ test("2026 editions: new language records, verified metadata and catalog totals"
     );
   }
 
-  assert.equal(catalog.length, 50);
+  assert.equal(catalog.length, 51);
   assert.equal(
     catalog.filter((entry) => entry.isbn !== "METAFYZIKA").length,
-    49,
+    50,
   );
   assert.equal(new Set(catalog.map((entry) => entry.category)).size, 9);
   assert.equal(new Set(catalog.map((entry) => entry.language)).size, 4);
@@ -534,7 +534,7 @@ test("2026 editions: new language records, verified metadata and catalog totals"
   assert.equal(catalog.filter((entry) => entry.language === "Italian").length, 3);
   assert.deepEqual(
     catalog.map((entry) => entry.id),
-    Array.from({ length: 50 }, (_, i) => i + 1),
+    Array.from({ length: 51 }, (_, i) => i + 1),
   );
 });
 
