@@ -661,5 +661,31 @@
     "web_url": null,
     "language": "Slovak",
     "category": "Medical Thriller"
+  },
+  {
+    "id": 52,
+    "title": "Metafyzika 4",
+    "author": "MUDr. Ľubomír Polaščín",
+    "year": 2026,
+    "isbn": "METAFYZIKA-4",
+    "description": "PDF, slovenské vydanie na 25. októbra 2026; do knižnice pridané 24. októbra 2026. Štvrtý diel Nedeľnej metafyziky: filozofický a klinicko-etický spis o hraniciach pomoci, autonómii pacienta a dôvere v medicíne (odmietnutie liečby, odvolanie súhlasu, úloha rodiny a starostlivosť pri konečnosti života), ktorý rozlišuje filozofickú úvahu, klinicko-etické odporúčanie a slovenský právny rámec. 30 strán, 403 kB. Bez ISBN a DOI (interný katalógový identifikátor: METAFYZIKA-4).",
+    "cover_image": null,
+    "url": "https://polascin.net/library.php?slug=metafyzika-4&lang=sk",
+    "web_url": "https://polascin.net/library_file.php?slug=metafyzika-4&download=1",
+    "language": "Slovak",
+    "category": "Digital Product"
+  },
+  {
+    "id": 53,
+    "title": "Metafyzika 5",
+    "author": "MUDr. Ľubomír Polaščín",
+    "year": 2026,
+    "isbn": "METAFYZIKA-5",
+    "description": "PDF, slovenské vydanie na 1. novembra 2026; do knižnice pridané 24. októbra 2026. Piaty diel Nedeľnej metafyziky, Hranice medicíny: filozofická a klinicko-etická úvaha o tom, do akej miery vieme pomôcť pacientovi, ktorý pomoc odmieta. Nadväzuje na štvrtý diel: autonómia a rozhodovacia spôsobilosť, informovaný nesúhlas, akútne zhoršenie, úloha rodiny, konanie a nekonanie, pasívna eutanázia a trestnoprávne hranice, dialýza, paliatívna starostlivosť a pokyny vopred. 36 strán, 669 kB. Bez ISBN a DOI (interný katalógový identifikátor: METAFYZIKA-5).",
+    "cover_image": null,
+    "url": "https://polascin.net/library.php?slug=metafyzika-5&lang=sk",
+    "web_url": "https://polascin.net/library_file.php?slug=metafyzika-5&download=1",
+    "language": "Slovak",
+    "category": "Digital Product"
   }
 ]

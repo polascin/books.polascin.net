@@ -21,6 +21,10 @@ const newPublicationsMigration = readFileSync(
   resolve(__dirname, "../sql/2026-10-18_metafyzika_3_and_generacie.sql"),
   "utf8",
 );
+const metafyzika45Migration = readFileSync(
+  resolve(__dirname, "../sql/2026-10-24_metafyzika_4_and_5.sql"),
+  "utf8",
+);
 const italianMigration = readFileSync(
   resolve(__dirname, "../sql/2026-10-19_italian_sknb_editions.sql"),
   "utf8",
@@ -463,6 +467,20 @@ test("2026 editions: new language records, verified metadata and catalog totals"
       url: "https://polascin.net/library.php?slug=metafyzika-3&lang=sk",
     },
     {
+      isbn: "METAFYZIKA-4",
+      title: "Metafyzika 4",
+      language: "Slovak",
+      pages: /25\. októbra 2026.*24\. októbra 2026.*30 strán, 403 kB/u,
+      url: "https://polascin.net/library.php?slug=metafyzika-4&lang=sk",
+    },
+    {
+      isbn: "METAFYZIKA-5",
+      title: "Metafyzika 5",
+      language: "Slovak",
+      pages: /1\. novembra 2026.*24\. októbra 2026.*Hranice medicíny.*36 strán, 669 kB/u,
+      url: "https://polascin.net/library.php?slug=metafyzika-5&lang=sk",
+    },
+    {
       isbn: "GENERACIE-HIST",
       title: "Generácie v dejinách a v súčasnosti",
       language: "Slovak",
@@ -523,10 +541,10 @@ test("2026 editions: new language records, verified metadata and catalog totals"
     );
   }
 
-  assert.equal(catalog.length, 51);
+  assert.equal(catalog.length, 53);
   assert.equal(
     catalog.filter((entry) => entry.isbn !== "METAFYZIKA").length,
-    50,
+    52,
   );
   assert.equal(new Set(catalog.map((entry) => entry.category)).size, 9);
   assert.equal(new Set(catalog.map((entry) => entry.language)).size, 4);
@@ -534,7 +552,7 @@ test("2026 editions: new language records, verified metadata and catalog totals"
   assert.equal(catalog.filter((entry) => entry.language === "Italian").length, 3);
   assert.deepEqual(
     catalog.map((entry) => entry.id),
-    Array.from({ length: 51 }, (_, i) => i + 1),
+    Array.from({ length: 53 }, (_, i) => i + 1),
   );
 });
 
@@ -575,4 +593,28 @@ test("new publication migration matches its JSON records and backs up before tra
       newPublicationsMigration.indexOf("\nSTART TRANSACTION;"),
     "backup table must be created before the transaction starts",
   );
+});
+
+test("Metafyzika 4 and 5 migration matches its JSON records and backs up before transaction", () => {
+  for (const key of ["METAFYZIKA-4", "METAFYZIKA-5"]) {
+    const entry = books.find((book) => book.isbn === key);
+    assert.ok(entry, `${key} must exist in books.json`);
+    assert.ok(metafyzika45Migration.includes(`'${entry.title}'`));
+    assert.ok(metafyzika45Migration.includes(entry.description));
+    assert.ok(metafyzika45Migration.includes(`'${key}'`));
+    assert.ok(metafyzika45Migration.includes(`'${entry.url}'`));
+    assert.ok(metafyzika45Migration.includes(`'${entry.web_url}'`));
+    assert.equal(entry.cover_image, null);
+    assert.equal(entry.language, "Slovak");
+    assert.equal(entry.category, "Digital Product");
+    assert.equal(entry.author, "MUDr. Ľubomír Polaščín");
+    assert.equal(entry.year, 2026);
+  }
+
+  assert.ok(
+    metafyzika45Migration.indexOf("CREATE TABLE IF NOT EXISTS") <
+      metafyzika45Migration.indexOf("\nSTART TRANSACTION;"),
+    "backup table must be created before the transaction starts",
+  );
+  assert.ok(metafyzika45Migration.includes("books_backup_2026_10_24_metafyzika_4_and_5"));
 });

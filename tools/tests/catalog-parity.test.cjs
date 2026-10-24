@@ -180,13 +180,21 @@ test("books.json: the 2026 additions are present exactly once", () => {
       "NEFRO-DPA-IT",
       "https://polascin.net/library.php?slug=sk-nefro-dimostrato-probabile-aperto&lang=sk",
     ],
+    [
+      "METAFYZIKA-4",
+      "https://polascin.net/library.php?slug=metafyzika-4&lang=sk",
+    ],
+    [
+      "METAFYZIKA-5",
+      "https://polascin.net/library.php?slug=metafyzika-5&lang=sk",
+    ],
   ]) {
     const matches = catalog.filter((book) => book.isbn === isbn);
     assert.equal(matches.length, 1, `${isbn} must appear exactly once`);
     assert.equal(matches[0].url, url);
   }
 
-  for (const isbn of ["METAFYZIKA-3", "GENERACIE-HIST", "NEFRO-DPA-IT"]) {
+  for (const isbn of ["METAFYZIKA-3", "GENERACIE-HIST", "NEFRO-DPA-IT", "METAFYZIKA-4", "METAFYZIKA-5"]) {
     const book = catalog.find((item) => item.isbn === isbn);
     assert.equal(book.language, isbn === "NEFRO-DPA-IT" ? "Italian" : "Slovak");
     assert.equal(book.category, "Digital Product");
