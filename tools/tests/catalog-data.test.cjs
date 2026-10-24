@@ -617,4 +617,8 @@ test("Metafyzika 4 and 5 migration matches its JSON records and backs up before 
     "backup table must be created before the transaction starts",
   );
   assert.ok(metafyzika45Migration.includes("books_backup_2026_10_24_metafyzika_4_and_5"));
+  // Ids are pinned to the books.json ids: production AUTO_INCREMENT was already
+  // 53 on 2026-10-24, so an unpinned insert would have drifted to 53 and 54.
+  assert.match(metafyzika45Migration, /SELECT 52,\s+'Metafyzika 4'/u);
+  assert.match(metafyzika45Migration, /SELECT 53,\s+'Metafyzika 5'/u);
 });

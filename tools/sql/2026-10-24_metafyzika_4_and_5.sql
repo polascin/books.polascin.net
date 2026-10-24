@@ -8,8 +8,12 @@
 -- Both PDFs answered HTTP 200 with Content-Type application/pdf on 2026-10-24.
 -- Neither has an ISBN or DOI; the internal catalog identifiers fit
 -- books.isbn VARCHAR(20). data/books.json carries the same rows as ids 52
--- and 53; the ids here come from AUTO_INCREMENT, so apply this file only
--- after every earlier migration (the DB held 51 rows on 2026-10-20).
+-- and 53, and the ids are pinned here: on 2026-10-24 the production table
+-- held 51 rows (max id 51) but its AUTO_INCREMENT already stood at 53, so
+-- an unpinned INSERT would have produced ids 53 and 54 and the DB would have
+-- drifted from books.json again (see 2026-10-20_italian_sknb_editions_prod_apply.sql).
+-- Rows are still matched by isbn/title/url, never by id; the id guard only
+-- keeps the file a no-op if someone else already took that id.
 SET NAMES utf8mb4;
 
 -- Back up any matching rows BEFORE START TRANSACTION: CREATE TABLE ... AS is
@@ -18,6 +22,7 @@ CREATE TABLE IF NOT EXISTS books_backup_2026_10_24_metafyzika_4_and_5 AS
 SELECT *
   FROM books
  WHERE isbn IN ('METAFYZIKA-4', 'METAFYZIKA-5')
+    OR id IN (52, 53)
     OR title IN ('Metafyzika 4', 'Metafyzika 5')
     OR url IN (
          'https://polascin.net/library.php?slug=metafyzika-4&lang=sk',
@@ -26,8 +31,9 @@ SELECT *
 
 START TRANSACTION;
 
-INSERT INTO books (title, author, year, isbn, description, cover_image, url, web_url, language, category)
-  SELECT 'Metafyzika 4',
+INSERT INTO books (id, title, author, year, isbn, description, cover_image, url, web_url, language, category)
+  SELECT 52,
+         'Metafyzika 4',
          'MUDr. Ľubomír Polaščín',
          2026,
          'METAFYZIKA-4',
@@ -43,10 +49,12 @@ INSERT INTO books (title, author, year, isbn, description, cover_image, url, web
      WHERE isbn = 'METAFYZIKA-4'
         OR title = 'Metafyzika 4'
         OR url = 'https://polascin.net/library.php?slug=metafyzika-4&lang=sk'
+        OR id = 52
   );
 
-INSERT INTO books (title, author, year, isbn, description, cover_image, url, web_url, language, category)
-  SELECT 'Metafyzika 5',
+INSERT INTO books (id, title, author, year, isbn, description, cover_image, url, web_url, language, category)
+  SELECT 53,
+         'Metafyzika 5',
          'MUDr. Ľubomír Polaščín',
          2026,
          'METAFYZIKA-5',
@@ -62,6 +70,7 @@ INSERT INTO books (title, author, year, isbn, description, cover_image, url, web
      WHERE isbn = 'METAFYZIKA-5'
         OR title = 'Metafyzika 5'
         OR url = 'https://polascin.net/library.php?slug=metafyzika-5&lang=sk'
+        OR id = 53
   );
 
 COMMIT;
