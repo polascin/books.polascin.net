@@ -50,3 +50,31 @@ nástroje. Odvtedy číta `.deployignore` rovnako ako rsync v CI.
 
 Ak sa vylučovanie mení, treba ho overiť **v oboch** cestách — `.deployignore`
 je spoločný zdroj pravdy, ale používajú ho dva nezávislé skripty.
+
+## Lokálna cesta nasadenia (`tools/deploy.ps1`)
+
+Lokálna náhrada workflow `.github/workflows/deploy.yml` pre Windows bez rsync
+a bez WSL. Predvolene je to **plán**: nič sa nezapíše na server, kým sa nepridá
+`-Apply`.
+
+```powershell
+.\tools\deploy.ps1            # validácia + zoznam zmien
+.\tools\deploy.ps1 -Apply     # upload, overenie SHA-256, smoke test
+```
+
+Postup: `php -l`, `node --check`, `npm test`, kontrola aktuálnosti
+`assets/css/tailwind.css` (prestavba do dočasného súboru a porovnanie SHA-256),
+zoznam súborov z gitu filtrovaný `.deployignore`, porovnanie SHA-256 s web
+rootom, upload iba zmenených súborov cez tar stream po SSH alias `websupport`,
+overenie hashov na serveri a smoke test `/`, `/privacy.php`, `/terms.php`.
+
+Čo lokálna cesta **nerobí** rovnako ako Actions:
+
+- Nepoužíva `rsync`, takže neprenáša práva súborov; server dostane práva z tar
+  archívu.
+- Rovnako ako workflow nepoužíva `--delete`, takže súbory na serveri, ktoré
+  v repozitári nie sú, zostávajú nedotknuté.
+- Vyžaduje `node_modules` (testy a Tailwind), kým Actions ich inštaluje čerstvé.
+
+Kým nie je lokálna cesta overená na produkcii, zostáva záväzná cesta cez
+GitHub Actions podľa `.cursor/rules/commit-push-verify-deploy.mdc`.
