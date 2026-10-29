@@ -29,13 +29,38 @@ const italianMigration = readFileSync(
   resolve(__dirname, "../sql/2026-10-19_italian_sknb_editions.sql"),
   "utf8",
 );
+const docxRemovalMigration = readFileSync(
+  resolve(__dirname, "../sql/2026-10-29_remove_docx_formats_and_marza_price.sql"),
+  "utf8",
+);
+
+// 2026-10-29: DOCX was dropped from every offered format list with REPLACE()
+// statements, so the older migrations below still carry the earlier wording.
+// This maps a current JSON description back to that wording for the tests
+// that compare a historical migration with data/books.json.
+const DOCX_REMOVAL_PAIRS = [
+  ["PDF, EPUB, AZW3, DOCX a ODT", "PDF, EPUB, AZW3 a ODT"],
+  ["PDF, EPUB, AZW3, DOCX, ODT", "PDF, EPUB, AZW3, ODT"],
+  ["PDF, EPUB, AZW3, DOCX und ODT", "PDF, EPUB, AZW3 und ODT"],
+];
+
+function descriptionBeforeDocxRemoval(description) {
+  return DOCX_REMOVAL_PAIRS.reduce(
+    (text, [before, after]) => text.split(after).join(before),
+    description,
+  );
+}
 
 test("Italian SK Nefro migration mirrors JSON and backs up before transaction", () => {
   for (const key of ["NEFRO-SKNB-1-IT", "NEFRO-SKNB-1-K-IT"]) {
     const entry = books.find((book) => book.isbn === key);
     assert.ok(entry, `${key} must exist in books.json`);
     for (const field of ["description", "cover_image", "url", "web_url", "title"]) {
-      assert.ok(italianMigration.includes(entry[field]), `${key}: ${field}`);
+      const expected =
+        field === "description"
+          ? descriptionBeforeDocxRemoval(entry[field])
+          : entry[field];
+      assert.ok(italianMigration.includes(expected), `${key}: ${field}`);
     }
   }
   assert.ok(
@@ -158,7 +183,7 @@ test("SK Nefro Báza 1 is held once, with both verified channels", () => {
   assert.match(book.description, /387 odborných článkov/u);
   assert.match(book.description, /1745 strán, 393 ilustrácií, 579608 slov/u);
   assert.doesNotMatch(book.description, /405|476/u);
-  assert.match(book.description, /PDF, EPUB, AZW3, DOCX a ODT/u);
+  assert.match(book.description, /PDF, EPUB, AZW3 a ODT/u);
   assert.match(
     book.description,
     /7 EUR za jeden formát, 12 EUR za všetky formáty/u,
@@ -195,7 +220,7 @@ test("NEFRO-BWO-DE keeps the free PDF primary and adds the paid Gumroad bundle",
   assert.match(book.description, /16 Kapitel-Editorials und einem Editorial zum Anhang/u);
   assert.match(book.description, /separates kostenpflichtiges Gumroad-Paket/iu);
   assert.match(book.description, /17 erweiterte Kapitel-Editorials zu 387 Fachartikeln/u);
-  assert.match(book.description, /PDF, EPUB, AZW3, DOCX und ODT; ohne DRM/u);
+  assert.match(book.description, /PDF, EPUB, AZW3 und ODT; ohne DRM/u);
   assert.match(book.description, /keine offene Lizenz/u);
   assert.match(book.description, /Ohne ISBN und DOI/u);
   assert.doesNotMatch(book.description, /Ã|Ä|Å/u);
@@ -206,7 +231,7 @@ test("NEFRO-BWO-DE keeps the free PDF primary and adds the paid Gumroad bundle",
   assert.match(salesSourceMigration, /NOT \(web_url <=>/u);
   assert.match(salesSourceMigration, /COMMIT;[\s\S]*?Rollback/u);
   assert.ok(
-    salesSourceMigration.includes(book.description),
+    salesSourceMigration.includes(descriptionBeforeDocxRemoval(book.description)),
     "SQL migration must contain the exact JSON description",
   );
   assert.ok(
@@ -568,7 +593,7 @@ test("catalog migration mirrors the changed JSON record descriptions", () => {
     const entry = books.find((book) => book.isbn === key);
     assert.ok(entry, `${key} must exist in books.json`);
     assert.ok(
-      catalogMigration.includes(entry.description),
+      catalogMigration.includes(descriptionBeforeDocxRemoval(entry.description)),
       `${key}: SQL migration description must match data/books.json`,
     );
     assert.ok(
@@ -621,4 +646,38 @@ test("Metafyzika 4 and 5 migration matches its JSON records and backs up before 
   // 53 on 2026-10-24, so an unpinned insert would have drifted to 53 and 54.
   assert.match(metafyzika45Migration, /SELECT 52,\s+'Metafyzika 4'/u);
   assert.match(metafyzika45Migration, /SELECT 53,\s+'Metafyzika 5'/u);
+});
+
+test("DOCX removal migration mirrors JSON and backs up before transaction", () => {
+  for (const book of books) {
+    assert.doesNotMatch(
+      String(book.description ?? ""),
+      /DOCX/u,
+      `${book.isbn}: DOCX is no longer offered in any publication`,
+    );
+  }
+  for (const [before, after] of DOCX_REMOVAL_PAIRS) {
+    assert.ok(
+      docxRemovalMigration.includes(
+        `REPLACE(description, '${before}', '${after}')`,
+      ),
+      `migration must rewrite "${before}"`,
+    );
+  }
+
+  const marza = books.find((book) => book.isbn === "MARZA-Z-KRVI");
+  assert.ok(marza, "MARZA-Z-KRVI must exist in books.json");
+  assert.match(marza.description, /dostupné cez Gumroad za 9,98 €;/u);
+  assert.doesNotMatch(marza.description, /20 €/u);
+  assert.ok(
+    docxRemovalMigration.includes(marza.description),
+    "SQL migration must contain the exact JSON description of Marža z krvi",
+  );
+  assert.match(docxRemovalMigration, /WHERE isbn = 'MARZA-Z-KRVI'/u);
+  assert.match(docxRemovalMigration, /NOT \(description <=>/u);
+  assert.ok(
+    docxRemovalMigration.indexOf("CREATE TABLE IF NOT EXISTS") <
+      docxRemovalMigration.indexOf("\nSTART TRANSACTION;"),
+    "backup table must be created before the transaction starts",
+  );
 });

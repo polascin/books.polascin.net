@@ -316,7 +316,7 @@ test(
         filename: "2026-10-06-sk-nefro-belegt-wahrscheinlich-offen-de.pdf",
       },
     ];
-    const formats = ["pdf", "epub", "azw3", "docx", "odt"];
+    const formats = ["pdf", "epub", "azw3", "odt"];
     const failures = [];
 
     for (const edition of editions) {
