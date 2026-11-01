@@ -20,30 +20,7 @@
     </div>
 </footer>
 
-<!-- Cookie Consent Banner -->
-<?php // Starts hidden. script.js reveals it only when no choice is stored yet;
-      // without the hidden attribute the Accept/Reject buttons stay in the tab
-      // order and in the screen-reader tree while the banner sits off-screen. ?>
-<div id="cookie-banner" hidden
-    class="fixed bottom-0 left-0 right-0 bg-slate-900 border-t border-slate-700 text-white p-4 shadow-2xl z-[100] transform transition-transform duration-500 translate-y-full"
-    aria-live="polite" aria-label="Cookie consent banner" role="dialog">
-    <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
-        <div class="text-sm text-slate-300">
-            <p>This website uses only essential browser storage to remember your cookie preference. No analytics,
-                advertising or tracking cookies are set. If optional analytics are introduced in the future, they will
-                load only after you choose Accept. Read our <a href="/privacy"
-                    class="text-white underline hover:text-gray-300">Privacy Policy</a>.</p>
-        </div>
-        <div class="flex gap-3 flex-shrink-0">
-            <button id="reject-cookies"
-                class="min-h-11 min-w-[2.75rem] px-4 py-2.5 bg-slate-700 text-white rounded hover:bg-slate-600 transition-colors text-sm font-cinzel tracking-wider font-semibold"
-                aria-label="Reject optional cookies">Reject</button>
-            <button id="accept-cookies"
-                class="min-h-11 min-w-[2.75rem] px-4 py-2.5 bg-paper text-slate-900 rounded hover:bg-white transition-colors text-sm font-cinzel tracking-wider font-semibold"
-                aria-label="Accept optional cookies">Accept</button>
-        </div>
-    </div>
-</div>
+<script src="/assets/js/clarity-consent.js?v=20261101" data-project="z6sxbeabon" data-paths="/,/index.php,/catalog,/catalog.php,/about,/about.php,/privacy,/privacy.php,/terms,/terms.php" data-privacy="/privacy"></script>
 
 <!-- Custom Scripts -->
 <script src="<?php echo assetUrl('assets/js/script.js'); ?>"></script>

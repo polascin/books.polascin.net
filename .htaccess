@@ -21,7 +21,7 @@ ServerSignature Off
     #                    inline SVG šum ako background-image
     #   JSON-LD v <script type="application/ld+json"> nie je spustiteľný skript,
     #   prehliadač ho pod script-src 'self' neblokuje.
-    Header always set Content-Security-Policy "default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self'; form-action 'self'; frame-ancestors 'self'; base-uri 'self'; object-src 'none'; upgrade-insecure-requests"
+    Header always set Content-Security-Policy "default-src 'self'; script-src 'self' https://*.clarity.ms; style-src 'self'; img-src 'self' data: https://*.clarity.ms https://c.bing.com; font-src 'self'; connect-src 'self' https://*.clarity.ms; form-action 'self'; frame-ancestors 'self'; base-uri 'self'; object-src 'none'; upgrade-insecure-requests"
 
     # Cachovanie. CSS a JS chodia s ?v=<mtime> z assetUrl() v
     # includes/functions.php, fonty majú hash priamo v názve súboru — nová

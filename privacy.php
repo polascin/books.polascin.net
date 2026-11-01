@@ -16,7 +16,7 @@ include __DIR__ . '/includes/header.php';
     <h1 class="font-cinzel text-3xl font-bold text-slate-800 mb-6 border-b border-gray-300 pb-4">Privacy Policy</h1>
     
     <div class="space-y-6 text-slate-700 leading-relaxed text-justify font-sans">
-        <p><strong>Effective Date:</strong> March 22, 2026 &middot; <strong>Last Updated:</strong> September 12, 2026</p>
+        <p><strong>Effective Date:</strong> March 22, 2026 &middot; <strong>Last Updated:</strong> November 1, 2026</p>
         <p>Bibliotheca Polascini provides information about books, publications, authorship, medicine, literature, and related external resources. This page explains both how privacy is handled on this website and the legal limitations that apply to the informational material published here. The use of this website is further governed by our <a href="/terms" class="text-blue-600 hover:text-blue-800 underline focus:ring-2 focus:ring-slate-800 focus:outline-none">Terms of Use</a>.</p>
         
         <h2 class="font-cinzel text-xl font-bold text-slate-800 mt-8 mb-2">1. Introduction and Data Controller</h2>
@@ -30,17 +30,17 @@ include __DIR__ . '/includes/header.php';
         <p>No data protection officer has been appointed, as the website is operated by an individual and does not carry out large-scale or systematic processing that would require one under Article 37 GDPR.</p>
 
         <h2 class="font-cinzel text-xl font-bold text-slate-800 mt-8 mb-2">2. Information We Collect</h2>
-        <p>We collect basic technical information to ensure the website functions securely and continuously. When you interact with our cookie consent banner, we store your preference locally in your browser's local storage to prevent prompting you repeatedly. We do not collect personally identifiable information unless you explicitly volunteer it by contacting us.</p>
+        <p>We collect basic technical information to ensure the website functions securely and continuously. When you interact with our cookie consent banner, we store your preference locally in your browser's local storage to prevent prompting you repeatedly. If you allow analytics, pseudonymous usage data is also processed by Microsoft Clarity as described below.</p>
 
         <h2 class="font-cinzel text-xl font-bold text-slate-800 mt-8 mb-2">3. Cookies, Browser Storage and External Resources</h2>
-        <p>This website does not set any analytics, advertising, or tracking cookies. The only item stored in your browser is a single local storage entry that remembers the choice you made on our cookie consent banner, so that you are not prompted repeatedly. This entry is written only after you select "Accept" or "Reject"; nothing is stored before you make a choice. If optional analytics are introduced in the future, they will be loaded only after you explicitly choose "Accept" on the consent banner.</p>
-        <p>Every asset needed to display this website &mdash; stylesheets, web fonts, scripts, and images &mdash; is served directly from this website's own server. No content delivery network, font service, or other third-party host is contacted when you open a page. Loading a page does not send requests to external font, analytics, or advertising services. Our hosting provider processes connection information to serve the website, as described below. Following an external link connects you to the destination website, which has its own privacy practices.</p>
+        <p>Microsoft Clarity loads only after you choose Allow analytics. It records visits, clicks, scrolling and public-page sessions with masked text to improve the website. Microsoft receives this data. Advertising consent stays denied. The cookies <code>_clck</code> and <code>_clsk</code> distinguish visitors and connect page views into sessions. You can withdraw consent using Analytics settings in the footer. Without consent, Clarity does not load.</p>
+<p>For details about Microsoft's processing, including international transfers, see the <a href="https://privacy.microsoft.com/privacystatement">Microsoft Privacy Statement</a> and <a href="https://learn.microsoft.com/en-us/clarity/setup-and-installation/clarity-cookies">Clarity cookie documentation</a>. Other website assets are hosted locally. Following an external link connects you to that website.</p>
 
         <h2 class="font-cinzel text-xl font-bold text-slate-800 mt-8 mb-2">4. Hosting</h2>
         <p>This website is hosted by Websupport, s.r.o., a hosting provider established in Slovakia, with servers located in the European Union. Like virtually all hosting providers, Websupport keeps standard server and access logs (such as IP addresses, timestamps, and requested pages) for security and operational purposes. These logs are maintained by the hosting provider as part of the ordinary operation of its infrastructure.</p>
 
         <h2 class="font-cinzel text-xl font-bold text-slate-800 mt-8 mb-2">5. Data Retention</h2>
-        <p>Your consent preference is stored solely in your own browser's local storage and remains there until you clear your browser data. No personal data is stored on the server side beyond the standard hosting logs described above.</p>
+        <p>Your analytics choice is stored in your browser for 180 days. You can change it at any time using Analytics settings or clear it with your browser data. Consented usage data is also processed by Microsoft Clarity as described above.</p>
 
         <h2 class="font-cinzel text-xl font-bold text-slate-800 mt-8 mb-2">6. Your Rights under GDPR</h2>
         <p>As a user located in the European Union or accessing European infrastructure, you possess several core privacy rights under the GDPR:</p>
