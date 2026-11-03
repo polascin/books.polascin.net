@@ -36,7 +36,8 @@ function loadEnvOnce() {
     static $loaded = false;
     if (!$loaded) {
         $loaded = true;
-        loadEnv(__DIR__ . '/../.env');
+        $privateEnv = dirname(__DIR__, 3) . '/private/books.env';
+        loadEnv(is_readable($privateEnv) ? $privateEnv : __DIR__ . '/../.env');
     }
 }
 
