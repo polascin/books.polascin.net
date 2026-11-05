@@ -191,7 +191,7 @@ include __DIR__ . '/includes/header.php';
             <p class="font-playfair text-slate-500 mt-2 italic">The catalog is currently empty. Please add books to the data source.</p>
         </div>
     <?php else: ?>
-        <div id="no-results" class="hidden bg-white/90 p-10 text-center rounded-[1.5rem] shadow-sm border border-slate-200 mb-8">
+        <div id="no-results" class="bg-white/90 p-10 text-center rounded-[1.5rem] shadow-sm border border-slate-200 mb-8" hidden>
             <h3 class="font-cinzel text-xl text-slate-800 tracking-[0.12em]">No Matching Entries</h3>
             <p class="font-playfair italic text-slate-600 mt-3">Try another author, title fragment, or reset the category filter.</p>
         </div>

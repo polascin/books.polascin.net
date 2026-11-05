@@ -47,11 +47,7 @@ function catalog(reducedMotion) {
     "language-filter": input(),
     "results-count": { textContent: "" },
     "no-results": {
-      classList: {
-        toggle(name, hidden) {
-          this.hidden = hidden;
-        },
-      },
+      hidden: true,
     },
   };
   vm.runInNewContext(source, {
@@ -109,14 +105,14 @@ test("combined filters hide unmatched cards immediately and update empty state",
   c.category("Medical Fiction");
   assert.ok(c.cards.every((card) => card.hidden));
   assert.equal(c.elements["results-count"].textContent, "0");
-  assert.equal(c.elements["no-results"].classList.hidden, false);
+  assert.equal(c.elements["no-results"].hidden, false);
   c.search("walter");
   assert.deepEqual(
     c.cards.map((card) => card.hidden),
     [true, false, true],
   );
   assert.equal(c.elements["results-count"].textContent, "1");
-  assert.equal(c.elements["no-results"].classList.hidden, true);
+  assert.equal(c.elements["no-results"].hidden, true);
 });
 
 test("language filter isolates German records and composes with search", () => {
@@ -131,7 +127,7 @@ test("language filter isolates German records and composes with search", () => {
   c.search("vital");
   assert.ok(c.cards.every((card) => card.hidden));
   assert.equal(c.elements["results-count"].textContent, "0");
-  assert.equal(c.elements["no-results"].classList.hidden, false);
+  assert.equal(c.elements["no-results"].hidden, false);
 });
 
 test("language filter supports Italian records", () => {

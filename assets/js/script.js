@@ -42,7 +42,9 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     if (noResults) {
-      noResults.classList.toggle("hidden", visibleCount !== 0);
+      // Prefer the HTML hidden attribute (same as .book-item cards) over a
+      // utility class, so empty-state visibility cannot diverge from CSS.
+      noResults.hidden = visibleCount !== 0;
     }
   }
 
