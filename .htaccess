@@ -39,6 +39,10 @@ ServerSignature Off
     <FilesMatch "\.php$">
         Header set Cache-Control "no-cache"
     </FilesMatch>
+    # Crawl metadata must refresh with the deploy, not linger in edge caches.
+    <FilesMatch "^(robots\.txt|sitemap\.xml|site\.webmanifest)$">
+        Header set Cache-Control "no-cache"
+    </FilesMatch>
 </IfModule>
 
 # Blokovanie .git a citlivých súborov
