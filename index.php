@@ -174,7 +174,7 @@ include __DIR__ . '/includes/header.php';
 
     <!-- Link to the separated About Page -->
     <div class="mt-4 text-center">
-        <a href="/about" class="inline-block px-6 py-2 font-cinzel tracking-widest text-sm text-slate-600 hover:text-slate-800 transition-all duration-300">
+        <a href="/about" class="inline-block px-6 py-2 font-cinzel tracking-widest text-sm text-slate-600 hover:text-slate-800 transition-all duration-300 underline">
             De Auctore (About)
         </a>
     </div>
