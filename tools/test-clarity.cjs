@@ -236,19 +236,27 @@ s.elements.find((e) => e.textContent === "Nastavenia analytiky").click();
         prevented += 1;
       },
     });
-  tab(false);
-  assert.equal(link.focused, true);
-  assert.equal(prevented, 1);
-  allow.focus();
-  tab(false);
-  assert.equal(link.focused, true);
-  link.focus();
-  tab(true);
-  assert.equal(allow.focused, true);
-  decline.focus();
+  // show(true) already focused Decline; Tab in the middle must not trap.
+  assert.equal(decline.focused, true);
   prevented = 0;
   tab(false);
   assert.equal(prevented, 0);
+  allow.focus();
+  tab(false);
+  assert.equal(link.focused, true);
+  assert.equal(prevented, 1);
+  link.focus();
+  tab(true);
+  assert.equal(allow.focused, true);
+  // Settings button sits outside the dialog; Tab must re-enter at the link.
+  const settings = s.elements.find(
+    (e) => e.textContent === "Nastavenia analytiky",
+  );
+  settings.focus();
+  prevented = 0;
+  tab(false);
+  assert.equal(link.focused, true);
+  assert.equal(prevented, 1);
 }
 
 for (const path of ["/login.php", "/calculator.php", "/admin.php"])
