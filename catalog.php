@@ -271,7 +271,7 @@ include __DIR__ . '/includes/header.php';
                             <div class="catalog-title-block mb-4">
                                 <h3 class="font-cinzel font-bold text-xl md:text-2xl text-slate-900 mb-2 leading-tight text-balance">
                                     <?php if (!empty($titleUrl)): ?>
-                                        <a href="<?php echo safeUrl($titleUrl); ?>" target="_blank" rel="noopener noreferrer" class="book-title-link hover:underline decoration-slate-600 underline-offset-4" aria-label="<?php echo esc_html($bookTitleText); ?> (opens in a new tab)">
+                                        <a href="<?php echo safeUrl($titleUrl); ?>" target="_blank" rel="noopener noreferrer" class="book-title-link underline decoration-slate-600 underline-offset-4" aria-label="<?php echo esc_html($bookTitleText); ?> (opens in a new tab)">
                                             <?php echo esc_html($bookTitleText); ?>
                                         </a>
                                     <?php else: ?>
