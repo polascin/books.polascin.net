@@ -488,8 +488,13 @@ html {
 
 /* Cieľ preskočenia dostáva fokus programovo — bez vlastného rámčeka.
    scroll-margin-top: sticky header (py-4 + brand/nav, na mobile aj dva riadky)
-   by inak prekryl začiatok obsahu po aktivácii skip-linku. */
-#main-content {
+   by inak prekryl začiatok obsahu po aktivácii skip-linku, footer Disclaimer
+   (#legal-disclaimer) a ostatné fragmentové kotvy v main. */
+#main-content,
+#legal-disclaimer,
+#about,
+#catalog,
+[id^="book-"] {
   scroll-margin-top: 7rem;
 }
 

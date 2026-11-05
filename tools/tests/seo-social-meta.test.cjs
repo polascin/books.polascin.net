@@ -16,8 +16,11 @@ describe("social preview and skip-target meta", () => {
     assert.doesNotMatch(header, /summary_large_image/);
   });
 
-  it("keeps skip-link target clear of the sticky header", () => {
-    assert.match(style, /#main-content\s*\{[^}]*scroll-margin-top:\s*7rem/s);
+  it("keeps skip-link and in-page anchors clear of the sticky header", () => {
+    assert.match(
+      style,
+      /#main-content,\s*#legal-disclaimer,\s*#about,\s*#catalog,\s*\[id\^="book-"\]\s*\{[^}]*scroll-margin-top:\s*7rem/s,
+    );
   });
 
   it("matches about portrait HTML size to the rendered 192px frame", () => {
