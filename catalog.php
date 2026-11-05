@@ -179,7 +179,7 @@ include __DIR__ . '/includes/header.php';
         </div>
 
         <div class="catalog-toolbar-meta mt-4 flex flex-col gap-2 md:flex-row md:items-center md:justify-between">
-            <p class="catalog-summary text-sm text-slate-600" role="status"><span id="results-count"><?php echo count($books); ?></span> items currently visible.</p>
+            <p class="catalog-summary text-sm text-slate-600" role="status" aria-atomic="true"><span id="results-count"><?php echo count($books); ?></span> items currently visible.</p>
             <p class="catalog-summary text-sm text-slate-500">Use the filters to narrow the archive by title, author, or subject area.</p>
         </div>
     </div>

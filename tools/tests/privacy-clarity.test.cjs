@@ -3,10 +3,7 @@ const assert = require("node:assert/strict");
 const { readFileSync } = require("node:fs");
 const { resolve } = require("node:path");
 
-const privacy = readFileSync(
-  resolve(__dirname, "../../privacy.php"),
-  "utf8",
-);
+const privacy = readFileSync(resolve(__dirname, "../../privacy.php"), "utf8");
 
 describe("privacy policy aligns with Clarity consent UI", () => {
   it("describes the analytics consent prompt, not the removed cookie banner", () => {
@@ -21,5 +18,17 @@ describe("privacy policy aligns with Clarity consent UI", () => {
     assert.match(privacy, /masked text/i);
     assert.match(privacy, /_clck/);
     assert.match(privacy, /_clsk/);
+  });
+
+  it("styles Microsoft Clarity external references like other policy links", () => {
+    assert.match(
+      privacy,
+      /href="https:\/\/privacy\.microsoft\.com\/privacystatement"[^>]*class="[^"]*focus:ring-2/,
+    );
+    assert.match(
+      privacy,
+      /href="https:\/\/learn\.microsoft\.com\/en-us\/clarity\/setup-and-installation\/clarity-cookies"[^>]*class="[^"]*focus:ring-2/,
+    );
+    assert.match(privacy, /Last Updated:<\/strong> November 5, 2026/);
   });
 });

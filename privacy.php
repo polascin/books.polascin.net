@@ -16,7 +16,7 @@ include __DIR__ . '/includes/header.php';
     <h1 class="font-cinzel text-3xl font-bold text-slate-800 mb-6 border-b border-gray-300 pb-4">Privacy Policy</h1>
     
     <div class="space-y-6 text-slate-700 leading-relaxed text-justify font-sans">
-        <p><strong>Effective Date:</strong> March 22, 2026 &middot; <strong>Last Updated:</strong> November 1, 2026</p>
+        <p><strong>Effective Date:</strong> March 22, 2026 &middot; <strong>Last Updated:</strong> November 5, 2026</p>
         <p>Bibliotheca Polascini provides information about books, publications, authorship, medicine, literature, and related external resources. This page explains both how privacy is handled on this website and the legal limitations that apply to the informational material published here. The use of this website is further governed by our <a href="/terms" class="text-blue-600 hover:text-blue-800 underline focus:ring-2 focus:ring-slate-800 focus:outline-none">Terms of Use</a>.</p>
         
         <h2 class="font-cinzel text-xl font-bold text-slate-800 mt-8 mb-2">1. Introduction and Data Controller</h2>
@@ -34,7 +34,7 @@ include __DIR__ . '/includes/header.php';
 
         <h2 class="font-cinzel text-xl font-bold text-slate-800 mt-8 mb-2">3. Cookies, Browser Storage and External Resources</h2>
         <p>Microsoft Clarity loads only after you choose Allow analytics. It records visits, clicks, scrolling and public-page sessions with masked text to improve the website. Microsoft receives this data. Advertising consent stays denied. The cookies <code>_clck</code> and <code>_clsk</code> distinguish visitors and connect page views into sessions. You can withdraw consent using Analytics settings in the footer. Without consent, Clarity does not load.</p>
-        <p>For details about Microsoft's processing, including international transfers, see the <a href="https://privacy.microsoft.com/privacystatement">Microsoft Privacy Statement</a> and <a href="https://learn.microsoft.com/en-us/clarity/setup-and-installation/clarity-cookies">Clarity cookie documentation</a>. Other website assets are hosted locally. Following an external link connects you to that website.</p>
+        <p>For details about Microsoft's processing, including international transfers, see the <a href="https://privacy.microsoft.com/privacystatement" class="text-blue-600 hover:text-blue-800 underline focus:ring-2 focus:ring-slate-800 focus:outline-none">Microsoft Privacy Statement</a> and <a href="https://learn.microsoft.com/en-us/clarity/setup-and-installation/clarity-cookies" class="text-blue-600 hover:text-blue-800 underline focus:ring-2 focus:ring-slate-800 focus:outline-none">Clarity cookie documentation</a>. Other website assets are hosted locally. Following an external link connects you to that website.</p>
 
         <h2 class="font-cinzel text-xl font-bold text-slate-800 mt-8 mb-2">4. Hosting</h2>
         <p>This website is hosted by Websupport, s.r.o., a hosting provider established in Slovakia, with servers located in the European Union. Like virtually all hosting providers, Websupport keeps standard server and access logs (such as IP addresses, timestamps, and requested pages) for security and operational purposes. These logs are maintained by the hosting provider as part of the ordinary operation of its infrastructure.</p>
