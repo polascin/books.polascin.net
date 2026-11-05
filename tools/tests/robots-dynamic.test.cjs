@@ -17,7 +17,9 @@ describe("robots.txt is served dynamically", () => {
     assert.match(robotsPhp, /\$path = __DIR__ \. '\/robots\.txt';/);
     assert.match(robotsPhp, /readfile\(\$path\)/);
     assert.match(robotsPhp, /no-store/);
+    assert.match(robotsPhp, /X-Robots-Tag: noindex/);
   });
+
 
   it("robots.txt lists agent and AGENTS paths", () => {
     assert.match(robotsTxt, /Disallow: \/\.codex\//);

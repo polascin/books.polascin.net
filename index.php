@@ -167,14 +167,14 @@ include __DIR__ . '/includes/header.php';
     
     <!-- Link to the separated Catalog Page -->
     <div class="mt-12 mb-4 text-center">
-        <a href="catalog.php" class="inline-block border border-slate-800 text-slate-800 px-8 py-3 font-cinzel tracking-widest text-lg hover:bg-slate-800 hover:text-white transition-all duration-300 shadow-md hover:shadow-lg">
+        <a href="/catalog.php" class="inline-block border border-slate-800 text-slate-800 px-8 py-3 font-cinzel tracking-widest text-lg hover:bg-slate-800 hover:text-white transition-all duration-300 shadow-md hover:shadow-lg">
             View Catalogus Librorum
         </a>
     </div>
 
     <!-- Link to the separated About Page -->
     <div class="mt-4 text-center">
-        <a href="about.php" class="inline-block px-6 py-2 font-cinzel tracking-widest text-sm text-slate-600 hover:text-slate-800 transition-all duration-300">
+        <a href="/about.php" class="inline-block px-6 py-2 font-cinzel tracking-widest text-sm text-slate-600 hover:text-slate-800 transition-all duration-300">
             De Auctore (About)
         </a>
     </div>

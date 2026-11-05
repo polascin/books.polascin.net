@@ -76,12 +76,12 @@
     <!-- Main Header Area - Could contain navigation if needed later -->
     <header class="w-full bg-slate-900 text-paper py-4 shadow-md sticky top-0 z-50">
         <div class="container mx-auto px-4 flex flex-col gap-3 sm:flex-row justify-between items-center">
-            <a href="index.php" class="text-xl font-cinzel tracking-widest hover:text-white transition-colors">Bibliotheca Polascini</a>
+            <a href="/" class="text-xl font-cinzel tracking-widest hover:text-white transition-colors">Bibliotheca Polascini</a>
             <nav aria-label="Main Navigation">
                 <ul class="flex space-x-6">
-                    <li><a href="index.php" class="hover:text-gray-300 transition-colors font-playfair italic"<?php echo $currentScript === 'index.php' ? ' aria-current="page"' : ''; ?>>Home</a></li>
-                    <li><a href="catalog.php" class="hover:text-gray-300 transition-colors font-playfair italic"<?php echo $currentScript === 'catalog.php' ? ' aria-current="page"' : ''; ?>>Catalog</a></li>
-                    <li><a href="about.php" class="hover:text-gray-300 transition-colors font-playfair italic"<?php echo $currentScript === 'about.php' ? ' aria-current="page"' : ''; ?>>About</a></li>
+                    <li><a href="/" class="hover:text-gray-300 transition-colors font-playfair italic"<?php echo $currentScript === 'index.php' ? ' aria-current="page"' : ''; ?>>Home</a></li>
+                    <li><a href="/catalog.php" class="hover:text-gray-300 transition-colors font-playfair italic"<?php echo $currentScript === 'catalog.php' ? ' aria-current="page"' : ''; ?>>Catalog</a></li>
+                    <li><a href="/about.php" class="hover:text-gray-300 transition-colors font-playfair italic"<?php echo $currentScript === 'about.php' ? ' aria-current="page"' : ''; ?>>About</a></li>
                 </ul>
             </nav>
         </div>

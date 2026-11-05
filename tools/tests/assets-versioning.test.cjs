@@ -26,6 +26,15 @@ describe("static asset versioning", () => {
     }
   });
 
+  it("main nav uses root-absolute paths, not relative *.php hrefs", () => {
+    assert.match(header, /href="\/"/);
+    assert.match(header, /href="\/catalog\.php"/);
+    assert.match(header, /href="\/about\.php"/);
+    assert.doesNotMatch(header, /href="index\.php"/);
+    assert.doesNotMatch(header, /href="catalog\.php"/);
+    assert.doesNotMatch(header, /href="about\.php"/);
+  });
+
   it("catalog script is versioned through assetUrl()", () => {
     assert.match(footer, /assetUrl\('assets\/js\/script\.js'\)/);
   });
