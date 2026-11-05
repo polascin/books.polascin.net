@@ -11,11 +11,16 @@ function run({ path = "/", query = "", stored = null, external = false } = {}) {
   const events = {};
   const docEvents = {};
   const cookies = [];
+  let activeElement = null;
   const make = (tag) => ({
     tag,
     focused: false,
     focus() {
+      if (activeElement && activeElement !== this) {
+        activeElement.focused = false;
+      }
       this.focused = true;
+      activeElement = this;
     },
     children: [],
     dataset: {},
@@ -31,6 +36,7 @@ function run({ path = "/", query = "", stored = null, external = false } = {}) {
 
     appendChild(e) {
       this.children.push(e);
+      e.parent = this;
       elements.push(e);
     },
     append(...es) {
@@ -42,8 +48,25 @@ function run({ path = "/", query = "", stored = null, external = false } = {}) {
     remove() {
       this.removed = true;
     },
+    contains(node) {
+      let cur = node;
+      while (cur) {
+        if (cur === this) return true;
+        cur = cur.parent;
+      }
+      return false;
+    },
     querySelector() {
       return this.children.find((c) => c.tag === "button") || { focus() {} };
+    },
+    querySelectorAll(sel) {
+      const wantLink = String(sel).includes("a[href]");
+      const wantButton = String(sel).includes("button");
+      return this.children.filter((c) => {
+        if (wantLink && c.tag === "a") return true;
+        if (wantButton && c.tag === "button") return true;
+        return false;
+      });
     },
   });
   const head = make("head");
@@ -78,6 +101,9 @@ function run({ path = "/", query = "", stored = null, external = false } = {}) {
     },
     set cookie(c) {
       cookies.push(c);
+    },
+    get activeElement() {
+      return activeElement;
     },
   };
   const window = {
@@ -187,6 +213,43 @@ s.docEvents.keydown({ key: "Escape", preventDefault() {} });
 assert.equal(s.dialog(), null);
 assert.equal(JSON.parse(s.value).granted, true);
 assert.equal(s.reloads, 0);
+
+s = run({
+  stored: JSON.stringify({ granted: true, expires: Date.now() + 10000 }),
+});
+s.elements.find((e) => e.textContent === "Nastavenia analytiky").click();
+{
+  const dialog = s.dialog();
+  const link = dialog.children.find((c) => c.tag === "a");
+  const decline = dialog.children.find(
+    (c) => c.tag === "button" && c.textContent === "Odmietnuť",
+  );
+  const allow = dialog.children.find(
+    (c) => c.tag === "button" && c.textContent === "Povoliť analytiku",
+  );
+  let prevented = 0;
+  const tab = (shiftKey) =>
+    s.docEvents.keydown({
+      key: "Tab",
+      shiftKey,
+      preventDefault() {
+        prevented += 1;
+      },
+    });
+  tab(false);
+  assert.equal(link.focused, true);
+  assert.equal(prevented, 1);
+  allow.focus();
+  tab(false);
+  assert.equal(link.focused, true);
+  link.focus();
+  tab(true);
+  assert.equal(allow.focused, true);
+  decline.focus();
+  prevented = 0;
+  tab(false);
+  assert.equal(prevented, 0);
+}
 
 for (const path of ["/login.php", "/calculator.php", "/admin.php"])
   assert.equal(run({ path }).elements.length, 0);

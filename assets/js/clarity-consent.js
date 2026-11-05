@@ -35,11 +35,35 @@
       /* Consent still applies for this page. */
     }
   };
+  function dialogFocusables() {
+    return banner
+      ? [...banner.querySelectorAll("a[href], button:not([disabled])")]
+      : [];
+  }
   function onKeydown(e) {
-    if (e.key !== "Escape" || !banner) return;
-    e.preventDefault();
-    if (escapeMode === "decline") apply(false);
-    else dismiss();
+    if (!banner) return;
+    if (e.key === "Escape") {
+      e.preventDefault();
+      if (escapeMode === "decline") apply(false);
+      else dismiss();
+      return;
+    }
+    if (e.key !== "Tab") return;
+    const items = dialogFocusables();
+    if (!items.length) return;
+    const first = items[0];
+    const last = items[items.length - 1];
+    const active = document.activeElement;
+    const inside = banner.contains(active);
+    if (e.shiftKey) {
+      if (!inside || active === first) {
+        e.preventDefault();
+        last.focus();
+      }
+    } else if (!inside || active === last) {
+      e.preventDefault();
+      first.focus();
+    }
   }
   function dismiss() {
     if (!banner) return;
