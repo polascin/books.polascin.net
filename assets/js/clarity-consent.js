@@ -17,6 +17,7 @@
   const sk = document.documentElement.lang.startsWith("sk");
   let loaded = false;
   let banner;
+  let backdrop;
   let escapeMode = null;
   const read = () => {
     try {
@@ -65,13 +66,22 @@
       first.focus();
     }
   }
-  function dismiss() {
-    if (!banner) return;
-    banner.remove();
-    banner = null;
+  function closeDialogShell() {
+    if (backdrop) {
+      backdrop.remove();
+      backdrop = null;
+    }
+    if (banner) {
+      banner.remove();
+      banner = null;
+    }
     escapeMode = null;
     setExpanded(false);
     document.removeEventListener("keydown", onKeydown);
+  }
+  function dismiss() {
+    if (!banner) return;
+    closeDialogShell();
     settings.focus();
   }
   function apply(granted, persist = true) {
@@ -116,11 +126,7 @@
       if (loaded && persist) location.reload();
     }
     if (banner) {
-      banner.remove();
-      banner = null;
-      escapeMode = null;
-      setExpanded(false);
-      document.removeEventListener("keydown", onKeydown);
+      closeDialogShell();
       // Return keyboard focus to the footer control that owns the dialog.
       settings.focus();
     }
@@ -181,7 +187,13 @@
     accept.textContent = sk ? "Povoliť analytiku" : "Allow analytics";
     accept.addEventListener("click", () => apply(true));
     banner.append(title, text, link, decline, accept);
-    document.body.appendChild(banner);
+    backdrop = document.createElement("div");
+    backdrop.className = "clarity-consent-backdrop";
+    backdrop.addEventListener("click", () => {
+      if (escapeMode === "decline") apply(false);
+      else dismiss();
+    });
+    document.body.append(backdrop, banner);
     escapeMode = focus ? "dismiss" : "decline";
     document.addEventListener("keydown", onKeydown);
     if (focus) decline.focus();

@@ -1,3 +1,9 @@
+.clarity-consent-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 2147482999;
+  background: rgba(15, 23, 42, 0.35);
+}
 .clarity-consent {
   position: fixed;
   bottom: 1rem;
@@ -27,6 +33,12 @@
 .clarity-consent a {
   color: #164e78;
 }
+.clarity-consent a:focus-visible,
+.clarity-consent button:focus-visible,
+.clarity-settings:focus-visible {
+  outline: 3px solid #005fcc;
+  outline-offset: 3px;
+}
 .clarity-consent button,
 .clarity-settings {
   min-height: 2.75rem;
@@ -39,11 +51,6 @@
   color: #172b3b;
   font: inherit;
   cursor: pointer;
-}
-.clarity-consent button:focus-visible,
-.clarity-settings:focus-visible {
-  outline: 3px solid #005fcc;
-  outline-offset: 3px;
 }
 @media (max-width: 450px) {
   .clarity-consent {

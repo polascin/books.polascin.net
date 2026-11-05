@@ -161,6 +161,10 @@ assert.equal(
   "https://example.com/js/clarity-consent.css?v=42",
 );
 assert.equal(s.dialog().attrs["aria-modal"], "true");
+assert.ok(
+  s.elements.find((e) => e.className === "clarity-consent-backdrop"),
+  "modal backdrop should block pointer events to the page",
+);
 assert.equal(
   s.elements.find((e) => e.textContent === "Nastavenia analytiky").attrs[
     "aria-haspopup"
@@ -208,6 +212,11 @@ s.docEvents.keydown({ key: "Escape", preventDefault() {} });
 assert.equal(JSON.parse(s.value).granted, false);
 assert.equal(s.scripts().length, 0);
 
+s = run();
+s.elements.find((e) => e.className === "clarity-consent-backdrop").click();
+assert.equal(JSON.parse(s.value).granted, false);
+assert.equal(s.dialog(), null);
+
 s = run({
   stored: JSON.stringify({ granted: true, expires: Date.now() + 10000 }),
 });
@@ -215,6 +224,16 @@ assert.equal(s.scripts().length, 1);
 s.elements.find((e) => e.textContent === "Nastavenia analytiky").click();
 assert.ok(s.dialog());
 s.docEvents.keydown({ key: "Escape", preventDefault() {} });
+assert.equal(s.dialog(), null);
+assert.equal(JSON.parse(s.value).granted, true);
+assert.equal(s.reloads, 0);
+
+s = run({
+  stored: JSON.stringify({ granted: true, expires: Date.now() + 10000 }),
+});
+s.elements.find((e) => e.textContent === "Nastavenia analytiky").click();
+assert.ok(s.dialog());
+s.elements.find((e) => e.className === "clarity-consent-backdrop").click();
 assert.equal(s.dialog(), null);
 assert.equal(JSON.parse(s.value).granted, true);
 assert.equal(s.reloads, 0);
