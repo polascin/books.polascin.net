@@ -32,6 +32,7 @@
 }
 .clarity-consent a {
   color: #164e78;
+  text-decoration: underline;
 }
 .clarity-consent a:focus-visible,
 .clarity-consent button:focus-visible,

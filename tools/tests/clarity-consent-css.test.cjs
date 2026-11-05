@@ -23,4 +23,11 @@ describe("Clarity consent dialog chrome", () => {
       /\.clarity-consent a:focus-visible,\s*\.clarity-consent button:focus-visible/s,
     );
   });
+
+  it("underlines the privacy link so it is not color-only", () => {
+    assert.match(
+      css,
+      /\.clarity-consent a\s*\{[^}]*text-decoration:\s*underline/s,
+    );
+  });
 });
