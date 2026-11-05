@@ -1,5 +1,5 @@
 # robots.txt — books.polascin.net
-# Aktualizované: 2026-09-04
+# Aktualizované: 2026-11-05
 
 User-agent: *
 Allow: /
@@ -9,6 +9,12 @@ Disallow: /data/
 Disallow: /tools/
 Disallow: /hooks/
 Disallow: /.git/
+Disallow: /.codex/
+Disallow: /.trunk/
+Disallow: /.agents/
+Disallow: /.cursor/
+Disallow: /.kilo/
+Disallow: /AGENTS.md
 
 Crawl-delay: 10
 

@@ -30,7 +30,7 @@ include __DIR__ . '/includes/header.php';
         <p>No data protection officer has been appointed, as the website is operated by an individual and does not carry out large-scale or systematic processing that would require one under Article 37 GDPR.</p>
 
         <h2 class="font-cinzel text-xl font-bold text-slate-800 mt-8 mb-2">2. Information We Collect</h2>
-        <p>We collect basic technical information to ensure the website functions securely and continuously. When you interact with our cookie consent banner, we store your preference locally in your browser's local storage to prevent prompting you repeatedly. If you allow analytics, pseudonymous usage data is also processed by Microsoft Clarity as described below.</p>
+        <p>We collect basic technical information to ensure the website functions securely and continuously. When you interact with our analytics consent prompt, we store your preference locally in your browser's local storage to prevent prompting you repeatedly. If you allow analytics, pseudonymous usage data is also processed by Microsoft Clarity as described below.</p>
 
         <h2 class="font-cinzel text-xl font-bold text-slate-800 mt-8 mb-2">3. Cookies, Browser Storage and External Resources</h2>
         <p>Microsoft Clarity loads only after you choose Allow analytics. It records visits, clicks, scrolling and public-page sessions with masked text to improve the website. Microsoft receives this data. Advertising consent stays denied. The cookies <code>_clck</code> and <code>_clsk</code> distinguish visitors and connect page views into sessions. You can withdraw consent using Analytics settings in the footer. Without consent, Clarity does not load.</p>
