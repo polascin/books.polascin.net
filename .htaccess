@@ -40,8 +40,14 @@ ServerSignature Off
         Header set Cache-Control "no-cache"
     </FilesMatch>
     # Crawl metadata must refresh with the deploy, not linger in edge caches.
+    # no-store: bare /robots.txt was still served stale (473 B) after origin
+    # already had the November file (590 B); query-string bypasses the edge.
     <FilesMatch "^(robots\.txt|sitemap\.xml|site\.webmanifest)$">
-        Header set Cache-Control "no-cache"
+        Header unset ETag
+        Header set Cache-Control "no-store, max-age=0"
+    </FilesMatch>
+    <FilesMatch "^(robots\.txt|sitemap\.xml)$">
+        FileETag None
     </FilesMatch>
 </IfModule>
 
@@ -99,5 +105,8 @@ ServerSignature Off
     RewriteRule ^(\.git|\.claude|\.vscode|\.agents|\.codex|\.cursor|\.kilo|\.github|node_modules|includes|data|tools|hooks)(/.*)?$ - [F,L]
     # Alias bez prípony: /privacy a /terms → kanonické .php stránky
     RewriteRule ^(privacy|terms)/?$ /$1.php [R=301,L,NE]
+    # Static /robots.txt can stick in the edge cache (origin 590 B, public 473 B).
+    # Serve through PHP so each request reads the deployed file.
+    RewriteRule ^robots\.txt$ /robots.php [L]
     RewriteRule ^sitemap\.xml$ sitemap.xml [L]
 </IfModule>
