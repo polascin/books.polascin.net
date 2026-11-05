@@ -14,7 +14,8 @@ describe("robots.txt is served dynamically", () => {
   });
 
   it("robots.php reads robots.txt with no-store headers", () => {
-    assert.match(robotsPhp, /readfile\(__DIR__ \. '\/robots\.txt'\)/);
+    assert.match(robotsPhp, /\$path = __DIR__ \. '\/robots\.txt';/);
+    assert.match(robotsPhp, /readfile\(\$path\)/);
     assert.match(robotsPhp, /no-store/);
   });
 
