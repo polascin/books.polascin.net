@@ -5,9 +5,10 @@
  * file path cannot keep an obsolete crawl policy after deploy.
  */
 header('Content-Type: text/plain; charset=UTF-8');
-header('Cache-Control: no-store, max-age=0');
 header('X-Content-Type-Options: nosniff');
 header('X-Robots-Tag: noindex');
+// Cache-Control comes only from .htaccess <Files "robots.php"> so clients
+// do not receive a duplicated Cache-Control header line.
 
 $path = __DIR__ . '/robots.txt';
 if (!is_readable($path)) {

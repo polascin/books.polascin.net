@@ -13,12 +13,13 @@ describe("robots.txt is served dynamically", () => {
     assert.match(htaccess, /RewriteRule \^robots\\\.txt\$ \/robots\.php \[L\]/);
   });
 
-  it("robots.php reads robots.txt with no-store headers", () => {
+  it("robots.php reads robots.txt and leaves Cache-Control to Apache", () => {
     assert.match(robotsPhp, /\$path = __DIR__ \. '\/robots\.txt';/);
     assert.match(robotsPhp, /readfile\(\$path\)/);
-    assert.match(robotsPhp, /no-store/);
+    assert.doesNotMatch(robotsPhp, /header\('Cache-Control/);
     assert.match(robotsPhp, /X-Robots-Tag: noindex/);
   });
+
 
   it("Apache sets a single no-store Cache-Control for robots.php", () => {
     assert.match(
