@@ -103,8 +103,11 @@ ServerSignature Off
     RewriteEngine On
     RewriteRule "(^|/)\.(?!well-known)" - [F,L]
     RewriteRule ^(\.git|\.claude|\.vscode|\.agents|\.codex|\.cursor|\.kilo|\.github|node_modules|includes|data|tools|hooks)(/.*)?$ - [F,L]
-    # Alias bez prípony: /privacy a /terms → kanonické .php stránky
-    RewriteRule ^(privacy|terms)/?$ /$1.php [R=301,L,NE]
+    # Alias bez prípony → kanonické .php stránky (Clarity data-paths už
+    # počítajú s /catalog a /about; bez tohto pravidla vracali 404).
+    RewriteRule ^(privacy|terms|catalog|about)/?$ /$1.php [R=301,L,NE]
+    # Canonical home is /; keep /index.php from competing in search results.
+    RewriteRule ^index\.php$ / [R=301,L]
     # Static /robots.txt can stick in the edge cache (origin 590 B, public 473 B).
     # Serve through PHP so each request reads the deployed file.
     RewriteRule ^robots\.txt$ /robots.php [L]

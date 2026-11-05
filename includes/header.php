@@ -80,8 +80,8 @@
             <nav aria-label="Main Navigation">
                 <ul class="flex space-x-6">
                     <li><a href="/" class="hover:text-gray-300 transition-colors font-playfair italic"<?php echo $currentScript === 'index.php' ? ' aria-current="page"' : ''; ?>>Home</a></li>
-                    <li><a href="/catalog.php" class="hover:text-gray-300 transition-colors font-playfair italic"<?php echo $currentScript === 'catalog.php' ? ' aria-current="page"' : ''; ?>>Catalog</a></li>
-                    <li><a href="/about.php" class="hover:text-gray-300 transition-colors font-playfair italic"<?php echo $currentScript === 'about.php' ? ' aria-current="page"' : ''; ?>>About</a></li>
+                    <li><a href="/catalog" class="hover:text-gray-300 transition-colors font-playfair italic"<?php echo $currentScript === 'catalog.php' ? ' aria-current="page"' : ''; ?>>Catalog</a></li>
+                    <li><a href="/about" class="hover:text-gray-300 transition-colors font-playfair italic"<?php echo $currentScript === 'about.php' ? ' aria-current="page"' : ''; ?>>About</a></li>
                 </ul>
             </nav>
         </div>
