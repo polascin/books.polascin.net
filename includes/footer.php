@@ -20,7 +20,7 @@
     </div>
 </footer>
 
-<script src="/assets/js/clarity-consent.js?v=20261101" data-project="z6sxbeabon" data-paths="/,/index.php,/catalog,/catalog.php,/about,/about.php,/privacy,/privacy.php,/terms,/terms.php" data-privacy="/privacy"></script>
+<script src="<?php echo assetUrl('assets/js/clarity-consent.js'); ?>" data-project="z6sxbeabon" data-css="<?php echo assetUrl('assets/js/clarity-consent.css'); ?>" data-paths="/,/index.php,/catalog,/catalog.php,/about,/about.php,/privacy,/privacy.php,/terms,/terms.php" data-privacy="/privacy"></script>
 
 <!-- Custom Scripts -->
 <script src="<?php echo assetUrl('assets/js/script.js'); ?>"></script>

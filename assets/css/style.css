@@ -529,7 +529,6 @@ html {
 
 /* Keep keyboard focus visible against the dark navigation and footer. */
 header :focus-visible,
-footer :focus-visible,
-#cookie-banner :focus-visible {
+footer :focus-visible {
   outline-color: #f4f1ea;
 }
