@@ -15,6 +15,7 @@ function run({ path = "/", query = "", stored = null, external = false } = {}) {
   const make = (tag) => ({
     tag,
     focused: false,
+    style: {},
     focus() {
       if (activeElement && activeElement !== this) {
         activeElement.focused = false;
@@ -85,7 +86,7 @@ function run({ path = "/", query = "", stored = null, external = false } = {}) {
     },
     head,
     body,
-    documentElement: { lang: "sk" },
+    documentElement: { lang: "sk", style: {} },
     createElement: make,
     querySelector() {
       return null;
@@ -141,6 +142,7 @@ function run({ path = "/", query = "", stored = null, external = false } = {}) {
     docEvents,
     window,
     body,
+    documentElement: document.documentElement,
     cookies,
     get reloads() {
       return reloads;
@@ -185,6 +187,12 @@ assert.equal(
   true,
   "first prompt must move focus into the modal behind the backdrop",
 );
+assert.equal(
+  s.body.style.overflow,
+  "hidden",
+  "open dialog must lock page scroll",
+);
+assert.equal(s.documentElement.style.overflow, "hidden");
 let accept = s.elements.find((e) => e.textContent === "Povoliť analytiku");
 accept.click();
 const settingsBtn = s.elements.find(
@@ -193,6 +201,12 @@ const settingsBtn = s.elements.find(
 assert.equal(settingsBtn.attrs["aria-expanded"], "false");
 assert.equal(settingsBtn.attrs["aria-controls"], undefined);
 assert.equal(settingsBtn.focused, true);
+assert.equal(
+  s.body.style.overflow,
+  "",
+  "closing the dialog must restore page scroll",
+);
+assert.equal(s.documentElement.style.overflow, "");
 assert.equal(s.scripts().length, 1);
 assert.equal(s.scripts()[0].src, "https://www.clarity.ms/tag/abc123");
 assert.equal(s.body["data-clarity-mask"], "true");

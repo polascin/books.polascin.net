@@ -66,6 +66,12 @@
       first.focus();
     }
   }
+  function setScrollLock(on) {
+    // Keep the page behind the modal from scrolling on touch / wheel.
+    const value = on ? "hidden" : "";
+    document.documentElement.style.overflow = value;
+    document.body.style.overflow = value;
+  }
   function closeDialogShell() {
     if (backdrop) {
       backdrop.remove();
@@ -77,6 +83,7 @@
     }
     escapeMode = null;
     setExpanded(false);
+    setScrollLock(false);
     document.removeEventListener("keydown", onKeydown);
   }
   function dismiss() {
@@ -195,6 +202,7 @@
       else dismiss();
     });
     document.body.append(backdrop, banner);
+    setScrollLock(true);
     // Backdrop blocks the page, so keyboard focus must enter the dialog.
     // Escape still declines on first prompt and only dismisses from settings.
     escapeMode = fromSettings ? "dismiss" : "decline";
