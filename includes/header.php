@@ -44,9 +44,12 @@
     <meta property="og:description" content="<?php echo esc_html($pageDescription); ?>">
     <meta property="og:url" content="<?php echo esc_html($pageCanonical); ?>">
     <meta property="og:image" content="<?php echo esc_html($pageImage); ?>">
+    <?php // Default social image is assets/images/author.png (256×256 portrait). ?>
+    <meta property="og:image:width" content="256">
+    <meta property="og:image:height" content="256">
     <meta property="og:locale" content="en_US">
 
-    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:card" content="summary">
     <meta name="twitter:title" content="<?php echo esc_html($pageTitle); ?>">
     <meta name="twitter:description" content="<?php echo esc_html($pageDescription); ?>">
     <meta name="twitter:image" content="<?php echo esc_html($pageImage); ?>">

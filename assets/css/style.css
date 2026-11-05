@@ -486,7 +486,13 @@ html {
   top: 0;
 }
 
-/* Cieľ preskočenia dostáva fokus programovo — bez vlastného rámčeka. */
+/* Cieľ preskočenia dostáva fokus programovo — bez vlastného rámčeka.
+   scroll-margin-top: sticky header (py-4 + brand/nav, na mobile aj dva riadky)
+   by inak prekryl začiatok obsahu po aktivácii skip-linku. */
+#main-content {
+  scroll-margin-top: 7rem;
+}
+
 #main-content:focus {
   outline: none;
 }
