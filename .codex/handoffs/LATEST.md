@@ -1,9 +1,9 @@
 # Latest handoff pointer
 
-Active loop handoff: `.codex/handoffs/2026-11-05-192954-books-dev-loop.md`
+Active loop handoff: `.codex/handoffs/2026-11-05-194700-books-dev-loop-beh7.md`
 
 Loop sentinel: `AGENT_LOOP_WAKE_books_dev`
-Head: `46f2e1b` on `main`
-Last closed: Beh #6 + deploy hygiene for `.codex`
-Next tick: DB/JSON parity on server or next audit finding
-Stop: kill the sleeper PID and do not re-arm
+Head: `7203bab` on `main`
+Last closed: Beh #7 (privacy wording, sitemap/robots, server junk cleanup)
+Next: Beh #8 — next audit finding
+Stop: kill sleeper PID and do not re-arm
