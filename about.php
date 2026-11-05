@@ -55,8 +55,8 @@ include __DIR__ . '/includes/header.php';
                 <p class="font-playfair text-slate-600 italic mb-4">Nephrologist, Writer & Programmer</p>
                 
                 <div class="space-y-2 text-sm text-slate-700">
-                    <a href="https://polascin.net" target="_blank" rel="noopener noreferrer" class="block hover:text-slate-900 transition-colors" aria-label="polascin.net (opens in a new tab)"><span aria-hidden="true">🌐</span> polascin.net</a>
-                    <a href="https://polascin.com" target="_blank" rel="noopener noreferrer" class="block hover:text-slate-900 transition-colors" aria-label="polascin.com (opens in a new tab)"><span aria-hidden="true">🌐</span> polascin.com</a>
+                    <a href="https://polascin.net" target="_blank" rel="noopener noreferrer" class="block hover:text-slate-900 transition-colors underline" aria-label="polascin.net (opens in a new tab)"><span aria-hidden="true">🌐</span> polascin.net</a>
+                    <a href="https://polascin.com" target="_blank" rel="noopener noreferrer" class="block hover:text-slate-900 transition-colors underline" aria-label="polascin.com (opens in a new tab)"><span aria-hidden="true">🌐</span> polascin.com</a>
                 </div>
             </div>
 
