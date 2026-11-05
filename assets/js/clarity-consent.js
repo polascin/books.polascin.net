@@ -46,6 +46,7 @@
     banner.remove();
     banner = null;
     escapeMode = null;
+    setExpanded(false);
     document.removeEventListener("keydown", onKeydown);
     settings.focus();
   }
@@ -94,6 +95,7 @@
       banner.remove();
       banner = null;
       escapeMode = null;
+      setExpanded(false);
       document.removeEventListener("keydown", onKeydown);
     }
   }
@@ -112,9 +114,14 @@
   const settings = document.createElement("button");
   settings.type = "button";
   settings.className = "clarity-settings";
+  settings.setAttribute("aria-haspopup", "dialog");
+  settings.setAttribute("aria-expanded", "false");
   settings.textContent = sk ? "Nastavenia analytiky" : "Analytics settings";
   settings.addEventListener("click", () => show(true));
   (document.querySelector("footer") || document.body).appendChild(settings);
+  function setExpanded(open) {
+    settings.setAttribute("aria-expanded", open ? "true" : "false");
+  }
   function show(focus = false) {
     if (banner) {
       if (focus) banner.querySelector("button").focus();
@@ -122,9 +129,12 @@
     }
     banner = document.createElement("section");
     banner.className = "clarity-consent";
+    banner.id = "clarity-consent-dialog";
     banner.setAttribute("role", "dialog");
     banner.setAttribute("aria-modal", "true");
     banner.setAttribute("aria-labelledby", "clarity-consent-title");
+    settings.setAttribute("aria-controls", banner.id);
+    setExpanded(true);
     const title = document.createElement("h2");
     title.id = "clarity-consent-title";
     title.textContent = sk ? "Voliteľná analytika" : "Optional analytics";

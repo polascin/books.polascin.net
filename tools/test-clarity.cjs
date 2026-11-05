@@ -130,8 +130,26 @@ assert.equal(
   "https://example.com/js/clarity-consent.css?v=42",
 );
 assert.equal(s.dialog().attrs["aria-modal"], "true");
+assert.equal(
+  s.elements.find((e) => e.textContent === "Nastavenia analytiky").attrs[
+    "aria-haspopup"
+  ],
+  "dialog",
+);
+assert.equal(
+  s.elements.find((e) => e.textContent === "Nastavenia analytiky").attrs[
+    "aria-expanded"
+  ],
+  "true",
+);
 let accept = s.elements.find((e) => e.textContent === "Povoliť analytiku");
 accept.click();
+assert.equal(
+  s.elements.find((e) => e.textContent === "Nastavenia analytiky").attrs[
+    "aria-expanded"
+  ],
+  "false",
+);
 assert.equal(s.scripts().length, 1);
 assert.equal(s.scripts()[0].src, "https://www.clarity.ms/tag/abc123");
 assert.equal(s.body["data-clarity-mask"], "true");
