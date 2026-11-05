@@ -7,9 +7,9 @@
     <div class="container mx-auto px-4">
         <p class="font-cinzel text-sm tracking-widest mb-2">EX BIBLIOTHECA Dr. Lubomiri Polascini</p>
         <div class="flex flex-wrap justify-center gap-4 text-xs mt-4 mb-2">
-            <a href="/privacy" class="hover:text-white transition-colors">Privacy Policy</a>
+            <a href="/privacy" class="hover:text-white transition-colors"<?php echo ($currentScript ?? '') === 'privacy.php' ? ' aria-current="page"' : ''; ?>>Privacy Policy</a>
             <span>&bull;</span>
-            <a href="/terms" class="hover:text-white transition-colors">Terms of Use</a>
+            <a href="/terms" class="hover:text-white transition-colors"<?php echo ($currentScript ?? '') === 'terms.php' ? ' aria-current="page"' : ''; ?>>Terms of Use</a>
             <span>&bull;</span>
             <a href="/privacy#legal-disclaimer" class="hover:text-white transition-colors">Disclaimer</a>
             <span>&bull;</span>

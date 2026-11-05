@@ -180,6 +180,11 @@ assert.equal(
   ],
   "true",
 );
+assert.equal(
+  s.elements.find((e) => e.textContent === "Odmietnuť").focused,
+  true,
+  "first prompt must move focus into the modal behind the backdrop",
+);
 let accept = s.elements.find((e) => e.textContent === "Povoliť analytiku");
 accept.click();
 const settingsBtn = s.elements.find(

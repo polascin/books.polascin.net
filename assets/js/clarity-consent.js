@@ -155,9 +155,9 @@
     settings.setAttribute("aria-expanded", open ? "true" : "false");
     if (!open) settings.removeAttribute("aria-controls");
   }
-  function show(focus = false) {
+  function show(fromSettings = false) {
     if (banner) {
-      if (focus) banner.querySelector("button").focus();
+      if (fromSettings) banner.querySelector("button").focus();
       return;
     }
     banner = document.createElement("section");
@@ -195,9 +195,11 @@
       else dismiss();
     });
     document.body.append(backdrop, banner);
-    escapeMode = focus ? "dismiss" : "decline";
+    // Backdrop blocks the page, so keyboard focus must enter the dialog.
+    // Escape still declines on first prompt and only dismisses from settings.
+    escapeMode = fromSettings ? "dismiss" : "decline";
     document.addEventListener("keydown", onKeydown);
-    if (focus) decline.focus();
+    decline.focus();
   }
   const stored = read();
   if (
