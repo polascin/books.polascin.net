@@ -3,9 +3,11 @@ const assert = require("node:assert/strict");
 const { readFileSync } = require("node:fs");
 const { resolve } = require("node:path");
 
+const root = resolve(__dirname, "../..");
 const manifest = JSON.parse(
-  readFileSync(resolve(__dirname, "../../site.webmanifest"), "utf8"),
+  readFileSync(resolve(root, "site.webmanifest"), "utf8"),
 );
+const htaccess = readFileSync(resolve(root, ".htaccess"), "utf8");
 
 describe("site.webmanifest install icons", () => {
   it("ships 192/512 icons with separate any and maskable purposes", () => {
@@ -31,5 +33,13 @@ describe("site.webmanifest install icons", () => {
   it("declares a stable application id independent of cache-busted manifest URLs", () => {
     assert.equal(manifest.id, "/");
     assert.equal(manifest.start_url, "/");
+  });
+
+  it("forces application/manifest+json for .webmanifest responses", () => {
+    assert.match(htaccess, /AddType application\/manifest\+json \.webmanifest/);
+    assert.match(
+      htaccess,
+      /<Files "site\.webmanifest">[\s\S]*Content-Type "application\/manifest\+json"/,
+    );
   });
 });

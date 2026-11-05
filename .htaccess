@@ -2,6 +2,12 @@
 Options -Indexes
 ServerSignature Off
 
+# PWA manifest must advertise the dedicated MIME type. Without it (and with
+# X-Content-Type-Options: nosniff) Chromium may ignore the install manifest.
+<IfModule mod_mime.c>
+    AddType application/manifest+json .webmanifest
+</IfModule>
+
 # Globálne bezpečnostné HTTP hlavičky
 <IfModule mod_headers.c>
     Header always set X-Frame-Options "SAMEORIGIN"
@@ -52,6 +58,9 @@ ServerSignature Off
         Header unset ETag
         Header set Cache-Control "no-store, max-age=0"
     </FilesMatch>
+    <Files "site.webmanifest">
+        Header set Content-Type "application/manifest+json"
+    </Files>
     <FilesMatch "^(robots\.txt|sitemap\.xml)$">
         FileETag None
     </FilesMatch>
