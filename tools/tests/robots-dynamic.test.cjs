@@ -20,6 +20,14 @@ describe("robots.txt is served dynamically", () => {
     assert.match(robotsPhp, /X-Robots-Tag: noindex/);
   });
 
+  it("Apache sets a single no-store Cache-Control for robots.php", () => {
+    assert.match(
+      htaccess,
+      /<Files "robots\.php">\s*Header unset Cache-Control\s*Header set Cache-Control "no-store, max-age=0"\s*<\/Files>/s,
+    );
+  });
+
+
 
   it("robots.txt lists agent and AGENTS paths", () => {
     assert.match(robotsTxt, /Disallow: \/\.codex\//);

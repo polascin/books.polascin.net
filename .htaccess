@@ -36,9 +36,15 @@ ServerSignature Off
         Header set Cache-Control "public, max-age=2592000"
     </FilesMatch>
     # Dynamické stránky sa musia vždy overiť — obsah katalógu sa mení.
+    # robots.php is excluded: it needs no-store (below), and two Cache-Control
+    # headers (no-cache + no-store) were reaching clients.
     <FilesMatch "\.php$">
         Header set Cache-Control "no-cache"
     </FilesMatch>
+    <Files "robots.php">
+        Header unset Cache-Control
+        Header set Cache-Control "no-store, max-age=0"
+    </Files>
     # Crawl metadata must refresh with the deploy, not linger in edge caches.
     # no-store: bare /robots.txt was still served stale (473 B) after origin
     # already had the November file (590 B); query-string bypasses the edge.
