@@ -37,8 +37,12 @@ function catalog(reducedMotion) {
   }));
   const input = () => ({
     value: "",
+    focused: false,
     addEventListener(event, listener) {
       this[event] = listener;
+    },
+    focus() {
+      this.focused = true;
     },
   });
   const elements = {
@@ -50,20 +54,30 @@ function catalog(reducedMotion) {
       hidden: true,
     },
   };
+  const document = {
+    activeElement: null,
+    addEventListener: (event, listener) => listener(),
+    getElementById: (id) => elements[id] || null,
+    querySelectorAll: () => cards,
+  };
   vm.runInNewContext(source, {
-    document: {
-      addEventListener: (event, listener) => listener(),
-      getElementById: (id) => elements[id] || null,
-      querySelectorAll: () => cards,
-    },
+    document,
     window: { matchMedia: () => ({ matches: reducedMotion }) },
     setTimeout: (callback, delay) => timers.push({ callback, delay }),
   });
   return {
     cards,
     elements,
+    setActiveInCard(index) {
+      document.activeElement = {
+        closest(sel) {
+          return sel === ".book-item" ? cards[index] : null;
+        },
+      };
+    },
     search(value) {
       elements["search-books"].value = value;
+      elements["search-books"].focused = false;
       elements["search-books"].input();
     },
     category(value) {
@@ -138,4 +152,20 @@ test("language filter supports Italian records", () => {
     [true, true, false],
   );
   assert.equal(c.elements["results-count"].textContent, "1");
+});
+
+test("moves keyboard focus out of a card that filtering just hid", () => {
+  const c = catalog(false);
+  c.setActiveInCard(0);
+  c.search("missing-title");
+  assert.equal(c.cards[0].hidden, true);
+  assert.equal(c.elements["search-books"].focused, true);
+});
+
+test("keeps focus when the focused card stays visible", () => {
+  const c = catalog(false);
+  c.setActiveInCard(0);
+  c.search("vital");
+  assert.equal(c.cards[0].hidden, false);
+  assert.equal(c.elements["search-books"].focused, false);
 });

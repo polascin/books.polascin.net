@@ -46,6 +46,13 @@ document.addEventListener("DOMContentLoaded", () => {
       // utility class, so empty-state visibility cannot diverge from CSS.
       noResults.hidden = visibleCount !== 0;
     }
+
+    // If filtering hid the card that still holds keyboard focus, move focus
+    // back to the search field so it is not stranded on display:none.
+    const trapped = document.activeElement?.closest?.(".book-item");
+    if (trapped?.hidden && searchInput) {
+      searchInput.focus({ preventScroll: true });
+    }
   }
 
   if (searchInput) {
