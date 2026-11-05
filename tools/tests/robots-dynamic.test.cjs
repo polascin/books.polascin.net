@@ -22,6 +22,8 @@ describe("robots.txt is served dynamically", () => {
   it("robots.txt lists agent and AGENTS paths", () => {
     assert.match(robotsTxt, /Disallow: \/\.codex\//);
     assert.match(robotsTxt, /Disallow: \/AGENTS\.md/);
+    assert.match(robotsTxt, /Disallow: \/robots\.php/);
     assert.match(robotsTxt, /2026-11-05/);
   });
 });
+

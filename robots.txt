@@ -15,6 +15,7 @@ Disallow: /.agents/
 Disallow: /.cursor/
 Disallow: /.kilo/
 Disallow: /AGENTS.md
+Disallow: /robots.php
 
 Crawl-delay: 10
 

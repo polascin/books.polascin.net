@@ -17,6 +17,7 @@
   const sk = document.documentElement.lang.startsWith("sk");
   let loaded = false;
   let banner;
+  let escapeMode = null;
   const read = () => {
     try {
       return JSON.parse(localStorage.getItem(key));
@@ -34,6 +35,20 @@
       /* Consent still applies for this page. */
     }
   };
+  function onKeydown(e) {
+    if (e.key !== "Escape" || !banner) return;
+    e.preventDefault();
+    if (escapeMode === "decline") apply(false);
+    else dismiss();
+  }
+  function dismiss() {
+    if (!banner) return;
+    banner.remove();
+    banner = null;
+    escapeMode = null;
+    document.removeEventListener("keydown", onKeydown);
+    settings.focus();
+  }
   function apply(granted, persist = true) {
     if (persist && !external) save(granted);
     if (granted) {
@@ -78,6 +93,8 @@
     if (banner) {
       banner.remove();
       banner = null;
+      escapeMode = null;
+      document.removeEventListener("keydown", onKeydown);
     }
   }
   if (external) {
@@ -106,6 +123,7 @@
     banner = document.createElement("section");
     banner.className = "clarity-consent";
     banner.setAttribute("role", "dialog");
+    banner.setAttribute("aria-modal", "true");
     banner.setAttribute("aria-labelledby", "clarity-consent-title");
     const title = document.createElement("h2");
     title.id = "clarity-consent-title";
@@ -127,6 +145,8 @@
     accept.addEventListener("click", () => apply(true));
     banner.append(title, text, link, decline, accept);
     document.body.appendChild(banner);
+    escapeMode = focus ? "dismiss" : "decline";
+    document.addEventListener("keydown", onKeydown);
     if (focus) decline.focus();
   }
   const stored = read();
