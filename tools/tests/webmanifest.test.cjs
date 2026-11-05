@@ -27,4 +27,9 @@ describe("site.webmanifest install icons", () => {
       assert.match(icon.sizes, /^(192|512)x\1$/);
     }
   });
+
+  it("declares a stable application id independent of cache-busted manifest URLs", () => {
+    assert.equal(manifest.id, "/");
+    assert.equal(manifest.start_url, "/");
+  });
 });

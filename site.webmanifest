@@ -3,6 +3,7 @@
   "short_name": "Polascini",
   "description": "Books, chapters, and publications by Dr. Lubomir Polascin.",
   "lang": "en",
+  "id": "/",
   "start_url": "/",
   "scope": "/",
   "icons": [

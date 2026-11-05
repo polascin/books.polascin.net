@@ -121,6 +121,8 @@
       escapeMode = null;
       setExpanded(false);
       document.removeEventListener("keydown", onKeydown);
+      // Return keyboard focus to the footer control that owns the dialog.
+      settings.focus();
     }
   }
   if (external) {

@@ -180,6 +180,7 @@ const settingsBtn = s.elements.find(
 );
 assert.equal(settingsBtn.attrs["aria-expanded"], "false");
 assert.equal(settingsBtn.attrs["aria-controls"], undefined);
+assert.equal(settingsBtn.focused, true);
 assert.equal(s.scripts().length, 1);
 assert.equal(s.scripts()[0].src, "https://www.clarity.ms/tag/abc123");
 assert.equal(s.body["data-clarity-mask"], "true");
@@ -197,6 +198,10 @@ assert.ok(s.cookies.some((c) => c.includes("Domain=.example.com")));
 s = run();
 s.elements.find((e) => e.textContent === "Odmietnuť").click();
 assert.equal(s.scripts().length, 0);
+assert.equal(
+  s.elements.find((e) => e.textContent === "Nastavenia analytiky").focused,
+  true,
+);
 
 s = run();
 s.docEvents.keydown({ key: "Escape", preventDefault() {} });
