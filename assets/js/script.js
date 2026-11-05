@@ -6,6 +6,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const bookCards = document.querySelectorAll(".book-item");
   const resultsCount = document.getElementById("results-count");
   const noResults = document.getElementById("no-results");
+  const emptyStatus = document.getElementById("catalog-empty-status");
 
   function filterBooks() {
     const searchTerm = searchInput ? searchInput.value.toLowerCase() : "";
@@ -41,10 +42,15 @@ document.addEventListener("DOMContentLoaded", () => {
       resultsCount.textContent = String(visibleCount);
     }
 
+    const showEmpty = visibleCount === 0;
     if (noResults) {
       // Prefer the HTML hidden attribute (same as .book-item cards) over a
       // utility class, so empty-state visibility cannot diverge from CSS.
-      noResults.hidden = visibleCount !== 0;
+      noResults.hidden = !showEmpty;
+    }
+    if (emptyStatus) {
+      // Mirror the visual empty panel into the live status region (WCAG 4.1.3).
+      emptyStatus.hidden = !showEmpty;
     }
 
     // If filtering hid the card that still holds keyboard focus, move focus

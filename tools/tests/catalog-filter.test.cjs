@@ -53,6 +53,9 @@ function catalog(reducedMotion) {
     "no-results": {
       hidden: true,
     },
+    "catalog-empty-status": {
+      hidden: true,
+    },
   };
   const document = {
     activeElement: null,
@@ -120,6 +123,7 @@ test("combined filters hide unmatched cards immediately and update empty state",
   assert.ok(c.cards.every((card) => card.hidden));
   assert.equal(c.elements["results-count"].textContent, "0");
   assert.equal(c.elements["no-results"].hidden, false);
+  assert.equal(c.elements["catalog-empty-status"].hidden, false);
   c.search("walter");
   assert.deepEqual(
     c.cards.map((card) => card.hidden),
@@ -127,6 +131,7 @@ test("combined filters hide unmatched cards immediately and update empty state",
   );
   assert.equal(c.elements["results-count"].textContent, "1");
   assert.equal(c.elements["no-results"].hidden, true);
+  assert.equal(c.elements["catalog-empty-status"].hidden, true);
 });
 
 test("language filter isolates German records and composes with search", () => {

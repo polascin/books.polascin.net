@@ -12,7 +12,8 @@ describe("catalog empty state and phone detection", () => {
   it("toggles #no-results with the hidden attribute like book cards", () => {
     assert.match(catalog, /id="no-results"[^>]*\bhidden\b/);
     assert.doesNotMatch(catalog, /id="no-results"[^>]*class="hidden /);
-    assert.match(script, /noResults\.hidden\s*=\s*visibleCount !== 0/);
+    assert.match(script, /noResults\.hidden\s*=\s*!showEmpty/);
+    assert.match(script, /emptyStatus\.hidden\s*=\s*!showEmpty/);
     assert.doesNotMatch(script, /noResults\.classList\.toggle\("hidden"/);
   });
 
