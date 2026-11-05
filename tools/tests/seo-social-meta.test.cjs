@@ -16,6 +16,21 @@ describe("social preview and skip-target meta", () => {
     assert.doesNotMatch(header, /summary_large_image/);
   });
 
+  it("provides accessible alt text for the social preview image", () => {
+    assert.match(
+      header,
+      /\$pageImageAlt = \$pageImageAlt \?\? 'Portrait of Dr\. Lubomir Polascin'/,
+    );
+    assert.match(
+      header,
+      /og:image:alt" content="<\?php echo esc_html\(\$pageImageAlt\); \?>"/,
+    );
+    assert.match(
+      header,
+      /twitter:image:alt" content="<\?php echo esc_html\(\$pageImageAlt\); \?>"/,
+    );
+  });
+
   it("keeps skip-link and in-page anchors clear of the sticky header", () => {
     assert.match(
       style,

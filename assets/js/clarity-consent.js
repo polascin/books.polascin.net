@@ -189,6 +189,7 @@
     banner.append(title, text, link, decline, accept);
     backdrop = document.createElement("div");
     backdrop.className = "clarity-consent-backdrop";
+    backdrop.setAttribute("aria-hidden", "true");
     backdrop.addEventListener("click", () => {
       if (escapeMode === "decline") apply(false);
       else dismiss();

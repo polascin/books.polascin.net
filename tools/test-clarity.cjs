@@ -161,10 +161,13 @@ assert.equal(
   "https://example.com/js/clarity-consent.css?v=42",
 );
 assert.equal(s.dialog().attrs["aria-modal"], "true");
-assert.ok(
-  s.elements.find((e) => e.className === "clarity-consent-backdrop"),
-  "modal backdrop should block pointer events to the page",
-);
+{
+  const backdrop = s.elements.find(
+    (e) => e.className === "clarity-consent-backdrop",
+  );
+  assert.ok(backdrop, "modal backdrop should block pointer events to the page");
+  assert.equal(backdrop.attrs["aria-hidden"], "true");
+}
 assert.equal(
   s.elements.find((e) => e.textContent === "Nastavenia analytiky").attrs[
     "aria-haspopup"

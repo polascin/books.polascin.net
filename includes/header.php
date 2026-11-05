@@ -17,6 +17,7 @@
     $pageDescription = $pageDescription ?? $defaultDescription;
     $pageCanonical = $pageCanonical ?? buildAbsoluteUrl($currentScript === 'index.php' ? '/' : $currentScript);
     $pageImage = $pageImage ?? getDefaultSeoImage();
+    $pageImageAlt = $pageImageAlt ?? 'Portrait of Dr. Lubomir Polascin';
     $pageRobots = $pageRobots ?? 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1';
     $pageType = $pageType ?? 'website';
     $pageStructuredData = $pageStructuredData ?? [];
@@ -47,12 +48,14 @@
     <?php // Default social image is assets/images/author.png (256×256 portrait). ?>
     <meta property="og:image:width" content="256">
     <meta property="og:image:height" content="256">
+    <meta property="og:image:alt" content="<?php echo esc_html($pageImageAlt); ?>">
     <meta property="og:locale" content="en_US">
 
     <meta name="twitter:card" content="summary">
     <meta name="twitter:title" content="<?php echo esc_html($pageTitle); ?>">
     <meta name="twitter:description" content="<?php echo esc_html($pageDescription); ?>">
     <meta name="twitter:image" content="<?php echo esc_html($pageImage); ?>">
+    <meta name="twitter:image:alt" content="<?php echo esc_html($pageImageAlt); ?>">
     <meta name="twitter:url" content="<?php echo esc_html($pageCanonical); ?>">
     
     <!-- Styles: self-hosted fonts and a locally built Tailwind bundle.
