@@ -38,6 +38,14 @@ describe("social preview and skip-target meta", () => {
     );
   });
 
+  it("keeps a visible focus ring on #main-content for keyboard skip-link use", () => {
+    assert.match(
+      style,
+      /#main-content:focus:not\(:focus-visible\)\s*\{[^}]*outline:\s*none/s,
+    );
+    assert.doesNotMatch(style, /#main-content:focus\s*\{[^}]*outline:\s*none/s);
+  });
+
   it("matches about portrait HTML size to the rendered 192px frame", () => {
     assert.match(about, /width="192" height="192"/);
   });
