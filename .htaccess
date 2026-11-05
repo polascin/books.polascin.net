@@ -92,7 +92,7 @@ ServerSignature Off
 <IfModule mod_rewrite.c>
     RewriteEngine On
     RewriteRule "(^|/)\.(?!well-known)" - [F,L]
-    RewriteRule ^(\.git|\.claude|\.vscode|\.agents|\.cursor|\.github|node_modules|includes|data|tools|hooks)(/.*)?$ - [F,L]
+    RewriteRule ^(\.git|\.claude|\.vscode|\.agents|\.codex|\.cursor|\.kilo|\.github|node_modules|includes|data|tools|hooks)(/.*)?$ - [F,L]
     # Alias bez prípony: /privacy a /terms → kanonické .php stránky
     RewriteRule ^(privacy|terms)/?$ /$1.php [R=301,L,NE]
     RewriteRule ^sitemap\.xml$ sitemap.xml [L]
