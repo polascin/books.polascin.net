@@ -121,6 +121,7 @@
   (document.querySelector("footer") || document.body).appendChild(settings);
   function setExpanded(open) {
     settings.setAttribute("aria-expanded", open ? "true" : "false");
+    if (!open) settings.removeAttribute("aria-controls");
   }
   function show(focus = false) {
     if (banner) {

@@ -24,6 +24,11 @@ function run({ path = "/", query = "", stored = null, external = false } = {}) {
       this.attrs[k] = v;
       this[k] = v;
     },
+    removeAttribute(k) {
+      delete this.attrs[k];
+      delete this[k];
+    },
+
     appendChild(e) {
       this.children.push(e);
       elements.push(e);
@@ -144,12 +149,11 @@ assert.equal(
 );
 let accept = s.elements.find((e) => e.textContent === "Povoliť analytiku");
 accept.click();
-assert.equal(
-  s.elements.find((e) => e.textContent === "Nastavenia analytiky").attrs[
-    "aria-expanded"
-  ],
-  "false",
+const settingsBtn = s.elements.find(
+  (e) => e.textContent === "Nastavenia analytiky",
 );
+assert.equal(settingsBtn.attrs["aria-expanded"], "false");
+assert.equal(settingsBtn.attrs["aria-controls"], undefined);
 assert.equal(s.scripts().length, 1);
 assert.equal(s.scripts()[0].src, "https://www.clarity.ms/tag/abc123");
 assert.equal(s.body["data-clarity-mask"], "true");
