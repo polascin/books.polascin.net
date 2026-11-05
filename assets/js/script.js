@@ -7,6 +7,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const resultsCount = document.getElementById("results-count");
   const noResults = document.getElementById("no-results");
   const emptyStatus = document.getElementById("catalog-empty-status");
+  let wasEmpty = false;
 
   function filterBooks() {
     const searchTerm = searchInput ? searchInput.value.toLowerCase() : "";
@@ -52,6 +53,18 @@ document.addEventListener("DOMContentLoaded", () => {
       // Mirror the visual empty panel into the live status region (WCAG 4.1.3).
       emptyStatus.hidden = !showEmpty;
     }
+    // When a long grid collapses to zero matches, bring the empty panel into
+    // view once (not on every keystroke while already empty).
+    if (showEmpty && !wasEmpty && noResults) {
+      const reduceMotion = window.matchMedia(
+        "(prefers-reduced-motion: reduce)",
+      ).matches;
+      noResults.scrollIntoView({
+        block: "nearest",
+        behavior: reduceMotion ? "auto" : "smooth",
+      });
+    }
+    wasEmpty = showEmpty;
 
     // If filtering hid the card that still holds keyboard focus, move focus
     // back to the search field so it is not stranded on display:none.

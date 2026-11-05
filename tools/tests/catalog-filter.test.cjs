@@ -52,6 +52,10 @@ function catalog(reducedMotion) {
     "results-count": { textContent: "" },
     "no-results": {
       hidden: true,
+      scrolled: null,
+      scrollIntoView(opts) {
+        this.scrolled = opts;
+      },
     },
     "catalog-empty-status": {
       hidden: true,
@@ -65,7 +69,13 @@ function catalog(reducedMotion) {
   };
   vm.runInNewContext(source, {
     document,
-    window: { matchMedia: () => ({ matches: reducedMotion }) },
+    window: {
+      matchMedia: (query) => ({
+        matches: String(query).includes("prefers-reduced-motion")
+          ? reducedMotion
+          : false,
+      }),
+    },
     setTimeout: (callback, delay) => timers.push({ callback, delay }),
   });
   return {
@@ -173,4 +183,21 @@ test("keeps focus when the focused card stays visible", () => {
   c.search("vital");
   assert.equal(c.cards[0].hidden, false);
   assert.equal(c.elements["search-books"].focused, false);
+});
+
+test("scrolls the empty panel into view when filters first yield zero", () => {
+  const c = catalog(false);
+  c.search("missing-title");
+  assert.equal(c.elements["no-results"].scrolled.block, "nearest");
+  assert.equal(c.elements["no-results"].scrolled.behavior, "smooth");
+  c.elements["no-results"].scrolled = null;
+  c.search("still-missing");
+  assert.equal(c.elements["no-results"].scrolled, null);
+});
+
+test("uses instant empty-panel scroll when reduced motion is preferred", () => {
+  const c = catalog(true);
+  c.search("missing-title");
+  assert.equal(c.elements["no-results"].scrolled.block, "nearest");
+  assert.equal(c.elements["no-results"].scrolled.behavior, "auto");
 });
