@@ -286,7 +286,7 @@ include __DIR__ . '/includes/header.php';
                             </p>
                             
                             <div class="book-meta-strip mt-auto pt-4 border-t border-slate-300/60 flex flex-wrap gap-3 text-xs font-mono text-slate-500 items-center justify-between">
-                                <span class="catalog-isbn"><?php echo esc_html($bookIdentifier !== null ? $bookIdentifier['label'] . ': ' . $bookIdentifier['value'] : 'ISBN: N/A'); ?></span>
+                                <span class="catalog-isbn"><?php echo esc_html($bookIdentifier !== null ? $bookIdentifier['label'] . ': ' . $bookIdentifier['value'] : 'No ISBN / ASIN'); ?></span>
                                 <?php if(!empty($bookLanguage)): ?>
                                     <span class="book-lang-chip bg-slate-200/80 px-3 py-1 rounded-full text-slate-600 uppercase tracking-[0.16em] text-[10px] font-semibold"><?php echo esc_html($bookLanguage); ?></span>
                                 <?php endif; ?>
