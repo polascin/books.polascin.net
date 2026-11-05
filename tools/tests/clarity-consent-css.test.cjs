@@ -30,4 +30,9 @@ describe("Clarity consent dialog chrome", () => {
       /\.clarity-consent a\s*\{[^}]*text-decoration:\s*underline/s,
     );
   });
+
+  it("respects safe-area insets for the dialog and settings control", () => {
+    assert.match(css, /\.clarity-consent\s*\{[^}]*safe-area-inset-bottom/s);
+    assert.match(css, /\.clarity-settings\s*\{[^}]*safe-area-inset-bottom/s);
+  });
 });
