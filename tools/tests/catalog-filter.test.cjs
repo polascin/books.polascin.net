@@ -221,3 +221,20 @@ test("search matches ISBN, ASIN, and catalog ID values", () => {
   );
   assert.equal(c.elements["results-count"].textContent, "1");
 });
+
+test("identifier search ignores hyphen and space differences", () => {
+  const c = catalog(false);
+  c.search("nefrosknb1");
+  assert.deepEqual(
+    c.cards.map((card) => card.hidden),
+    [true, true, false],
+  );
+  assert.equal(c.elements["results-count"].textContent, "1");
+
+  c.search("978 1234-567890");
+  assert.deepEqual(
+    c.cards.map((card) => card.hidden),
+    [true, false, true],
+  );
+  assert.equal(c.elements["results-count"].textContent, "1");
+});

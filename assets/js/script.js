@@ -9,8 +9,16 @@ document.addEventListener("DOMContentLoaded", () => {
   const emptyStatus = document.getElementById("catalog-empty-status");
   let wasEmpty = false;
 
+  function normalizeIdentifier(value) {
+    // Allow ISBN/ID queries without matching hyphen or space placement.
+    return String(value || "")
+      .toLowerCase()
+      .replace(/[\s-]+/g, "");
+  }
+
   function filterBooks() {
     const searchTerm = searchInput ? searchInput.value.toLowerCase() : "";
+    const searchIdentifier = normalizeIdentifier(searchTerm);
     const categoryTerm = categorySelect
       ? categorySelect.value.toLowerCase()
       : "";
@@ -22,16 +30,16 @@ document.addEventListener("DOMContentLoaded", () => {
     bookCards.forEach((card) => {
       const title = (card.getAttribute("data-title") || "").toLowerCase();
       const author = (card.getAttribute("data-author") || "").toLowerCase();
-      const identifier = (
-        card.getAttribute("data-identifier") || ""
-      ).toLowerCase();
+      const identifier = normalizeIdentifier(
+        card.getAttribute("data-identifier"),
+      );
       const category = card.getAttribute("data-category")?.toLowerCase() || "";
       const language = card.getAttribute("data-language")?.toLowerCase() || "";
 
       const matchesSearch =
         title.includes(searchTerm) ||
         author.includes(searchTerm) ||
-        identifier.includes(searchTerm);
+        (searchIdentifier !== "" && identifier.includes(searchIdentifier));
       const matchesCategory = categoryTerm === "" || category === categoryTerm;
       const matchesLanguage = languageTerm === "" || language === languageTerm;
 
