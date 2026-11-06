@@ -2,6 +2,9 @@
 Options -Indexes
 ServerSignature Off
 
+# Site-branded 404 (layout, noindex, recovery links) instead of the bare Apache page.
+ErrorDocument 404 /404.php
+
 # PWA manifest must advertise the dedicated MIME type. Without it (and with
 # X-Content-Type-Options: nosniff) Chromium may ignore the install manifest.
 <IfModule mod_mime.c>
