@@ -37,4 +37,12 @@ describe("catalog search field", () => {
     );
     assert.match(header, /viewport-fit=cover/);
   });
+
+  it("prefills the search field from the q query parameter", () => {
+    assert.match(catalog, /\$_GET\['q'\]/);
+    assert.match(
+      catalog,
+      /id="search-books"[^>]*name="q"[^>]*value="<\?php echo esc_html\(\$catalogQuery\); \?>"/s,
+    );
+  });
 });
