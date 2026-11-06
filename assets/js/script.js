@@ -17,7 +17,7 @@ document.addEventListener("DOMContentLoaded", () => {
       .replace(/[\s-]+/g, "");
   }
 
-  function filterBooks() {
+  function filterBooks(event) {
     const searchTerm = searchInput ? searchInput.value.toLowerCase() : "";
     const searchIdentifier = normalizeIdentifier(searchTerm);
     const categoryTerm = categorySelect
@@ -80,11 +80,17 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     wasEmpty = showEmpty;
 
-    // If filtering hid the card that still holds keyboard focus, move focus
-    // back to the search field so it is not stranded on display:none.
+    // If filtering hid the card that still holds keyboard focus, restore
+    // focus to the control that triggered the filter (select or search)
+    // so Tab order is not yanked to search after a category/language change.
     const trapped = document.activeElement?.closest?.(".book-item");
-    if (trapped?.hidden && searchInput) {
-      searchInput.focus({ preventScroll: true });
+    if (trapped?.hidden) {
+      const source = event?.currentTarget;
+      const restore =
+        source === categorySelect || source === languageSelect
+          ? source
+          : searchInput;
+      restore?.focus({ preventScroll: true });
     }
   }
 

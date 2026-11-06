@@ -99,18 +99,29 @@ function catalog(reducedMotion) {
     search(value) {
       elements["search-books"].value = value;
       elements["search-books"].focused = false;
-      elements["search-books"].input();
+      elements["search-books"].input({
+        currentTarget: elements["search-books"],
+      });
     },
     category(value) {
-      elements["category-filter"].value = value;
-      elements["category-filter"].change();
+      const el = elements["category-filter"];
+      el.value = value;
+      el.focused = false;
+      el.change({ currentTarget: el });
     },
     language(value) {
-      elements["language-filter"].value = value;
-      elements["language-filter"].change();
+      const el = elements["language-filter"];
+      el.value = value;
+      el.focused = false;
+      el.change({ currentTarget: el });
     },
     clear() {
       elements["clear-catalog-filters"].click();
+    },
+    resetFocusFlags() {
+      elements["search-books"].focused = false;
+      elements["category-filter"].focused = false;
+      elements["language-filter"].focused = false;
     },
     flush() {
       timers
@@ -186,6 +197,23 @@ test("moves keyboard focus out of a card that filtering just hid", () => {
   c.search("missing-title");
   assert.equal(c.cards[0].hidden, true);
   assert.equal(c.elements["search-books"].focused, true);
+});
+
+test("returns focus to the select that hid the focused card", () => {
+  const c = catalog(false);
+  c.setActiveInCard(0);
+  c.resetFocusFlags();
+  c.category("Medical Fiction");
+  assert.equal(c.cards[0].hidden, true);
+  assert.equal(c.elements["category-filter"].focused, true);
+  assert.equal(c.elements["search-books"].focused, false);
+
+  c.setActiveInCard(1);
+  c.resetFocusFlags();
+  c.language("Italian");
+  assert.equal(c.cards[1].hidden, true);
+  assert.equal(c.elements["language-filter"].focused, true);
+  assert.equal(c.elements["search-books"].focused, false);
 });
 
 test("keeps focus when the focused card stays visible", () => {
