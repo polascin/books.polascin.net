@@ -1,9 +1,9 @@
 # Latest handoff pointer
 
-Active loop handoff: `.codex/handoffs/2026-11-06-030628-books-dev-loop-beh46.md`
+Active loop handoff: `.codex/handoffs/2026-11-06-031736-books-dev-loop-beh47.md`
 
 Loop sentinel: `AGENT_LOOP_WAKE_books_dev`
-Head: `990f260` on `main`
-Last closed: Beh #46 (clean public URLs + anti-loop)
-Next: Beh #47 — skip-link `:focus-visible` (candidate)
+Head: `aef975d` on `main`
+Last closed: Beh #47 (skip-link `:focus-visible`)
+Next: Beh #48 — next audit finding
 Stop: kill sleeper PID and do not re-arm
