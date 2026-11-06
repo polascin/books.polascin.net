@@ -515,21 +515,34 @@ html {
 }
 
 /* Reveal only for keyboard (or intentional) focus — a mouse click must not
-   flash the off-screen control into the sticky header band. */
+   flash the off-screen control into the sticky header band. Sit below the
+   notch/Dynamic Island when viewport-fit=cover is active. */
 .skip-link:focus-visible {
+  top: env(safe-area-inset-top, 0px);
+}
+
+/* viewport-fit=cover (header.php) extends the layout under the status bar.
+   Pad the sticky slate header so brand/nav stay clear of the notch, and grow
+   scroll-margin by the same inset so fragment targets clear the taller bar. */
+body > header.sticky {
   top: 0;
+  padding-top: env(safe-area-inset-top, 0px);
 }
 
 /* scroll-margin-top: sticky header (py-4 + brand/nav, na mobile aj dva riadky)
    by inak prekryl začiatok obsahu po aktivácii skip-linku, footer Disclaimer
    (#legal-disclaimer) a ostatné fragmentové kotvy v main.
    Outline hide only for non-keyboard focus so skip-link still shows :focus-visible. */
+:root {
+  --site-header-scroll-margin: calc(7rem + env(safe-area-inset-top, 0px));
+}
+
 #main-content,
 #legal-disclaimer,
 #about,
 #catalog,
 [id^="book-"] {
-  scroll-margin-top: 7rem;
+  scroll-margin-top: var(--site-header-scroll-margin);
 }
 
 #main-content:focus:not(:focus-visible) {

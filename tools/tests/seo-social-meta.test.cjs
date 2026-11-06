@@ -34,7 +34,23 @@ describe("social preview and skip-target meta", () => {
   it("keeps skip-link and in-page anchors clear of the sticky header", () => {
     assert.match(
       style,
-      /#main-content,\s*#legal-disclaimer,\s*#about,\s*#catalog,\s*\[id\^="book-"\]\s*\{[^}]*scroll-margin-top:\s*7rem/s,
+      /--site-header-scroll-margin:\s*calc\(7rem \+ env\(safe-area-inset-top,\s*0px\)\)/,
+    );
+    assert.match(
+      style,
+      /#main-content,\s*#legal-disclaimer,\s*#about,\s*#catalog,\s*\[id\^="book-"\]\s*\{[^}]*scroll-margin-top:\s*var\(--site-header-scroll-margin\)/s,
+    );
+  });
+
+  it("pads the sticky header and skip-link for the top safe area", () => {
+    assert.match(header, /viewport-fit=cover/);
+    assert.match(
+      style,
+      /body\s*>\s*header\.sticky\s*\{[^}]*padding-top:\s*env\(safe-area-inset-top,\s*0px\)/s,
+    );
+    assert.match(
+      style,
+      /\.skip-link:focus-visible\s*\{[^}]*top:\s*env\(safe-area-inset-top,\s*0px\)/s,
     );
   });
 
@@ -47,7 +63,10 @@ describe("social preview and skip-target meta", () => {
   });
 
   it("reveals the skip-link only under :focus-visible", () => {
-    assert.match(style, /\.skip-link:focus-visible\s*\{[^}]*top:\s*0/s);
+    assert.match(
+      style,
+      /\.skip-link:focus-visible\s*\{[^}]*top:\s*env\(safe-area-inset-top/s,
+    );
     assert.doesNotMatch(style, /\.skip-link:focus\s*\{[^}]*top:\s*0/s);
   });
 
