@@ -156,12 +156,30 @@ function buildAbsoluteUrl($path = '/') {
     }
 
     $normalizedPath = '/' . ltrim((string) $path, '/');
+    $fragment = '';
+    $hashPos = strpos($normalizedPath, '#');
+    if ($hashPos !== false) {
+        $fragment = substr($normalizedPath, $hashPos);
+        $normalizedPath = substr($normalizedPath, 0, $hashPos);
+    }
 
     if ($normalizedPath === '/index.php') {
         $normalizedPath = '/';
     }
 
-    return getSiteUrl() . $normalizedPath;
+    // Public pages are served at extensionless paths; keep canonicals, OG,
+    // JSON-LD, and sitemap locs aligned with the nav (/catalog, /about, …).
+    static $cleanPublicPaths = [
+        '/catalog.php' => '/catalog',
+        '/about.php' => '/about',
+        '/privacy.php' => '/privacy',
+        '/terms.php' => '/terms',
+    ];
+    if (isset($cleanPublicPaths[$normalizedPath])) {
+        $normalizedPath = $cleanPublicPaths[$normalizedPath];
+    }
+
+    return getSiteUrl() . $normalizedPath . $fragment;
 }
 
 /**

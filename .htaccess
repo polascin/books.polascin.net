@@ -121,9 +121,11 @@ ErrorDocument 404 /404.php
     RewriteEngine On
     RewriteRule "(^|/)\.(?!well-known)" - [F,L]
     RewriteRule ^(\.git|\.claude|\.vscode|\.agents|\.codex|\.cursor|\.kilo|\.github|node_modules|includes|data|tools|hooks)(/.*)?$ - [F,L]
-    # Alias bez prípony → kanonické .php stránky (Clarity data-paths už
-    # počítajú s /catalog a /about; bez tohto pravidla vracali 404).
-    RewriteRule ^(privacy|terms|catalog|about)/?$ /$1.php [R=301,L,NE]
+    # Canonical public pages are extensionless (/catalog, /about, …).
+    # Outward: keep old .php bookmarks from competing in search results.
+    RewriteRule ^(privacy|terms|catalog|about)\.php$ /$1 [R=301,L,QSA,NE]
+    # Inward: serve the PHP file without exposing it in the address bar.
+    RewriteRule ^(privacy|terms|catalog|about)/?$ $1.php [L,QSA]
     # Canonical home is /; keep /index.php from competing in search results.
     RewriteRule ^index\.php$ / [R=301,L]
     # Static /robots.txt can stick in the edge cache (origin 590 B, public 473 B).
