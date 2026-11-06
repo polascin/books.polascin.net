@@ -514,7 +514,9 @@ html {
   transition: top 0.2s ease-in-out;
 }
 
-.skip-link:focus {
+/* Reveal only for keyboard (or intentional) focus — a mouse click must not
+   flash the off-screen control into the sticky header band. */
+.skip-link:focus-visible {
   top: 0;
 }
 

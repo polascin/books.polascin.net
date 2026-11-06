@@ -46,6 +46,11 @@ describe("social preview and skip-target meta", () => {
     assert.doesNotMatch(style, /#main-content:focus\s*\{[^}]*outline:\s*none/s);
   });
 
+  it("reveals the skip-link only under :focus-visible", () => {
+    assert.match(style, /\.skip-link:focus-visible\s*\{[^}]*top:\s*0/s);
+    assert.doesNotMatch(style, /\.skip-link:focus\s*\{[^}]*top:\s*0/s);
+  });
+
   it("matches about portrait HTML size to the rendered 192px frame", () => {
     assert.match(about, /width="192" height="192"/);
   });
