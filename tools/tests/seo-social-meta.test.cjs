@@ -54,6 +54,13 @@ describe("social preview and skip-target meta", () => {
     );
   });
 
+  it("pads the footer for the bottom safe area", () => {
+    assert.match(
+      style,
+      /body\s*>\s*footer\s*\{[^}]*padding-bottom:\s*calc\(2rem \+ env\(safe-area-inset-bottom,\s*0px\)\)/s,
+    );
+  });
+
   it("keeps a visible focus ring on #main-content for keyboard skip-link use", () => {
     assert.match(
       style,

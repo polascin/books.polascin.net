@@ -529,6 +529,13 @@ body > header.sticky {
   padding-top: env(safe-area-inset-top, 0px);
 }
 
+/* Same cover edge at the home indicator: keep footer links (and the Clarity
+   settings control appended into the footer) clear of the bottom inset.
+   py-8 → 2rem base padding from Tailwind. */
+body > footer {
+  padding-bottom: calc(2rem + env(safe-area-inset-bottom, 0px));
+}
+
 /* scroll-margin-top: sticky header (py-4 + brand/nav, na mobile aj dva riadky)
    by inak prekryl začiatok obsahu po aktivácii skip-linku, footer Disclaimer
    (#legal-disclaimer) a ostatné fragmentové kotvy v main.
