@@ -130,12 +130,12 @@ include __DIR__ . '/includes/header.php';
 ?>
 
 <!-- CATALOG SECTION -->
-<section id="catalog" class="catalog-shell w-full max-w-7xl mx-auto px-4 py-8 md:py-12">
+<section id="catalog" class="catalog-shell w-full max-w-7xl mx-auto px-4 py-8 md:py-12" aria-labelledby="catalog-heading">
     <div class="catalog-hero paper-texture rounded-[2rem] overflow-hidden border border-slate-300/60 shadow-xl shadow-slate-900/10 mb-8">
         <div class="catalog-hero-grid px-6 py-8 md:px-10 md:py-10">
             <div>
                 <div class="catalog-kicker">Private Library Archive</div>
-                <h1 class="font-cinzel text-3xl md:text-5xl font-bold tracking-[0.18em] text-slate-900">Catalogus Librorum</h1>
+                <h1 id="catalog-heading" class="font-cinzel text-3xl md:text-5xl font-bold tracking-[0.18em] text-slate-900">Catalogus Librorum</h1>
                 <p class="catalog-intro font-playfair italic text-slate-700 mt-4">A living shelf of medicine, nephrology, interviews, academic contributions, and fiction shaped by clinical practice and literary work.</p>
                 <div class="catalog-chip-row mt-6">
                     <span class="catalog-chip"><?php echo count($books); ?> records</span>

@@ -37,10 +37,10 @@ include __DIR__ . '/includes/header.php';
 ?>
 
 <!-- ABOUT SECTION -->
-<section id="about" class="w-full max-w-5xl mx-auto px-4 py-16">
+<section id="about" class="w-full max-w-5xl mx-auto px-4 py-16" aria-labelledby="about-heading">
     
     <div class="mb-12 pb-4 border-b border-gray-300 text-center">
-        <h1 class="font-cinzel text-3xl font-bold tracking-wider text-slate-800">De Auctore</h1>
+        <h1 id="about-heading" class="font-cinzel text-3xl font-bold tracking-wider text-slate-800">De Auctore</h1>
         <p class="font-playfair italic text-slate-600 mt-2">Dr. Lubomir Polascin (Walter Kyo Csoelle)</p>
     </div>
 
