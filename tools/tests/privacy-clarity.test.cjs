@@ -3,9 +3,24 @@ const assert = require("node:assert/strict");
 const { readFileSync } = require("node:fs");
 const { resolve } = require("node:path");
 
-const privacy = readFileSync(resolve(__dirname, "../../privacy.php"), "utf8");
+const root = resolve(__dirname, "../..");
+const privacy = readFileSync(resolve(root, "privacy.php"), "utf8");
+const terms = readFileSync(resolve(root, "terms.php"), "utf8");
 
 describe("privacy policy aligns with Clarity consent UI", () => {
+  it("names the privacy and terms sections from their visible headings", () => {
+    assert.match(
+      privacy,
+      /<section[^>]*aria-labelledby="privacy-heading"[^>]*>[\s\S]*?<h1 id="privacy-heading"/,
+    );
+    assert.match(
+      terms,
+      /<section[^>]*aria-labelledby="terms-heading"[^>]*>[\s\S]*?<h1 id="terms-heading"/,
+    );
+    assert.doesNotMatch(privacy, /aria-label="Privacy Policy content"/);
+    assert.doesNotMatch(terms, /aria-label="Terms of Use content"/);
+  });
+
   it("describes the analytics consent prompt, not the removed cookie banner", () => {
     assert.match(privacy, /analytics consent prompt/i);
     assert.doesNotMatch(privacy, /cookie consent banner/i);

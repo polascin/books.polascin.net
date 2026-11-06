@@ -12,8 +12,8 @@ $pageRobots = 'noindex, follow';
 include __DIR__ . '/includes/header.php';
 ?>
 
-<section class="w-full max-w-4xl mx-auto px-4 py-16 bg-white my-10 rounded shadow-md border border-gray-200" aria-label="Terms of Use content">
-    <h1 class="font-cinzel text-3xl font-bold text-slate-800 mb-6 border-b border-gray-300 pb-4">Terms of Use</h1>
+<section class="w-full max-w-4xl mx-auto px-4 py-16 bg-white my-10 rounded shadow-md border border-gray-200" aria-labelledby="terms-heading">
+    <h1 id="terms-heading" class="font-cinzel text-3xl font-bold text-slate-800 mb-6 border-b border-gray-300 pb-4">Terms of Use</h1>
 
     <div class="space-y-6 text-slate-700 leading-relaxed text-justify font-sans">
         <p><strong>Effective Date:</strong> August 25, 2026</p>
