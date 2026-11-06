@@ -22,11 +22,16 @@ document.addEventListener("DOMContentLoaded", () => {
     bookCards.forEach((card) => {
       const title = (card.getAttribute("data-title") || "").toLowerCase();
       const author = (card.getAttribute("data-author") || "").toLowerCase();
+      const identifier = (
+        card.getAttribute("data-identifier") || ""
+      ).toLowerCase();
       const category = card.getAttribute("data-category")?.toLowerCase() || "";
       const language = card.getAttribute("data-language")?.toLowerCase() || "";
 
       const matchesSearch =
-        title.includes(searchTerm) || author.includes(searchTerm);
+        title.includes(searchTerm) ||
+        author.includes(searchTerm) ||
+        identifier.includes(searchTerm);
       const matchesCategory = categoryTerm === "" || category === categoryTerm;
       const matchesLanguage = languageTerm === "" || language === languageTerm;
 

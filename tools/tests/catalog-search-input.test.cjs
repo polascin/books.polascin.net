@@ -14,6 +14,12 @@ describe("catalog search field", () => {
     assert.match(catalog, /type="search"/);
     assert.match(catalog, /autocomplete="off"/);
     assert.match(catalog, /enterkeyhint="search"/);
+    assert.match(
+      catalog,
+      /aria-label="Search catalog by title, author, or ISBN\/ID"/,
+    );
+    assert.match(catalog, /placeholder="Search by title, author, or ISBN\/ID"/);
+    assert.match(catalog, /data-identifier="/);
     assert.doesNotMatch(
       catalog,
       /<input[^>]*id="search-books"[^>]*type="text"/s,

@@ -15,18 +15,21 @@ function catalog(reducedMotion) {
     {
       title: "Vital Algorithm",
       author: "Walter",
+      identifier: "B0HM2VHKFV",
       category: "Medical Thriller",
       language: "English",
     },
     {
       title: "Pulse Of The Body",
       author: "Walter",
+      identifier: "9781234567890",
       category: "Medical Fiction",
       language: "German",
     },
     {
       title: "SK Nefro: Dimostrato, probabile, aperto",
       author: "Lubomir",
+      identifier: "NEFRO-SKNB-1",
       category: "Digital Product",
       language: "Italian",
     },
@@ -200,4 +203,21 @@ test("uses instant empty-panel scroll when reduced motion is preferred", () => {
   c.search("missing-title");
   assert.equal(c.elements["no-results"].scrolled.block, "nearest");
   assert.equal(c.elements["no-results"].scrolled.behavior, "auto");
+});
+
+test("search matches ISBN, ASIN, and catalog ID values", () => {
+  const c = catalog(false);
+  c.search("b0hm2vhkfv");
+  assert.deepEqual(
+    c.cards.map((card) => card.hidden),
+    [false, true, true],
+  );
+  assert.equal(c.elements["results-count"].textContent, "1");
+
+  c.search("nefro-sknb");
+  assert.deepEqual(
+    c.cards.map((card) => card.hidden),
+    [true, true, false],
+  );
+  assert.equal(c.elements["results-count"].textContent, "1");
 });

@@ -153,7 +153,7 @@ include __DIR__ . '/includes/header.php';
     <div class="catalog-toolbar mb-10">
         <div class="catalog-toolbar-main">
             <div class="relative w-full md:flex-1">
-                <input type="search" id="search-books" name="q" autocomplete="off" enterkeyhint="search" aria-label="Search catalog by title or author" placeholder="Search by title or author" class="catalog-search-input w-full pl-11 pr-4 py-3 bg-white/90 border border-slate-300 rounded-2xl focus:outline-none focus:ring-2 focus:ring-slate-800 transition-shadow">
+                <input type="search" id="search-books" name="q" autocomplete="off" enterkeyhint="search" aria-label="Search catalog by title, author, or ISBN/ID" placeholder="Search by title, author, or ISBN/ID" class="catalog-search-input w-full pl-11 pr-4 py-3 bg-white/90 border border-slate-300 rounded-2xl focus:outline-none focus:ring-2 focus:ring-slate-800 transition-shadow">
                 <svg aria-hidden="true" class="w-5 h-5 text-slate-400 absolute left-4 top-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
             </div>
 
@@ -246,6 +246,7 @@ include __DIR__ . '/includes/header.php';
                  <article id="book-<?php echo (int)($book['id'] ?? ($index + 1)); ?>" class="book-item book-card paper-texture rounded-[1.5rem] overflow-hidden flex flex-col transition-all duration-300 transform" 
                      data-title="<?php echo esc_html($bookTitleText); ?>" 
                      data-author="<?php echo esc_html($bookAuthorText); ?>"
+                     data-identifier="<?php echo esc_html($bookIdentifier['value'] ?? ''); ?>"
                      data-category="<?php echo esc_html($bookCategory); ?>"
                      data-language="<?php echo esc_html($bookLanguage); ?>">
                     
