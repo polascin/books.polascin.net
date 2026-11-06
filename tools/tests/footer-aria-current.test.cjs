@@ -61,4 +61,11 @@ describe("header and home text links", () => {
       /href="\/about"[^>]*class="[^"]*underline/,
     );
   });
+
+  it("underlines the site brand link so it is not color-only", () => {
+    assert.match(
+      header,
+      /href="\/"[^>]*class="[^"]*font-cinzel[^"]*\bunderline\b/,
+    );
+  });
 });
