@@ -179,7 +179,7 @@ include __DIR__ . '/includes/header.php';
         </div>
 
         <div class="catalog-toolbar-meta mt-4 flex flex-col gap-2 md:flex-row md:items-center md:justify-between">
-            <p class="catalog-summary text-sm text-slate-600" role="status" aria-atomic="true"><span id="results-count"><?php echo count($books); ?></span> items currently visible.<span id="catalog-empty-status" class="sr-only" hidden> No matching entries. Try another author, title fragment, or reset the category filter.</span></p>
+            <p class="catalog-summary text-sm text-slate-600" role="status" aria-atomic="true"><span id="results-count"><?php echo count($books); ?></span> items currently visible.<span id="catalog-empty-status" class="sr-only" hidden> No matching entries. Try another author or title, or clear the search and filters.</span></p>
             <p class="catalog-summary text-sm text-slate-500">Use the filters to narrow the archive by title, author, or subject area.</p>
         </div>
     </div>
@@ -193,7 +193,7 @@ include __DIR__ . '/includes/header.php';
     <?php else: ?>
         <div id="no-results" class="bg-white/90 p-10 text-center rounded-[1.5rem] shadow-sm border border-slate-200 mb-8" hidden>
             <h3 class="font-cinzel text-xl text-slate-800 tracking-[0.12em]">No Matching Entries</h3>
-            <p class="font-playfair italic text-slate-600 mt-3">Try another author, title fragment, or reset the category filter.</p>
+            <p class="font-playfair italic text-slate-600 mt-3">Try another author or title, or clear the search and filters.</p>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8" id="book-grid">

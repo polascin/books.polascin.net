@@ -17,6 +17,21 @@ describe("catalog empty state and phone detection", () => {
     assert.doesNotMatch(script, /noResults\.classList\.toggle\("hidden"/);
   });
 
+  it("tells users to clear search and all filters, not only category", () => {
+    const hint =
+      /Try another author or title, or clear the search and filters\./;
+    assert.match(catalog, hint);
+    assert.match(
+      catalog,
+      /id="catalog-empty-status"[^>]*>[\s\S]*?clear the search and filters/,
+    );
+    assert.match(
+      catalog,
+      /id="no-results"[\s\S]*?clear the search and filters/,
+    );
+    assert.doesNotMatch(catalog, /reset the category filter/i);
+  });
+
   it("disables automatic telephone detection so IČO stays plain text", () => {
     assert.match(header, /format-detection" content="telephone=no"/);
   });
