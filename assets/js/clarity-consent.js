@@ -5,9 +5,13 @@
   if (!config || !/^[a-z0-9]+$/.test(config.dataset.project || "")) return;
   const allowed = (config.dataset.paths || "/,/index.php").split(",");
   if (!allowed.includes(location.pathname)) return;
+  // Skip consent UI when the URL may carry secrets (session replay risk).
+  // Allow ordinary marketing/nav params such as utm_*, gclid, lang, page.
+  const blockedParam =
+    /^(?:token|key|secret|password|passwd|auth|session|sid|api[_-]?key|access[_-]?token|refresh[_-]?token|id_token|client_secret)$/i;
   if (
-    [...new URLSearchParams(location.search).keys()].some(
-      (k) => !["lang", "slug", "page", "category"].includes(k),
+    [...new URLSearchParams(location.search).keys()].some((k) =>
+      blockedParam.test(k),
     )
   )
     return;

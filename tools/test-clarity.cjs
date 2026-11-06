@@ -308,6 +308,15 @@ s.elements.find((e) => e.textContent === "Nastavenia analytiky").click();
 for (const path of ["/login.php", "/calculator.php", "/admin.php"])
   assert.equal(run({ path }).elements.length, 0);
 assert.equal(run({ query: "?token=private" }).elements.length, 0);
+assert.equal(run({ query: "?access_token=x" }).elements.length, 0);
+assert.ok(
+  run({ query: "?utm_source=newsletter" }).elements.length > 0,
+  "marketing params must not disable the consent UI",
+);
+assert.ok(
+  run({ query: "?lang=en&gclid=abc&page=2" }).elements.length > 0,
+  "ordinary nav and ad params must keep consent available",
+);
 s = run({
   stored: JSON.stringify({ granted: true, expires: Date.now() - 1 }),
 });
@@ -325,5 +334,5 @@ s.events["site:analytics-consent"]({ detail: false });
 assert.equal(s.reloads, 1);
 
 console.log(
-  "PASS: consent gating, Escape/a11y, project ID, masking, revocation, cookies, expiry, duplicate prevention, private paths and tokens.",
+  "PASS: consent gating, Escape/a11y, project ID, masking, revocation, cookies, expiry, duplicate prevention, private paths, tokens, and UTM allow.",
 );
