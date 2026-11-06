@@ -4,7 +4,10 @@
   const config = document.currentScript;
   if (!config || !/^[a-z0-9]+$/.test(config.dataset.project || "")) return;
   const allowed = (config.dataset.paths || "/,/index.php").split(",");
-  if (!allowed.includes(location.pathname)) return;
+  // ErrorDocument keeps the typed URL in the address bar, so branded 404
+  // pages are detected by the template marker instead of pathname.
+  const isCustom404 = document.getElementById("not-found-heading") !== null;
+  if (!allowed.includes(location.pathname) && !isCustom404) return;
   // Skip consent UI when the URL may carry secrets (session replay risk).
   // Allow ordinary marketing/nav params such as utm_*, gclid, lang, page.
   const blockedParam =

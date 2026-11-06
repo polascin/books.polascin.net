@@ -7,6 +7,10 @@ const root = resolve(__dirname, "../..");
 const htaccess = readFileSync(resolve(root, ".htaccess"), "utf8");
 const notFound = readFileSync(resolve(root, "404.php"), "utf8");
 const header = readFileSync(resolve(root, "includes/header.php"), "utf8");
+const clarity = readFileSync(
+  resolve(root, "assets/js/clarity-consent.js"),
+  "utf8",
+);
 
 describe("custom 404 page", () => {
   it("routes missing URLs through ErrorDocument 404.php", () => {
@@ -26,7 +30,10 @@ describe("custom 404 page", () => {
 
   it("does not advertise a homepage canonical on missing URLs", () => {
     assert.match(notFound, /\$omitCanonicalUrls\s*=\s*true/);
-    assert.doesNotMatch(notFound, /\$pageCanonical\s*=\s*buildAbsoluteUrl\('\/'\)/);
+    assert.doesNotMatch(
+      notFound,
+      /\$pageCanonical\s*=\s*buildAbsoluteUrl\('\/'\)/,
+    );
     assert.match(
       header,
       /\$omitCanonicalUrls\s*=\s*!empty\(\$omitCanonicalUrls\)/,
@@ -43,5 +50,10 @@ describe("custom 404 page", () => {
       header,
       /if\s*\(\s*!\$omitCanonicalUrls\s*\):\s*\?>\s*<meta name="twitter:url"/s,
     );
+  });
+
+  it("keeps Clarity consent available on branded 404 responses", () => {
+    assert.match(notFound, /id="not-found-heading"/);
+    assert.match(clarity, /getElementById\("not-found-heading"\)\s*!==\s*null/);
   });
 });

@@ -6,7 +6,13 @@ const code = fs.readFileSync(
   "utf8",
 );
 
-function run({ path = "/", query = "", stored = null, external = false } = {}) {
+function run({
+  path = "/",
+  query = "",
+  stored = null,
+  external = false,
+  custom404 = false,
+} = {}) {
   const elements = [];
   const events = {};
   const docEvents = {};
@@ -72,6 +78,10 @@ function run({ path = "/", query = "", stored = null, external = false } = {}) {
   });
   const head = make("head");
   const body = make("body");
+  const byId = {};
+  if (custom404) {
+    byId["not-found-heading"] = make("h1");
+  }
   let value = stored;
   let reloads = 0;
   const document = {
@@ -88,6 +98,9 @@ function run({ path = "/", query = "", stored = null, external = false } = {}) {
     body,
     documentElement: { lang: "sk", style: {} },
     createElement: make,
+    getElementById(id) {
+      return byId[id] || null;
+    },
     querySelector() {
       return null;
     },
@@ -307,6 +320,12 @@ s.elements.find((e) => e.textContent === "Nastavenia analytiky").click();
 
 for (const path of ["/login.php", "/calculator.php", "/admin.php"])
   assert.equal(run({ path }).elements.length, 0);
+assert.equal(run({ path: "/this-path-does-not-exist" }).elements.length, 0);
+assert.ok(
+  run({ path: "/this-path-does-not-exist", custom404: true }).elements.length >
+    0,
+  "branded 404 pages must still offer analytics settings",
+);
 assert.equal(run({ query: "?token=private" }).elements.length, 0);
 assert.equal(run({ query: "?access_token=x" }).elements.length, 0);
 assert.ok(
@@ -334,5 +353,5 @@ s.events["site:analytics-consent"]({ detail: false });
 assert.equal(s.reloads, 1);
 
 console.log(
-  "PASS: consent gating, Escape/a11y, project ID, masking, revocation, cookies, expiry, duplicate prevention, private paths, tokens, and UTM allow.",
+  "PASS: consent gating, Escape/a11y, project ID, masking, revocation, cookies, expiry, duplicate prevention, private paths, tokens, UTM allow, and branded 404.",
 );
