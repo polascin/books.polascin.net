@@ -14,6 +14,10 @@ describe("clean public URLs", () => {
   it("301-redirects .php bookmarks to extensionless paths", () => {
     assert.match(
       htaccess,
+      /RewriteCond %\{THE_REQUEST\} \\s\/\+\(privacy\|terms\|catalog\|about\)\\\.php\[\\s\?\] \[NC\]/,
+    );
+    assert.match(
+      htaccess,
       /RewriteRule \^\(privacy\|terms\|catalog\|about\)\\\.php\$ \/\$1 \[R=301,L,QSA,NE\]/,
     );
   });

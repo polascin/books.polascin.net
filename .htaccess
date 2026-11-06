@@ -122,7 +122,10 @@ ErrorDocument 404 /404.php
     RewriteRule "(^|/)\.(?!well-known)" - [F,L]
     RewriteRule ^(\.git|\.claude|\.vscode|\.agents|\.codex|\.cursor|\.kilo|\.github|node_modules|includes|data|tools|hooks)(/.*)?$ - [F,L]
     # Canonical public pages are extensionless (/catalog, /about, …).
-    # Outward: keep old .php bookmarks from competing in search results.
+    # Outward only when the client literally requested *.php — after an
+    # internal rewrite Apache re-runs .htaccess, and without THE_REQUEST
+    # the next pass would 301 /catalog → catalog.php → /catalog forever.
+    RewriteCond %{THE_REQUEST} \s/+(privacy|terms|catalog|about)\.php[\s?] [NC]
     RewriteRule ^(privacy|terms|catalog|about)\.php$ /$1 [R=301,L,QSA,NE]
     # Inward: serve the PHP file without exposing it in the address bar.
     RewriteRule ^(privacy|terms|catalog|about)/?$ $1.php [L,QSA]
