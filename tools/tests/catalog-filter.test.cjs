@@ -63,6 +63,11 @@ function catalog(reducedMotion) {
     "catalog-empty-status": {
       hidden: true,
     },
+    "clear-catalog-filters": {
+      addEventListener(event, listener) {
+        this[event] = listener;
+      },
+    },
   };
   const document = {
     activeElement: null,
@@ -103,6 +108,9 @@ function catalog(reducedMotion) {
     language(value) {
       elements["language-filter"].value = value;
       elements["language-filter"].change();
+    },
+    clear() {
+      elements["clear-catalog-filters"].click();
     },
     flush() {
       timers
@@ -237,4 +245,22 @@ test("identifier search ignores hyphen and space differences", () => {
     [true, false, true],
   );
   assert.equal(c.elements["results-count"].textContent, "1");
+});
+
+test("clear control restores all filters and returns focus to search", () => {
+  const c = catalog(false);
+  c.search("missing-title");
+  c.category("Medical Fiction");
+  c.language("German");
+  assert.equal(c.elements["results-count"].textContent, "0");
+  assert.equal(c.elements["no-results"].hidden, false);
+
+  c.clear();
+  assert.equal(c.elements["search-books"].value, "");
+  assert.equal(c.elements["category-filter"].value, "");
+  assert.equal(c.elements["language-filter"].value, "");
+  assert.equal(c.elements["results-count"].textContent, "3");
+  assert.ok(c.cards.every((card) => !card.hidden));
+  assert.equal(c.elements["no-results"].hidden, true);
+  assert.equal(c.elements["search-books"].focused, true);
 });

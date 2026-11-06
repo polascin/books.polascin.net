@@ -194,6 +194,9 @@ include __DIR__ . '/includes/header.php';
         <div id="no-results" class="bg-white/90 p-10 text-center rounded-[1.5rem] shadow-sm border border-slate-200 mb-8" hidden>
             <h3 class="font-cinzel text-xl text-slate-800 tracking-[0.12em]">No Matching Entries</h3>
             <p class="font-playfair italic text-slate-600 mt-3">Try another author or title, or clear the search and filters.</p>
+            <button type="button" id="clear-catalog-filters" class="mt-6 inline-flex min-h-[2.75rem] items-center justify-center rounded-2xl border border-slate-800 bg-slate-900 px-5 py-2.5 text-sm font-medium text-paper hover:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-slate-800 focus:ring-offset-2">
+                Clear search and filters
+            </button>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8" id="book-grid">

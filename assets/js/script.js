@@ -7,6 +7,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const resultsCount = document.getElementById("results-count");
   const noResults = document.getElementById("no-results");
   const emptyStatus = document.getElementById("catalog-empty-status");
+  const clearFilters = document.getElementById("clear-catalog-filters");
   let wasEmpty = false;
 
   function normalizeIdentifier(value) {
@@ -87,6 +88,22 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
+  function clearCatalogFilters() {
+    if (searchInput) {
+      searchInput.value = "";
+    }
+    if (categorySelect) {
+      categorySelect.value = "";
+    }
+    if (languageSelect) {
+      languageSelect.value = "";
+    }
+    filterBooks();
+    if (searchInput) {
+      searchInput.focus({ preventScroll: true });
+    }
+  }
+
   if (searchInput) {
     searchInput.addEventListener("input", filterBooks);
   }
@@ -95,6 +112,9 @@ document.addEventListener("DOMContentLoaded", () => {
   }
   if (languageSelect) {
     languageSelect.addEventListener("change", filterBooks);
+  }
+  if (clearFilters) {
+    clearFilters.addEventListener("click", clearCatalogFilters);
   }
   if (searchInput || categorySelect || languageSelect) {
     filterBooks();
