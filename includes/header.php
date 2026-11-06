@@ -20,6 +20,7 @@
     $pageImageAlt = $pageImageAlt ?? 'Portrait of Dr. Lubomir Polascin';
     $pageRobots = $pageRobots ?? 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1';
     $pageType = $pageType ?? 'website';
+    $omitCanonicalUrls = !empty($omitCanonicalUrls);
     $pageStructuredData = $pageStructuredData ?? [];
 
     if (!empty($pageStructuredData) && (!is_array($pageStructuredData) || array_keys($pageStructuredData) !== range(0, count($pageStructuredData) - 1))) {
@@ -39,13 +40,17 @@
     <link rel="apple-touch-icon" sizes="180x180" href="<?php echo assetUrl('assets/images/apple-touch-icon.png'); ?>">
     <link rel="shortcut icon" href="<?php echo assetUrl('favicon.ico'); ?>">
     <link rel="manifest" href="<?php echo assetUrl('site.webmanifest'); ?>">
+    <?php if (!$omitCanonicalUrls): ?>
     <link rel="canonical" href="<?php echo esc_html($pageCanonical); ?>">
+    <?php endif; ?>
 
     <meta property="og:site_name" content="Bibliotheca Polascini">
     <meta property="og:type" content="<?php echo esc_html($pageType); ?>">
     <meta property="og:title" content="<?php echo esc_html($pageTitle); ?>">
     <meta property="og:description" content="<?php echo esc_html($pageDescription); ?>">
+    <?php if (!$omitCanonicalUrls): ?>
     <meta property="og:url" content="<?php echo esc_html($pageCanonical); ?>">
+    <?php endif; ?>
     <meta property="og:image" content="<?php echo esc_html($pageImage); ?>">
     <?php // Default social image is assets/images/author.png (256×256 portrait). ?>
     <meta property="og:image:width" content="256">
@@ -58,7 +63,9 @@
     <meta name="twitter:description" content="<?php echo esc_html($pageDescription); ?>">
     <meta name="twitter:image" content="<?php echo esc_html($pageImage); ?>">
     <meta name="twitter:image:alt" content="<?php echo esc_html($pageImageAlt); ?>">
+    <?php if (!$omitCanonicalUrls): ?>
     <meta name="twitter:url" content="<?php echo esc_html($pageCanonical); ?>">
+    <?php endif; ?>
     
     <!-- Styles: self-hosted fonts and a locally built Tailwind bundle.
          No third-party CDN is contacted, so no visitor IP is disclosed to

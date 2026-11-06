@@ -5,7 +5,9 @@ http_response_code(404);
 
 $pageTitle = 'Page Not Found | Bibliotheca Polascini';
 $pageDescription = 'The requested page was not found in Bibliotheca Polascini. Return to the home page or browse the catalog.';
-$pageCanonical = buildAbsoluteUrl('/');
+// Do not emit canonical/og:url/twitter:url: pointing every miss at "/"
+// would look like a soft duplicate of the homepage despite noindex.
+$omitCanonicalUrls = true;
 $pageType = 'website';
 $pageImage = getDefaultSeoImage();
 $pageRobots = 'noindex, follow';

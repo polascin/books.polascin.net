@@ -6,6 +6,7 @@ const { resolve } = require("node:path");
 const root = resolve(__dirname, "../..");
 const htaccess = readFileSync(resolve(root, ".htaccess"), "utf8");
 const notFound = readFileSync(resolve(root, "404.php"), "utf8");
+const header = readFileSync(resolve(root, "includes/header.php"), "utf8");
 
 describe("custom 404 page", () => {
   it("routes missing URLs through ErrorDocument 404.php", () => {
@@ -21,5 +22,26 @@ describe("custom 404 page", () => {
     assert.match(notFound, /href="\/catalog"/);
     assert.match(notFound, /href="\/"/);
     assert.match(notFound, /Page Not Found/);
+  });
+
+  it("does not advertise a homepage canonical on missing URLs", () => {
+    assert.match(notFound, /\$omitCanonicalUrls\s*=\s*true/);
+    assert.doesNotMatch(notFound, /\$pageCanonical\s*=\s*buildAbsoluteUrl\('\/'\)/);
+    assert.match(
+      header,
+      /\$omitCanonicalUrls\s*=\s*!empty\(\$omitCanonicalUrls\)/,
+    );
+    assert.match(
+      header,
+      /if\s*\(\s*!\$omitCanonicalUrls\s*\):\s*\?>\s*<link rel="canonical"/s,
+    );
+    assert.match(
+      header,
+      /if\s*\(\s*!\$omitCanonicalUrls\s*\):\s*\?>\s*<meta property="og:url"/s,
+    );
+    assert.match(
+      header,
+      /if\s*\(\s*!\$omitCanonicalUrls\s*\):\s*\?>\s*<meta name="twitter:url"/s,
+    );
   });
 });
